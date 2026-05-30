@@ -17,38 +17,20 @@ export default function ElementCapsule({ element }) {
     // Simulation variables
     let frame = 0;
 
-    // Particle pool for gas/vortex and solid/crystals
+    // Particle pool for gas/vapor and liquid bubbles
     const particles = [];
     for (let i = 0; i < 40; i++) {
       particles.push({
         x: width / 2,
         y: Math.random() * (height - 60) + 30,
-        radius: Math.random() * 2 + 1,
+        radius: Math.random() * 3 + 1.5,
         angle: Math.random() * Math.PI * 2,
-        speed: Math.random() * 0.05 + 0.02,
+        speed: Math.random() * 0.04 + 0.015,
         radiusY: Math.random() * 30 + 10,
-        verticalSpeed: Math.random() * 0.8 + 0.3,
-        color: 'rgba(255, 255, 255, 0.8)'
+        verticalSpeed: Math.random() * 0.7 + 0.3,
+        color: 'rgba(236, 72, 153, 0.4)'
       });
     }
-
-    // Plasma/electric arcs for noble gases
-    const arcs = [];
-    const createArcPoints = () => {
-      const pts = [];
-      const steps = 10;
-      pts.push({ x: width / 2, y: 30 });
-      for (let i = 1; i < steps; i++) {
-        const progress = i / steps;
-        const targetY = 30 + progress * (height - 60);
-        pts.push({
-          x: width / 2 + (Math.random() - 0.5) * 20,
-          y: targetY
-        });
-      }
-      pts.push({ x: width / 2, y: height - 30 });
-      return pts;
-    };
 
     const render = () => {
       frame++;
@@ -67,106 +49,85 @@ export default function ElementCapsule({ element }) {
       // Determine element type/state and draw effect
       const stateType = element?.state || 'gas';
       const category = element?.category || '';
+      const isMetal = category.includes('metal') || category.includes('lanthanide') || category.includes('actinide');
 
       if (stateType === 'gas') {
-        if (category.includes('noble')) {
-          // --- NOBLE GAS: Pulsing Plasma Arcs ---
-          ctx.shadowBlur = 15;
-          
-          // Determine color based on noble gas
-          let plasmaColor = '#ec4899'; // default pink/helium
-          if (element?.symbol === 'Ne') plasmaColor = '#f97316'; // Neon Orange
-          if (element?.symbol === 'Ar') plasmaColor = '#a855f7'; // Argon Violet
-          if (element?.symbol === 'Xe') plasmaColor = '#3b82f6'; // Xenon Blue
+        // --- 1. GASES: Swirling glowing neon-pink vapor ---
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ec4899'; // Neon pink glow
 
-          ctx.shadowColor = plasmaColor;
-          ctx.strokeStyle = plasmaColor;
-          ctx.lineWidth = 2.5;
+        particles.forEach(p => {
+          // Orbit and rise
+          p.angle += p.speed;
+          p.y -= p.verticalSpeed * 0.7;
 
-          // Render 2 electric arcs
-          if (frame % 8 === 0 || arcs.length === 0) {
-            arcs[0] = createArcPoints();
-            arcs[1] = createArcPoints();
+          // Recycle particles at bottom
+          if (p.y < 30) {
+            p.y = height - 35;
+            p.radiusY = Math.random() * 28 + 8;
           }
 
-          arcs.forEach(arc => {
-            if (!arc) return;
-            ctx.beginPath();
-            ctx.moveTo(arc[0].x, arc[0].y);
-            for (let i = 1; i < arc.length; i++) {
-              ctx.lineTo(arc[i].x, arc[i].y);
-            }
-            ctx.stroke();
-          });
+          // Vortex shape: wider at top, narrower at bottom
+          const heightFactor = (p.y - 30) / (height - 60); // 0 at top, 1 at bottom
+          const currentRadiusX = (1 - heightFactor) * 28 + 4;
 
-          // Core glowing pillar
-          const coreGrad = ctx.createLinearGradient(0, 0, width, 0);
-          coreGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0)');
-          coreGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.9)');
-          coreGrad.addColorStop(0.6, 'rgba(255, 255, 255, 0)');
-          ctx.fillStyle = coreGrad;
-          ctx.fillRect(width / 2 - 6, 30, 12, height - 60);
+          p.x = width / 2 + Math.cos(p.angle) * currentRadiusX;
 
-        } else {
-          // --- REGULAR GAS (e.g., Hydrogen, Nitrogen): Swirling Vortex ---
-          ctx.shadowBlur = 4;
-          ctx.shadowColor = '#e2e8f0';
-
-          particles.forEach(p => {
-            // Update particle
-            p.angle += p.speed;
-            p.y -= p.verticalSpeed;
-
-            // Loop vertical coordinates
-            if (p.y < 30) {
-              p.y = height - 35;
-              p.radiusY = Math.random() * 28 + 8;
-            }
-
-            // Orbital mathematics (vortex shape gets narrower at bottom, wider at top)
-            const heightFactor = (p.y - 30) / (height - 60); // 0 at top, 1 at bottom
-            const currentRadiusX = (1 - heightFactor) * 28 + 4; // Wider at top
-
-            p.x = width / 2 + Math.cos(p.angle) * currentRadiusX;
-
-            // Draw particle
-            const opacity = (1 - heightFactor) * 0.7 + 0.1;
-            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-          });
-        }
+          // Draw volumetric glowing vapor puff
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 4);
+          const opacity = (1 - heightFactor) * 0.35 + 0.05;
+          grad.addColorStop(0, `rgba(236, 72, 153, ${opacity})`);
+          grad.addColorStop(0.5, `rgba(236, 72, 153, ${opacity * 0.4})`);
+          grad.addColorStop(1, 'rgba(236, 72, 153, 0)');
+          
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
 
       } else if (stateType === 'liquid') {
-        // --- LIQUID (e.g., Mercury, Bromine): Flowing Wave ---
-        // Color based on Bromine (brownish red) or Mercury (silvery grey)
-        const isMercury = element?.symbol === 'Hg' || element?.symbol === 'Ag';
-        const liquidColor = isMercury ? '#94a3b8' : '#b91c1c';
-        const liquidColorGlow = isMercury ? '#cbd5e1' : '#ef4444';
+        // --- 2. LIQUIDS: Pulsating, bubbling fluid sloshing ---
+        const isHg = element?.symbol === 'Hg';
+        const isBr = element?.symbol === 'Br';
+        
+        // Colors: Mercury = silver, Bromine = dark red, others = glowing cyan
+        let fillStyle = '#0891b2'; // Cyan-600
+        let glowColor = '#06b6d4'; // Cyan-500
+        if (isHg) {
+          fillStyle = '#475569'; // Slate-600
+          glowColor = '#cbd5e1'; 
+        } else if (isBr) {
+          fillStyle = '#991b1b'; // Red-800
+          glowColor = '#ef4444';
+        }
 
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = liquidColorGlow;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = glowColor;
 
-        // Wave rendering
-        ctx.fillStyle = liquidColor;
+        // Sloshing wave calculations
+        const waveHeight = 6 + Math.sin(frame * 0.06) * 3; // Pulsating wave amp
+        const fillLevel = (height - 80) + Math.sin(frame * 0.025) * 4; // Pulsating height
+
+        ctx.fillStyle = fillStyle;
         ctx.beginPath();
         ctx.moveTo(22, height - 30);
-        
-        // Sine wave calculations
-        const waveHeight = 8;
-        const fillLevel = height - 85; // liquid height
-
         ctx.lineTo(22, fillLevel);
+        
         for (let x = 22; x <= width - 22; x++) {
-          const y = fillLevel + Math.sin((x / 15) + (frame * 0.08)) * waveHeight;
+          const y = fillLevel + Math.sin((x / 14) + (frame * 0.07)) * waveHeight;
           ctx.lineTo(x, y);
         }
         ctx.lineTo(width - 22, height - 30);
         ctx.closePath();
         ctx.fill();
 
-        // Shimmer gradient over liquid
+        // Wave crest highlight line
+        ctx.strokeStyle = glowColor;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Shimmer gradient overlay
         const liquidGlint = ctx.createLinearGradient(0, fillLevel - 5, 0, height - 30);
         liquidGlint.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
         liquidGlint.addColorStop(0.1, 'rgba(255, 255, 255, 0.1)');
@@ -174,72 +135,148 @@ export default function ElementCapsule({ element }) {
         ctx.fillStyle = liquidGlint;
         ctx.fillRect(22, fillLevel - 5, width - 44, height - 30 - fillLevel + 5);
 
-        // Draw bubbles floating up
-        particles.slice(0, 15).forEach(p => {
-          p.y -= p.verticalSpeed * 0.8;
-          p.x += Math.sin(frame * 0.05 + p.angle) * 0.5;
+        // Rising bubbles in liquid
+        particles.slice(0, 20).forEach(p => {
+          p.y -= p.verticalSpeed * 0.6;
+          p.x += Math.sin(frame * 0.04 + p.angle) * 0.6;
 
+          // Recycle bubble if it floats above fluid level
           if (p.y < fillLevel) {
-            p.y = height - 40;
+            p.y = height - 35;
             p.x = Math.random() * (width - 60) + 30;
           }
 
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.radius * 0.7, 0, Math.PI * 2);
           ctx.fill();
         });
 
-      } else if (stateType === 'solid') {
-        // --- SOLID (e.g., Gold, Carbon, Iron): Spinning Crystals ---
-        let crystalColor = '#eab308'; // Default gold
-        if (element?.symbol === 'Fe') crystalColor = '#64748b'; // Iron grey
-        if (element?.symbol === 'C') crystalColor = '#334155'; // Graphite black
-        if (element?.symbol === 'Li') crystalColor = '#a8a29e'; // Lithium silvery stone
+      } else {
+        // --- 3. SOLIDS: Jagged, rotating metallic/non-metallic crystals ---
+        const scale = 26;
+        const cx = width / 2;
+        const cy = height / 2 - 10;
 
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = crystalColor;
+        // 3D Octahedron vertices
+        const vertices = [
+          { x: 0, y: -scale * 1.3, z: 0 },
+          { x: scale, y: 0, z: 0 },
+          { x: 0, y: 0, z: scale },
+          { x: -scale, y: 0, z: 0 },
+          { x: 0, y: 0, z: -scale },
+          { x: 0, y: scale * 1.3, z: 0 }
+        ];
 
-        // Draw floating crystals
-        const numCrystals = 3;
-        for (let j = 0; j < numCrystals; j++) {
-          const speedFactor = (j + 1) * 0.015;
-          const yOffset = Math.sin(frame * speedFactor + j) * 8;
-          const cx = width / 2 + Math.cos(frame * 0.02 + j * 2) * 15;
-          const cy = height / 2 + yOffset - 10 + (j - 1) * 30;
-          const size = 12 + j * 3;
+        // 3D rotation angles
+        const rotY = frame * 0.022;
+        const rotX = frame * 0.012;
 
-          // Draw double-pyramid crystal
-          ctx.fillStyle = crystalColor;
-          ctx.beginPath();
-          ctx.moveTo(cx, cy - size); // top tip
-          ctx.lineTo(cx + size * 0.7, cy); // right point
-          ctx.lineTo(cx, cy + size); // bottom tip
-          ctx.lineTo(cx - size * 0.7, cy); // left point
-          ctx.closePath();
-          ctx.fill();
+        const projected = vertices.map(v => {
+          // Y rotation
+          let x1 = v.x * Math.cos(rotY) - v.z * Math.sin(rotY);
+          let z1 = v.x * Math.sin(rotY) + v.z * Math.cos(rotY);
+          // X rotation
+          let y2 = v.y * Math.cos(rotX) - z1 * Math.sin(rotX);
+          let z2 = v.y * Math.sin(rotX) + z1 * Math.cos(rotX);
+          
+          // Project to 2D
+          const zoom = 190;
+          const dist = 200;
+          const depth = (dist - z2);
+          const px = cx + (x1 * zoom) / depth;
+          const py = cy + (y2 * zoom) / depth;
+          return { x: px, y: py, z: z2 };
+        });
 
-          // Highlight side
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-          ctx.beginPath();
-          ctx.moveTo(cx, cy - size);
-          ctx.lineTo(cx + size * 0.7, cy);
-          ctx.lineTo(cx, cy);
-          ctx.closePath();
-          ctx.fill();
+        // 8 triangular faces
+        const faces = [
+          [0, 1, 2], [0, 2, 3], [0, 3, 4], [0, 4, 1], // Top
+          [5, 2, 1], [5, 3, 2], [5, 4, 3], [5, 1, 4]  // Bottom
+        ];
+
+        // Sort faces by depth (back to front)
+        const facesWithDepth = faces.map(face => {
+          const avgZ = (projected[face[0]].z + projected[face[1]].z + projected[face[2]].z) / 3;
+          return { face, avgZ };
+        });
+        facesWithDepth.sort((a, b) => b.avgZ - a.avgZ);
+
+        // Define metal tones
+        let glowColor = '#eab308'; // Default gold
+        let stop1 = '#cbd5e1', stop2 = '#94a3b8', stop3 = '#475569'; // Silver
+
+        if (isMetal) {
+          const isGoldOrAlkali = category.includes('alkali') || element?.symbol === 'Au';
+          const isCopper = element?.symbol === 'Cu';
+          
+          if (isGoldOrAlkali) {
+            glowColor = '#f59e0b';
+            stop1 = '#fef08a'; stop2 = '#eab308'; stop3 = '#854d0e';
+          } else if (isCopper) {
+            glowColor = '#ea580c';
+            stop1 = '#ffedd5'; stop2 = '#ea580c'; stop3 = '#7c2d12';
+          } else {
+            glowColor = '#a8a29e';
+            stop1 = '#ffffff'; stop2 = '#94a3b8'; stop3 = '#334155';
+          }
+        } else {
+          // Non-metals (Carbon, Sulfur, etc.) -> Charcoal crystals
+          glowColor = '#6b7280';
+          if (element?.symbol === 'S') {
+            glowColor = '#eab308';
+            stop1 = '#fef08a'; stop2 = '#facc15'; stop3 = '#854d0e'; // Yellow sulfur
+          } else {
+            stop1 = '#475569'; stop2 = '#1e293b'; stop3 = '#0f172a'; // Black/grey carbon
+          }
         }
 
-        // Floating sparkles
-        particles.slice(0, 20).forEach(p => {
-          p.y -= p.verticalSpeed * 0.4;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = glowColor;
+
+        facesWithDepth.forEach(({ face }) => {
+          const p0 = projected[face[0]];
+          const p1 = projected[face[1]];
+          const p2 = projected[face[2]];
+
+          // Cross product backface culling
+          const cross = (p1.x - p0.x) * (p2.y - p0.y) - (p1.y - p0.y) * (p2.x - p0.x);
+          if (cross < 0) return;
+
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y);
+          ctx.lineTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.closePath();
+
+          // Shiny metallic gradient shifting over time
+          const metalGrad = ctx.createLinearGradient(p0.x, p0.y, p2.x, p2.y);
+          const shift = (Math.sin(frame * 0.04) + 1) / 2 * 0.25;
+
+          metalGrad.addColorStop(0, stop1);
+          metalGrad.addColorStop(0.3 + shift, stop2);
+          metalGrad.addColorStop(1, stop3);
+
+          ctx.fillStyle = metalGrad;
+          ctx.fill();
+
+          // Sharp crystal outlines
+          ctx.strokeStyle = isMetal ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0.15)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // Floating ambient sparkles around the crystal
+        particles.slice(0, 15).forEach(p => {
+          p.y -= p.verticalSpeed * 0.35;
           if (p.y < 35) {
             p.y = height - 40;
             p.x = Math.random() * (width - 60) + 30;
           }
 
-          ctx.fillStyle = 'rgba(234, 179, 8, 0.6)';
+          ctx.fillStyle = isMetal ? 'rgba(255, 255, 255, 0.65)' : 'rgba(234, 179, 8, 0.45)';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.radius * 0.5, 0, Math.PI * 2);
           ctx.fill();
         });
       }
@@ -249,17 +286,17 @@ export default function ElementCapsule({ element }) {
       // 2. Draw front glass highlight (reflection)
       const glossGrad = ctx.createLinearGradient(0, 0, width, 0);
       glossGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      glossGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0.15)');
-      glossGrad.addColorStop(0.2, 'rgba(255, 255, 255, 0.25)');
-      glossGrad.addColorStop(0.25, 'rgba(255, 255, 255, 0.05)');
+      glossGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0.18)');
+      glossGrad.addColorStop(0.2, 'rgba(255, 255, 255, 0.28)');
+      glossGrad.addColorStop(0.25, 'rgba(255, 255, 255, 0.06)');
       glossGrad.addColorStop(0.85, 'rgba(255, 255, 255, 0)');
-      glossGrad.addColorStop(0.9, 'rgba(255, 255, 255, 0.15)');
+      glossGrad.addColorStop(0.9, 'rgba(255, 255, 255, 0.12)');
       glossGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = glossGrad;
       ctx.fillRect(20, 20, width - 40, height - 40);
 
       // Inner glass tube lining
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
       ctx.lineWidth = 1;
       ctx.strokeRect(22, 20, width - 44, height - 40);
 

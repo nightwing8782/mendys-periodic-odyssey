@@ -5,7 +5,7 @@ export default function Mendy({ state = 'idle' }) {
 
   // Auto-blink mechanism for organic feel
   useEffect(() => {
-    if (state !== 'idle') return;
+    if (state !== 'idle' && state !== 'thinking') return;
 
     const interval = setInterval(() => {
       setBlink(true);
@@ -21,7 +21,39 @@ export default function Mendy({ state = 'idle' }) {
   const isThinking = state === 'thinking';
 
   return (
-    <div className="flex flex-col items-center select-none animate-float">
+    <div className={`flex flex-col items-center select-none ${isCorrect ? 'animate-success-bounce' : 'animate-float'} relative`}>
+      {/* Inline styles for custom keyframe animations */}
+      <style>{`
+        @keyframes antenna-twitch-l {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(18deg) scaleY(0.95); }
+        }
+        @keyframes antenna-twitch-r {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(-18deg) scaleY(0.95); }
+        }
+        @keyframes chin-tap-anim {
+          0%, 100% { transform: rotate(-74deg) translate(-24px, -35px); }
+          50% { transform: rotate(-68deg) translate(-22px, -37px); }
+        }
+        @keyframes success-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        .animate-antenna-l {
+          animation: antenna-twitch-l 0.8s ease-in-out infinite;
+        }
+        .animate-antenna-r {
+          animation: antenna-twitch-r 0.8s ease-in-out infinite 0.15s;
+        }
+        .animate-chin-tap {
+          animation: chin-tap-anim 0.6s ease-in-out infinite;
+        }
+        .animate-success-bounce {
+          animation: success-bounce 0.45s ease-in-out infinite;
+        }
+      `}</style>
+
       <svg
         width="260"
         height="320"
@@ -38,9 +70,9 @@ export default function Mendy({ state = 'idle' }) {
             stroke="#eab308"
             strokeWidth="5"
             strokeLinecap="round"
-            className="transition-all duration-500 origin-[95px_105px]"
+            className={`transition-all duration-500 origin-[95px_105px] ${isThinking ? 'animate-antenna-l' : ''}`}
             style={{
-              transform: isIncorrect ? 'rotate(-15deg)' : isThinking ? 'rotate(5deg)' : 'none'
+              transform: isIncorrect ? 'rotate(-15deg)' : 'none'
             }}
           />
           <circle
@@ -48,10 +80,11 @@ export default function Mendy({ state = 'idle' }) {
             cy="60"
             r="10"
             fill="#22c55e"
-            className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400 glow-green-strong' : 'fill-emerald-500'}`}
+            className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
             style={{
               filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none',
-              transform: isIncorrect ? 'translate(-8px, 12px)' : 'none'
+              transform: isIncorrect ? 'translate(-8px, 12px)' : 'none',
+              animation: isThinking ? 'antenna-twitch-l 0.8s ease-in-out infinite origin-[95px_105px]' : 'none'
             }}
           />
 
@@ -61,9 +94,9 @@ export default function Mendy({ state = 'idle' }) {
             stroke="#eab308"
             strokeWidth="5"
             strokeLinecap="round"
-            className="transition-all duration-500 origin-[165px_105px]"
+            className={`transition-all duration-500 origin-[165px_105px] ${isThinking ? 'animate-antenna-r' : ''}`}
             style={{
-              transform: isIncorrect ? 'rotate(15deg)' : isThinking ? 'rotate(-10deg) translate(-2px, -8px)' : 'none'
+              transform: isIncorrect ? 'rotate(15deg)' : 'none'
             }}
           />
           <circle
@@ -79,17 +112,17 @@ export default function Mendy({ state = 'idle' }) {
           />
         </g>
 
-        {/* Head Gradient Definition */}
+        {/* Head & Suit Color Definitions */}
         <defs>
           <radialGradient id="headGrad" cx="50%" cy="40%" r="50%">
-            <stop offset="0%" stopColor="#fef08a" /> {/* Yellow-200 */}
-            <stop offset="80%" stopColor="#eab308" /> {/* Gold */}
-            <stop offset="100%" stopColor="#ca8a04" /> {/* Gold-dark */}
+            <stop offset="0%" stopColor="#fef08a" />
+            <stop offset="80%" stopColor="#eab308" />
+            <stop offset="100%" stopColor="#ca8a04" />
           </radialGradient>
 
           <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#14b8a6" /> {/* Teal */}
-            <stop offset="50%" stopColor="#0f766e" /> {/* Teal-dark */}
+            <stop offset="0%" stopColor="#14b8a6" />
+            <stop offset="50%" stopColor="#0f766e" />
             <stop offset="100%" stopColor="#115e59" />
           </linearGradient>
 
@@ -124,14 +157,17 @@ export default function Mendy({ state = 'idle' }) {
             stroke="url(#goldTrimGrad)"
             strokeWidth="2.5"
             strokeLinecap="round"
-            className="transition-all duration-500 origin-[75px_235px]"
+            className={`transition-all duration-500 origin-[75px_235px] ${isThinking ? 'animate-chin-tap' : ''}`}
             style={{
-              transform: isCorrect ? 'rotate(-60deg) translate(-25px, -15px)' : 'none'
+              transform: isCorrect 
+                ? 'rotate(-130deg) translate(-45px, -35px)' 
+                : isIncorrect 
+                ? 'rotate(42deg) translate(12px, -8px)' // resting on hip
+                : 'none'
             }}
           />
 
           {/* Right Arm */}
-          {/* Default posture is presenting or resting, let's make it presenting the screen */}
           <path
             d="M185 235C200 245 220 260 235 255C245 250 240 235 225 230C215 225 195 230 180 232"
             fill="url(#suitGrad)"
@@ -140,7 +176,11 @@ export default function Mendy({ state = 'idle' }) {
             strokeLinecap="round"
             className="transition-all duration-500 origin-[185px_235px]"
             style={{
-              transform: isCorrect ? 'rotate(60deg) translate(15px, -35px)' : isIncorrect ? 'rotate(-30deg) translate(0px, 10px)' : 'none'
+              transform: isCorrect 
+                ? 'rotate(130deg) translate(42px, -55px)' // fist pump / waving
+                : isIncorrect 
+                ? 'rotate(-42deg) translate(-12px, 8px)' // resting on hip
+                : 'none'
             }}
           />
 
@@ -189,7 +229,7 @@ export default function Mendy({ state = 'idle' }) {
           cy="195"
           r="10"
           fill="#ef4444"
-          opacity={isCorrect ? "0.6" : isIncorrect ? "0.1" : "0.3"}
+          opacity={isCorrect ? "0.75" : isIncorrect ? "0.1" : "0.3"}
           className="transition-all duration-500"
           style={{
             filter: 'blur(3px)'
@@ -200,7 +240,7 @@ export default function Mendy({ state = 'idle' }) {
           cy="195"
           r="10"
           fill="#ef4444"
-          opacity={isCorrect ? "0.6" : isIncorrect ? "0.1" : "0.3"}
+          opacity={isCorrect ? "0.75" : isIncorrect ? "0.1" : "0.3"}
           className="transition-all duration-500"
           style={{
             filter: 'blur(3px)'
@@ -216,18 +256,14 @@ export default function Mendy({ state = 'idle' }) {
               transform: isCorrect ? 'scale(1.15)' : isIncorrect ? 'scaleY(0.4) translateY(5px)' : isThinking ? 'translate(2px, -3px)' : 'none'
             }}
           >
-            {/* Eye socket / background */}
             <ellipse cx="95" cy="175" rx="18" ry="24" fill="#1e1b4b" />
-            {/* Pupil */}
             <ellipse cx="95" cy="175" rx="14" ry="19" fill="#030712" />
-            {/* Highlight */}
             {!blink && (
               <>
                 <circle cx="91" cy="165" r="5" fill="#ffffff" />
                 <circle cx="99" cy="183" r="2.5" fill="#ffffff" opacity="0.7" />
               </>
             )}
-            {/* Eyelid for Blinking */}
             {blink && <ellipse cx="95" cy="175" rx="18" ry="24" fill="url(#headGrad)" />}
           </g>
 
@@ -238,18 +274,14 @@ export default function Mendy({ state = 'idle' }) {
               transform: isCorrect ? 'scale(1.15)' : isIncorrect ? 'scaleY(0.4) translateY(5px)' : isThinking ? 'translate(2px, -3px)' : 'none'
             }}
           >
-            {/* Eye socket / background */}
             <ellipse cx="165" cy="175" rx="18" ry="24" fill="#1e1b4b" />
-            {/* Pupil */}
             <ellipse cx="165" cy="175" rx="14" ry="19" fill="#030712" />
-            {/* Highlight */}
             {!blink && (
               <>
                 <circle cx="161" cy="165" r="5" fill="#ffffff" />
                 <circle cx="169" cy="183" r="2.5" fill="#ffffff" opacity="0.7" />
               </>
             )}
-            {/* Eyelid for Blinking */}
             {blink && <ellipse cx="165" cy="175" rx="18" ry="24" fill="url(#headGrad)" />}
           </g>
         </g>
@@ -257,7 +289,6 @@ export default function Mendy({ state = 'idle' }) {
         {/* Mouth */}
         <g id="mouth">
           {isCorrect && (
-            // Big Happy Smile
             <path
               d="M115 198C115 198 130 220 145 198"
               stroke="#7f1d1d"
@@ -268,7 +299,6 @@ export default function Mendy({ state = 'idle' }) {
             />
           )}
           {isIncorrect && (
-            // Wry / Worried Mouth
             <path
               d="M120 205C125 200 135 200 140 205"
               stroke="#7f1d1d"
@@ -279,7 +309,6 @@ export default function Mendy({ state = 'idle' }) {
             />
           )}
           {isThinking && (
-            // Curious O-mouth
             <ellipse
               cx="130"
               cy="203"
@@ -292,7 +321,6 @@ export default function Mendy({ state = 'idle' }) {
             />
           )}
           {state === 'idle' && (
-            // Classic Gentle Smile
             <path
               d="M120 200C123 205 137 205 140 200"
               stroke="#7f1d1d"
@@ -316,10 +344,11 @@ export default function Mendy({ state = 'idle' }) {
           />
         )}
       </svg>
-      {/* Decorative caption / speech bubble */}
-      {state === 'thinking' && (
-        <div className="absolute -top-6 bg-slate-900 border border-yellow-500 text-yellow-300 text-xs px-3 py-1 rounded-full font-mono-sci shadow-[0_0_10px_rgba(234,179,8,0.2)] animate-pulse">
-          ANALYZING CLUES...
+
+      {/* Thinking state bubble */}
+      {isThinking && (
+        <div className="absolute -top-6 bg-slate-900 border border-yellow-500 text-yellow-300 text-[10px] px-3 py-1 rounded-full font-mono-sci shadow-[0_0_10px_rgba(234,179,8,0.2)] animate-pulse">
+          SCANNING BRAINWAVES...
         </div>
       )}
     </div>

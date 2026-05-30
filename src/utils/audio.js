@@ -203,3 +203,180 @@ export function playWarpDrive() {
     console.warn("Audio play failed:", error);
   }
 }
+
+// --- BACKGROUND RADIO MUSIC SYNTHESISER LOOP ---
+let radioVolumeNode = null;
+let radioAnalyserNode = null;
+let radioMusicInterval = null;
+let activeRadioOscillators = [];
+let radioVolume = 0.3; // Default moderate volume
+let radioMuted = false;
+
+export function initRadio() {
+  const ctx = initAudio();
+  if (!radioVolumeNode) {
+    radioVolumeNode = ctx.createGain();
+    radioVolumeNode.gain.setValueAtTime(radioMuted ? 0 : radioVolume, ctx.currentTime);
+    
+    radioAnalyserNode = ctx.createAnalyser();
+    radioAnalyserNode.fftSize = 64; // Small fftSize to extract a clean waveform wave
+    
+    radioVolumeNode.connect(radioAnalyserNode);
+    radioAnalyserNode.connect(ctx.destination);
+  }
+}
+
+export function stopRadioMusic() {
+  if (radioMusicInterval) {
+    clearInterval(radioMusicInterval);
+    radioMusicInterval = null;
+  }
+  activeRadioOscillators.forEach(osc => {
+    try { osc.stop(); } catch (e) {}
+  });
+  activeRadioOscillators = [];
+}
+
+export function setRadioVolume(volume) {
+  radioVolume = volume;
+  if (radioVolumeNode && !radioMuted) {
+    const ctx = initAudio();
+    radioVolumeNode.gain.setValueAtTime(volume, ctx.currentTime);
+  }
+}
+
+export function setRadioMute(muted) {
+  radioMuted = muted;
+  if (radioVolumeNode) {
+    const ctx = initAudio();
+    radioVolumeNode.gain.setValueAtTime(muted ? 0 : radioVolume, ctx.currentTime);
+  }
+}
+
+export function getRadioDataArray() {
+  if (!radioAnalyserNode) return null;
+  const bufferLength = radioAnalyserNode.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  radioAnalyserNode.getByteTimeDomainData(dataArray);
+  return dataArray;
+}
+
+export function startRadioMusic(stationIndex) {
+  stopRadioMusic();
+  initRadio();
+  
+  const ctx = initAudio();
+  const now = ctx.currentTime;
+  
+  if (stationIndex === 0) {
+    // Station 0: Space Ambient (Slow detuned cosmic hum)
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const filter = ctx.createBiquadFilter();
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(65.41, now); // Low C2
+    
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(65.90, now); // Detuned C2
+    
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(140, now);
+    
+    lfo.type = 'sine';
+    lfo.frequency.setValueAtTime(0.08, now); // Slow filter sweep LFO
+    lfoGain.gain.setValueAtTime(30, now);
+    
+    lfo.connect(lfoGain);
+    lfoGain.connect(filter.frequency);
+    
+    osc1.connect(filter);
+    osc2.connect(filter);
+    filter.connect(radioVolumeNode);
+    
+    lfo.start(now);
+    osc1.start(now);
+    osc2.start(now);
+    
+    activeRadioOscillators.push(lfo, osc1, osc2);
+    
+  } else if (stationIndex === 1) {
+    // Station 1: Retro Electronic (Arpeggiated synth arpeggio)
+    const arpeggio = [130.81, 155.56, 196.00, 233.08, 261.63, 311.13, 392.00, 311.13]; // C minor 7th
+    let step = 0;
+    
+    const playNextNote = () => {
+      const nowTime = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+      
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(arpeggio[step % arpeggio.length], nowTime);
+      
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, nowTime);
+      
+      gain.gain.setValueAtTime(0, nowTime);
+      gain.gain.linearRampToValueAtTime(0.18, nowTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, nowTime + 0.2);
+      
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(radioVolumeNode);
+      
+      osc.start(nowTime);
+      osc.stop(nowTime + 0.22);
+      
+      activeRadioOscillators.push(osc);
+      setTimeout(() => {
+        activeRadioOscillators = activeRadioOscillators.filter(o => o !== osc);
+      }, 300);
+      
+      step++;
+    };
+    
+    playNextNote();
+    radioMusicInterval = setInterval(playNextNote, 220);
+    
+  } else if (stationIndex === 2) {
+    // Station 2: Theremin Synth (mysterious wavy theremin)
+    const thereminScale = [220.00, 246.94, 293.66, 329.63, 392.00, 440.00, 493.88, 587.33, 659.25, 783.99]; // Pentatonic minor
+    const osc = ctx.createOscillator();
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(329.63, now); // E4
+    
+    lfo.type = 'sine';
+    lfo.frequency.setValueAtTime(5.5, now); // 5.5Hz vibrato
+    lfoGain.gain.setValueAtTime(6, now);
+    
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1000, now);
+    
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    
+    osc.connect(filter);
+    filter.connect(radioVolumeNode);
+    
+    lfo.start(now);
+    osc.start(now);
+    
+    activeRadioOscillators.push(lfo, osc);
+    
+    const glidePitch = () => {
+      const nowTime = ctx.currentTime;
+      const targetFreq = thereminScale[Math.floor(Math.random() * thereminScale.length)];
+      osc.frequency.exponentialRampToValueAtTime(targetFreq, nowTime + 1.2);
+    };
+    
+    radioMusicInterval = setInterval(glidePitch, 1500);
+  }
+}
+

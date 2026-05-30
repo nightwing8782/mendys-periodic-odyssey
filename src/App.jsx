@@ -5,8 +5,9 @@ import TriviaConsole from './components/TriviaConsole';
 import ElementCapsule from './components/ElementCapsule';
 import MasteryBoard from './components/MasteryBoard';
 import FailureScreen from './components/FailureScreen';
+import CombinationConsole from './components/CombinationConsole';
 import { elements } from './data/elements';
-import { playWarpDrive, playClueChime } from './utils/audio';
+import { playWarpDrive, playClueChime, stopRadioMusic } from './utils/audio';
 
 // Helper to shuffle array and take N items
 const getRandomBatch = (arr, count) => {
@@ -66,6 +67,11 @@ export default function App() {
   // Track Mendy's active visual expression state: 'idle' | 'correct' | 'incorrect' | 'thinking'
   const [mendyState, setMendyState] = useState('idle');
 
+  // Scanner, flash and shake states for cinematic overhauled effects
+  const [isCurrentElementCorrect, setIsCurrentElementCorrect] = useState(false);
+  const [shakeScreen, setShakeScreen] = useState(false);
+  const [greenFlash, setGreenFlash] = useState(false);
+
   // Round thresholds
   const getRoundThreshold = (r) => {
     if (r === 1) return 50;
@@ -85,16 +91,28 @@ export default function App() {
     setCurrentIndex(0);
     setCorrectInRound(0);
     setRound(roundNumber);
-    setMendyState('idle');
+    setMendyState('thinking'); // Mendy starts in thinking mode
+    setIsCurrentElementCorrect(false);
     setGameState('playing');
   }, [collectedSymbols]);
 
   // Answer handler
-  const handleAnswerSubmitted = (isCorrect, pointsEarned) => {
+  const handleAnswerSubmitted = (isCorrect, pointsEarned, wasPrecision) => {
     if (isCorrect) {
       setMendyState('correct');
       setCorrectInRound(prev => prev + 1);
       setScore(prev => prev + pointsEarned);
+      setIsCurrentElementCorrect(true); // Populates scanner details
+
+      // Precision correct entries trigger screen shake
+      if (wasPrecision) {
+        setShakeScreen(true);
+        setTimeout(() => setShakeScreen(false), 500);
+      }
+
+      // Success full-screen border green flash
+      setGreenFlash(true);
+      setTimeout(() => setGreenFlash(false), 600);
       
       // Permanently add to unlocked elements database for the Mastery Board
       const currentElement = currentBatch[currentIndex];
@@ -109,7 +127,9 @@ export default function App() {
 
     // Delay before moving to the next element
     setTimeout(() => {
-      setMendyState('idle');
+      setMendyState('thinking'); // Reset to thinking for the next countdown
+      setIsCurrentElementCorrect(false); // Reset correct state for scanner
+      
       if (currentIndex < 19) {
         setCurrentIndex(prev => prev + 1);
       } else {
@@ -122,6 +142,7 @@ export default function App() {
             // WIN THE GAME!
             setGameState('victory');
             playWarpDrive();
+            stopRadioMusic();
           } else {
             // Completed Round 1 to 5 successfully
             setGameState('round_complete');
@@ -148,14 +169,45 @@ export default function App() {
   const handleRestartGame = () => {
     setScore(0);
     setCollectedSymbols(new Set());
+    stopRadioMusic();
     startRound(1);
   };
 
   return (
     <CockpitLayout score={score}>
+      {/* Inline styles for screen shake and viewport outline flash */}
+      <style>{`
+        @keyframes screen-shake-anim {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          10% { transform: translate(-2.5px, -2px) rotate(-0.4deg); }
+          20% { transform: translate(2.5px, 2px) rotate(0.4deg); }
+          30% { transform: translate(-2px, 1.5px) rotate(-0.2deg); }
+          40% { transform: translate(2px, -1.5px) rotate(0.2deg); }
+          50% { transform: translate(-1.5px, 2px) rotate(-0.4deg); }
+          60% { transform: translate(2.5px, -1px) rotate(0.4deg); }
+          70% { transform: translate(-2px, -1.5px) rotate(-0.2deg); }
+          80% { transform: translate(2px, 2px) rotate(0.2deg); }
+          90% { transform: translate(-1px, 1px) rotate(-0.2deg); }
+        }
+        .animate-shake {
+          animation: screen-shake-anim 0.5s ease-in-out;
+        }
+        @keyframes flash-pulse-anim {
+          0%, 100% { opacity: 0.4; border-color: #10b981; box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.4); }
+          50% { opacity: 0.9; border-color: #34d399; box-shadow: inset 0 0 30px rgba(52, 211, 153, 0.85); }
+        }
+        .animate-flash-pulse {
+          animation: flash-pulse-anim 0.3s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Viewport Electric Green Border Flash Overlay */}
+      {greenFlash && (
+        <div className="fixed inset-0 border-[6px] rounded-lg pointer-events-none z-50 animate-flash-pulse" />
+      )}
       
       {/* LEFT COLUMN: Captain Mendy & Controls */}
-      <div className="lg:col-span-3 flex flex-col items-center justify-between space-y-6">
+      <div className={`lg:col-span-3 flex flex-col items-center justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
         {/* Captain Mendy card container */}
         <div className="glass-panel rounded-2xl p-4 border border-teal-500/20 w-full flex items-center justify-center bg-teal-950/10 min-h-[300px]">
@@ -184,7 +236,7 @@ export default function App() {
       </div>
 
       {/* CENTER COLUMN: Trivia Console & Element Capsule */}
-      <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+      <div className={`lg:col-span-5 flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
         {/* Trivia Area */}
         <div className="flex-grow min-h-[360px]">
@@ -319,11 +371,19 @@ export default function App() {
 
       </div>
 
-      {/* RIGHT COLUMN: Translucent Holographic Mastery Dashboard */}
-      <div className="lg:col-span-4 h-full flex flex-col justify-stretch">
-        <MasteryBoard 
-          collectedElements={collectedSymbols} 
-          totalGoalCount={118}
+      {/* RIGHT COLUMN: Holographic Mastery Dashboard & Combination Console */}
+      <div className={`lg:col-span-4 h-full flex flex-col justify-stretch transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
+        <div className="flex-grow">
+          <MasteryBoard 
+            collectedElements={collectedSymbols} 
+            totalGoalCount={118}
+          />
+        </div>
+        
+        {/* Overhaul Lower-Right Combination Console */}
+        <CombinationConsole 
+          activeElement={gameState === 'playing' ? currentBatch[currentIndex] : null}
+          isCorrect={isCurrentElementCorrect}
         />
       </div>
 
