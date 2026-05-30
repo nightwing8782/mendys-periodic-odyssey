@@ -11,7 +11,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "The most abundant chemical substance in the Universe, making up about 75% of all normal matter.",
-      "Has the lowest density of all gases and its atomic number is 1."
+      "Produced in the first fraction of a second after the Big Bang, representing the genesis of all baryonic matter.",
+      "Has the lowest density of all gases and its atomic number is 1.",
+      "It is the simplest possible atom, consisting of just a single proton and a single electron in its neutral state."
     ]
   },
   {
@@ -26,7 +28,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "Named after the Greek god of the Sun, Helios, where it was first detected in a solar spectrum.",
-      "A colorless, odorless, tasteless noble gas that is completely non-reactive under normal conditions."
+      "Although extremely common in stars, it is rare on Earth and is harvested as a byproduct of natural gas extraction.",
+      "A colorless, odorless, tasteless noble gas that is completely non-reactive under normal conditions.",
+      "It is the first member of the noble gas group and does not freeze under normal pressures, even at absolute zero."
     ]
   },
   {
@@ -41,7 +45,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "The lightest metal and the least dense solid element under standard conditions.",
-      "It reacts vigorously with water, and is the first element in the alkali metal group."
+      "In medicine, its carbonate salt is a classic mood stabilizer used to treat bipolar disorder.",
+      "It reacts vigorously with water, and is the first element in the alkali metal group.",
+      "This alkali metal is so light it floats on oil, and is the first element in the s-block of Period 2."
     ]
   },
   {
@@ -56,7 +62,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "Known for its tetravalency, it forms the chemical basis for all known organic life on Earth.",
-      "It can exist as both one of the softest minerals (graphite) and one of the hardest materials (diamond)."
+      "The radioactive isotope 14 is widely used by archaeologists to date organic materials up to 50,000 years old.",
+      "It can exist as both one of the softest minerals (graphite) and one of the hardest materials (diamond).",
+      "Forms a vital dioxide gas when combined with oxygen and is the main component of coal and charcoal."
     ]
   },
   {
@@ -71,7 +79,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "First discovered by Scottish physician Daniel Rutherford in 1772, who called it 'noxious air'.",
-      "This gas makes up approximately 78% of the Earth's atmosphere."
+      "Its compound with hydrogen is ammonia, synthesized industrially via the Haber-Bosch process to feed billions.",
+      "This gas makes up approximately 78% of the Earth's atmosphere.",
+      "Liquid form of this gas boils at -196 degrees Celsius and is used to flash-freeze food and remove warts."
     ]
   },
   {
@@ -86,7 +96,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "The third-most abundant element in the universe by mass, after hydrogen and helium, and highly reactive with metals.",
-      "Makes up about 21% of Earth's atmosphere and is crucial for cellular respiration in most living organisms."
+      "A highly reactive allotrope of this element, consisting of three atoms, forms a high-altitude shield filtering UV rays.",
+      "Makes up about 21% of Earth's atmosphere and is crucial for cellular respiration in most living organisms.",
+      "This gas makes up the water molecule alongside hydrogen and is the active agent in combustion and rusting."
     ]
   },
   {
@@ -101,7 +113,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A soft, silvery-white alkali metal that is so soft it can be easily cut with a butter knife at room temperature.",
-      "Combined with chlorine, it forms standard table salt."
+      "It burns with an intense, characteristic bright yellow light in a flame test.",
+      "Combined with chlorine, it forms standard table salt.",
+      "A soft alkali metal that reacts violently with water and is stored under mineral oil."
     ]
   },
   {
@@ -116,7 +130,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A shiny grey alkaline earth metal that burns with an incredibly bright, blinding white light when ignited.",
-      "It is a key component in chlorophyll, the molecule that plants use to absorb sunlight for photosynthesis."
+      "Its oxide has an incredibly high melting point, making it a key refractory lining for steel furnaces.",
+      "It is a key component in chlorophyll, the molecule that plants use to absorb sunlight for photosynthesis.",
+      "This alkaline earth metal is used in Epsom salts and causes a blinding white glare when ignited."
     ]
   },
   {
@@ -131,7 +147,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "The most abundant metal in the Earth's crust, though it is never found in its pure metallic form in nature.",
-      "A silvery-white, lightweight post-transition metal that is highly resistant to corrosion."
+      "Historically, it was once more valuable than gold or silver, and the Washington Monument was capped with it in 1884.",
+      "A silvery-white, lightweight post-transition metal that is highly resistant to corrosion.",
+      "A lightweight, recyclable metal that does not rust because it forms a self-protecting oxide skin."
     ]
   },
   {
@@ -146,7 +164,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A hard, crystalline metalloid with a blue-grey metallic luster, forming about 28% of the Earth's crust.",
-      "The main semiconductor material used to make computer microchips, transistors, and solar cells."
+      "It forms the primary constituent of common sand, quartz, and quartz-crystal oscillators.",
+      "The main semiconductor material used to make computer microchips, transistors, and solar cells.",
+      "A metalloid in Group 14, widely utilized as the semiconductor substrate in computer electronics."
     ]
   },
   {
@@ -161,7 +181,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "First isolated in 1669 from human urine by an alchemist searching for the Philosopher's Stone.",
-      "Exists in several colorful allotropes, the most common being white (highly toxic/flammable) and red."
+      "It is a key component in the DNA sugar-phosphate backbone and ATP energy transport molecules in all cells.",
+      "Exists in several colorful allotropes, the most common being white (highly toxic/flammable) and red.",
+      "This nonmetal exists as a soft, waxy white solid that glows in the dark and ignites spontaneously in air."
     ]
   },
   {
@@ -176,7 +198,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "Referred to in the Bible as 'brimstone', it is a bright yellow crystalline solid at room temperature.",
-      "When burned or combined with hydrogen, it produces a notorious smell resembling rotten eggs."
+      "Its acid is the world's most produced chemical, used as a barometer of a nation's industrial strength.",
+      "When burned or combined with hydrogen, it produces a notorious smell resembling rotten eggs.",
+      "A bright yellow nonmetal solid that burns with a blue flame and is used to vulcanize rubber."
     ]
   },
   {
@@ -191,7 +215,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A greenish-yellow halogen gas that was used as a chemical weapon in World War I due to its choking toxicity.",
-      "A highly reactive element that is widely used to disinfect drinking water and swimming pools."
+      "Combined with sodium, it forms the saline electrolyte of animal blood and extracellular fluids.",
+      "A highly reactive element that is widely used to disinfect drinking water and swimming pools.",
+      "A choking, greenish-yellow halogen gas famous for its bleach-like disinfecting power."
     ]
   },
   {
@@ -206,7 +232,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A silvery-white, extremely soft alkali metal named after potash, which is the English word for pot-ashes.",
-      "An essential dietary nutrient abundant in bananas, potatoes, and leafy green vegetables."
+      "Its superoxide compound is used in space suits and submarines to absorb carbon dioxide and release oxygen.",
+      "An essential dietary nutrient abundant in bananas, potatoes, and leafy green vegetables.",
+      "An alkali metal in Period 4, abundant in bananas and crucial for nerve signal transmission."
     ]
   },
   {
@@ -221,7 +249,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "An alkaline earth metal with atomic number 20, highly reactive and tarnishes to a dark oxide layer in air.",
-      "Crucial for human health, it builds strong bones and teeth, and is found in abundance in milk and cheese."
+      "Its carbonate forms chalk, limestone, marble, and the shells of marine organisms like clams and corals.",
+      "Crucial for human health, it builds strong bones and teeth, and is found in abundance in milk and cheese.",
+      "An alkaline earth metal with atomic number 20, essential for healthy bone density and dental strength."
     ]
   },
   {
@@ -236,7 +266,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "By mass, it is the most common element on Earth, forming much of Earth's outer and inner core.",
-      "Used to make steel, and is the key oxygen-carrying component in human blood (hemoglobin)."
+      "This metal is the final element produced by stellar nucleosynthesis before a supernova collapse.",
+      "Used to make steel, and is the key oxygen-carrying component in human blood (hemoglobin).",
+      "A transition metal in Group 8 that forms rust in moist air and is the main component of Earth's core."
     ]
   },
   {
@@ -251,7 +283,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "One of the few metals that can occur in nature in a directly usable metallic form, rather than needing extraction from ore.",
-      "A reddish-gold transition metal famous for its exceptional electrical and thermal conductivity."
+      "Along with gold, it is one of only two non-silvery colored metals on the periodic table.",
+      "A reddish-gold transition metal famous for its exceptional electrical and thermal conductivity.",
+      "A transition metal in Group 11, widely used for plumbing pipes, electrical wires, and cooking pots."
     ]
   },
   {
@@ -266,7 +300,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "A bluish-grey, lustrous transition metal that is commonly used to galvanize iron or steel to prevent rusting.",
-      "It is combined with copper to create the alloy brass."
+      "Its oxide is a common white pigment in sunscreens, valued for absorbing ultraviolet radiation.",
+      "It is combined with copper to create the alloy brass.",
+      "A transition metal with atomic number 30, alloyed with copper to produce brass and used to galvanize iron."
     ]
   },
   {
@@ -281,7 +317,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "Has the highest electrical conductivity, thermal conductivity, and reflectivity of any known metal.",
-      "Its chemical symbol is derived from the Latin word 'argentum', which translates to shiny or white."
+      "In photography, its halide salts are the key light-sensitive crystals used to capture film images.",
+      "Its chemical symbol is derived from the Latin word 'argentum', which translates to shiny or white.",
+      "A transition metal in Group 11, famous for having the highest electrical and thermal conductivity of all metals."
     ]
   },
   {
@@ -296,7 +334,9 @@ export const elements = [
     "tier": 1,
     "clues": [
       "An incredibly ductile and malleable transition metal; a single gram can be beaten into a sheet of one square meter.",
-      "Its chemical symbol is derived from the Latin word 'aurum', meaning 'shining dawn'."
+      "It is so chemically unreactive that it does not oxidize in air or dissolve in standard acids, but dissolves in aqua regia.",
+      "Its chemical symbol is derived from the Latin word 'aurum', meaning 'shining dawn'.",
+      "A precious transition metal in Group 11, famous for its yellow luster and for being the most malleable element."
     ]
   },
   {
@@ -311,7 +351,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A relatively rare metal in the universe, often formed when cosmic rays crash into heavier nuclei in interstellar space.",
-      "Its minerals can form beautiful gemstones such as emeralds and aquamarines."
+      "Ores of this metal are highly toxic to humans, causing a chronic, incurable scarring lung disease if dust is inhaled.",
+      "Its minerals can form beautiful gemstones such as emeralds and aquamarines.",
+      "An alkaline earth metal with atomic number 4, valued for its high thermal conductivity and structural stiffness."
     ]
   },
   {
@@ -326,7 +368,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A low-abundance metalloid produced entirely by cosmic ray spallation and supernovae, not stellar nucleosynthesis.",
-      "Commonly used in borosilicate glass (Pyrex) to make it highly resistant to thermal shock."
+      "Its hydride compounds are famous for forming unusual multi-center bonding rings that challenged standard Lewis rules.",
+      "Commonly used in borosilicate glass (Pyrex) to make it highly resistant to thermal shock.",
+      "Used in eye drops, laundry detergents, and as control rods in nuclear reactors under the name borax."
     ]
   },
   {
@@ -341,7 +385,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "The most chemically reactive and electronegative of all elements; it reacts with almost all substances, even glass.",
-      "Commonly added to tap water and toothpaste in small amounts to help prevent tooth decay."
+      "It is so reactive that it can ignite water, producing oxygen gas and hydrofluoric acid.",
+      "Commonly added to tap water and toothpaste in small amounts to help prevent tooth decay.",
+      "A pale yellow halogen gas that is the most reactive nonmetal on the periodic table."
     ]
   },
   {
@@ -356,7 +402,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Discovered in 1898, its name comes from the Greek word for 'new'. It is a noble gas with atomic number 10.",
-      "It glows with a bright reddish-orange light when used in high-voltage electrical discharge signs."
+      "It was discovered by freezing air until it liquefied, then evaporating it to capture the volatile fraction.",
+      "It glows with a bright reddish-orange light when used in high-voltage electrical discharge signs.",
+      "A noble gas with atomic number 10, famous for its intense reddish-orange glowing signs."
     ]
   },
   {
@@ -371,7 +419,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Its name is derived from the Greek word for 'lazy' or 'inactive', referring to its extreme chemical inertness.",
-      "It is the third-most abundant gas in Earth's atmosphere, far beating carbon dioxide."
+      "Its radioactive isotope 40, formed from potassium decay, is a standard tool for dating ancient volcanic rocks.",
+      "It is the third-most abundant gas in Earth's atmosphere, far beating carbon dioxide.",
+      "The most common noble gas in Earth's atmosphere, representing about 0.93% of air."
     ]
   },
   {
@@ -386,7 +436,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Named after the Titans of Greek mythology due to its incredible strength-to-weight ratio.",
-      "Highly resistant to corrosion in sea water and chlorine, and widely used for joint replacement implants."
+      "The mineral rutile is a major source of this metal, which is refined into a brilliant white dioxide pigment.",
+      "Highly resistant to corrosion in sea water and chlorine, and widely used for joint replacement implants.",
+      "Highly valued for its resistance to corrosion by sea water, chlorine, and acids, and widely used in aircraft."
     ]
   },
   {
@@ -401,7 +453,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A hard, silvery-grey, ductile transition metal named after the Scandinavian goddess of beauty, Vanadis, due to its colorful chemical compounds.",
-      "Mainly used as an alloy additive to strengthen steel for armor plate, axles, and tools."
+      "First discovered in Mexico in 1801 by Andres Manuel del Rio, who called it erythronium due to its red salts.",
+      "Mainly used as an alloy additive to strengthen steel for armor plate, axles, and tools.",
+      "A Group 5 transition metal used primarily as a steel additive to increase hardness and fatigue resistance."
     ]
   },
   {
@@ -416,7 +470,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "The main additive that makes steel 'stainless' by forming a passive oxide layer on the surface.",
-      "Its compounds were widely used as pigments (giving school buses their yellow color) and it is used to plate shiny auto parts."
+      "It was discovered in 1797 by Louis Nicolas Vauquelin, who named it from the Greek word for 'color'.",
+      "Its compounds were widely used as pigments (giving school buses their yellow color) and it is used to plate shiny auto parts.",
+      "A shiny, hard transition metal with atomic number 24, used to plate steel parts and in emerald mineral lattices."
     ]
   },
   {
@@ -431,7 +487,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A silvery-grey transition metal resembling iron, but much harder and very brittle.",
-      "Essential for steel production, where it acts as a deoxidizing agent and alloy strengthener."
+      "It is a key cofactor in the oxygen-evolving complex of photosystem II, which plants use to split water.",
+      "Essential for steel production, where it acts as a deoxidizing agent and alloy strengthener.",
+      "A transition metal with atomic number 25, used to strengthen iron alloys and inside alkaline battery anodes."
     ]
   },
   {
@@ -446,7 +504,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Its name comes from the German word for goblin ('Kobold'), as miners found its ores difficult and toxic to smelt.",
-      "Famous for creating a rich, deep blue pigment used in ceramics and glass since ancient times."
+      "A radioactive isotope of this element, 60, is a common gamma emitter used in industrial radiography and radiation therapy.",
+      "Famous for creating a rich, deep blue pigment used in ceramics and glass since ancient times.",
+      "A transition metal in Group 9, Period 4, used to manufacture high-strength superalloys and lithium batteries."
     ]
   },
   {
@@ -461,7 +521,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A silvery-white transition metal with a golden tinge. Ores were historically confused with copper by miners, who blamed 'Old Nick' (the devil).",
-      "Commonly alloyed with copper to make coins, and is a major component in rechargeable lithium-ion battery cathodes."
+      "It is a major component of metallic meteorites, which are alloyed with iron to form kamacite.",
+      "Commonly alloyed with copper to make coins, and is a major component in rechargeable lithium-ion battery cathodes.",
+      "A lustrous, silvery transition metal widely used to coin currency and inside rechargeable batteries."
     ]
   },
   {
@@ -476,7 +538,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Has an incredibly low melting point of 29.76 degrees Celsius, which is just below human body temperature.",
-      "It will literally melt in the palm of your hand, turning from a solid metal into a liquid mirror."
+      "Discovered in 1875 by Paul-Emile Lecoq de Boisbaudran, who named it in honor of France (Gallia).",
+      "It will literally melt in the palm of your hand, turning from a solid metal into a liquid mirror.",
+      "A post-transition metal in Group 13, famous for its low melting point of 29.76 degrees Celsius."
     ]
   },
   {
@@ -491,7 +555,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A lustrous, hard-brittle metalloid whose existence was predicted by Dmitri Mendeleev, who called it 'ekasilicon'.",
-      "Crucial in early electronics, it was the material used to create the very first working transistor in 1947."
+      "Its existence was predicted in 1869 by Mendeleev, who called it 'ekasilicon' based on its periodic position.",
+      "Crucial in early electronics, it was the material used to create the very first working transistor in 1947.",
+      "A lustrous, grey-white metalloid in Group 14, crucial for manufacturing infrared optics and fiber optics."
     ]
   },
   {
@@ -506,7 +572,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Historically notorious as the 'King of Poisons' due to its potency and lack of color/odor when dissolved in food.",
-      "A metalloid that occurs in many minerals, and was famously used in Victorian wallpaper pigments (Scheele's Green) which poisoned residents."
+      "In groundwater, it is a major toxic contaminant causing blackfoot disease in affected regions.",
+      "A metalloid that occurs in many minerals, and was famously used in Victorian wallpaper pigments (Scheele's Green) which poisoned residents.",
+      "A metalloid with atomic number 33, historically used as a pesticide, wood preservative, and poison."
     ]
   },
   {
@@ -521,7 +589,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Its electrical conductivity increases when light shines on it (photoconductivity), making it vital for early light meters.",
-      "Essential in trace amounts for human health, but toxic in larger doses; named after Selene, the Greek goddess of the Moon."
+      "It is the active photoreceptive material in specialized copier drums used inside early office photocopiers.",
+      "Essential in trace amounts for human health, but toxic in larger doses; named after Selene, the Greek goddess of the Moon.",
+      "A reactive nonmetal in Group 16, essential in trace amounts for thyroid function and cell health."
     ]
   },
   {
@@ -536,7 +606,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "One of only two elements on the periodic table that are liquid at room temperature and standard pressure.",
-      "A heavy, volatile, reddish-brown halogen liquid that evaporates easily into a suffocating, metallic-smelling gas."
+      "Discovered in 1826 by Antoine Jerome Balard, who isolated it from salt marsh waters.",
+      "A heavy, volatile, reddish-brown halogen liquid that evaporates easily into a suffocating, metallic-smelling gas.",
+      "A heavy, volatile, reddish-brown halogen liquid at room temperature that emits a sharp, choking vapor."
     ]
   },
   {
@@ -551,7 +623,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A noble gas discovered in 1898, whose name comes from the Greek word for 'hidden' or 'secret'.",
-      "Used in high-speed photographic flashes, airport runway lights, and energy-efficient fluorescent bulbs."
+      "It was discovered in 1898 by William Ramsay and Morris Travers in the residue of liquid air distillation.",
+      "Used in high-speed photographic flashes, airport runway lights, and energy-efficient fluorescent bulbs.",
+      "A noble gas with atomic number 36, used in high-efficiency double-pane window insulation and flash lamps."
     ]
   },
   {
@@ -566,7 +640,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "An ancient metal alloyed with copper since 3000 BC to create bronze, marking the start of a historical age.",
-      "Highly resistant to corrosion, it was historically used to plate iron cans for food preservation (such metal containers were commonly named after it)."
+      "Its transformation from a shiny metal to a crumbly grey powder at low temperatures is called 'pest'.",
+      "Highly resistant to corrosion, it was historically used to plate iron cans for food preservation (such metal containers were commonly named after it).",
+      "A post-transition metal in Group 14, alloyed with copper to make bronze and used to coat iron cans."
     ]
   },
   {
@@ -581,7 +657,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "Often called 'quicksilver' because it is a liquid transition metal at room temperature.",
-      "Its chemical symbol is derived from the Greek word 'hydrargyrum', meaning 'liquid silver'."
+      "It forms alloys called amalgams with almost all other metals except iron, which is why it is stored in iron flasks.",
+      "Its chemical symbol is derived from the Greek word 'hydrargyrum', meaning 'liquid silver'.",
+      "A transition metal in Group 12, Period 6, famous for being a heavy silvery liquid at room temperature."
     ]
   },
   {
@@ -596,7 +674,9 @@ export const elements = [
     "tier": 2,
     "clues": [
       "A heavy, soft, malleable post-transition metal with a low melting point, highly resistant to corrosion.",
-      "Used since ancient Roman times for plumbing, which later gave rise to the term 'plumber'."
+      "Ores like galena are roasted to yield this heavy metal, which was widely used in ancient solder and paint.",
+      "Used since ancient Roman times for plumbing, which later gave rise to the term 'plumber'.",
+      "A soft, dense post-transition metal in Group 14, used for radiation shielding and acid-filled car batteries."
     ]
   },
   {
@@ -611,7 +691,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "An extremely soft, silvery-white alkali metal that ignites spontaneously in air and reacts explosively with water.",
-      "Its compounds give a bright violet-red color to fireworks, and it is used in high-precision atomic clocks."
+      "It was discovered in 1861 by Robert Bunsen and Gustav Kirchhoff using their newly invented spectroscope.",
+      "Its compounds give a bright violet-red color to fireworks, and it is used in high-precision atomic clocks.",
+      "A soft, highly reactive alkali metal in Group 1, Period 5, which ignites spontaneously in air."
     ]
   },
   {
@@ -626,7 +708,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A soft, silvery-yellow alkaline earth metal that is highly reactive and burns with a bright crimson red flame.",
-      "Its salts are widely used in pyrotechnics to create deep red fireworks and emergency road flares."
+      "A radioactive isotope of this element, 90, is a major product of nuclear fission and mimics calcium in bones.",
+      "Its salts are widely used in pyrotechnics to create deep red fireworks and emergency road flares.",
+      "An alkaline earth metal with atomic number 38, famous for coloring fireworks and safety flares brilliant red."
     ]
   },
   {
@@ -641,7 +725,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A silvery-metallic transition metal chemically similar to the lanthanides, named after a Swedish village quarry.",
-      "Used as an additive to make red phosphors for old CRT television screens and in high-temperature superconductors."
+      "Ores containing this element were first found in a feldspar quarry in Ytterby, Sweden.",
+      "Used as an additive to make red phosphors for old CRT television screens and in high-temperature superconductors.",
+      "A transition metal in Group 3, Period 5, used as a dopant in microwave filters and red CRT phosphors."
     ]
   },
   {
@@ -656,7 +742,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A lustrous, greyish-white, strong transition metal that is highly resistant to corrosion by acids and alkalis.",
-      "Its oxide is synthesized to make fake diamonds (cubic zirconia) and it is used as cladding for nuclear fuel rods."
+      "It was discovered in 1789 by Martin Heinrich Klaproth in a mineral gemstone of the same name.",
+      "Its oxide is synthesized to make fake diamonds (cubic zirconia) and it is used as cladding for nuclear fuel rods.",
+      "A lustrous, greyish-white transition metal in Group 4, highly resistant to corrosion by acids and alkalis."
     ]
   },
   {
@@ -671,7 +759,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "Originally named columbium, this transition metal is used as a superconductor and in jet engine superalloys.",
-      "It becomes a superconductor at cryogenic temperatures, making it vital for MRI machine magnets."
+      "It was named after Niobe, the daughter of Tantalus, due to its extreme chemical similarity to tantalum.",
+      "It becomes a superconductor at cryogenic temperatures, making it vital for MRI machine magnets.",
+      "A Group 5 transition metal that becomes a superconductor at cryogenic temperatures, used in MRI magnets."
     ]
   },
   {
@@ -686,7 +776,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A refractory transition metal with an extremely high melting point of 2623 degrees Celsius.",
-      "Often used in steel alloys to increase strength and heat resistance for engine parts and military armor."
+      "Its name is derived from the Greek word for 'lead', as its minerals were long confused with lead ores.",
+      "Often used in steel alloys to increase strength and heat resistance for engine parts and military armor.",
+      "A transition metal with atomic number 42, used in structural steel alloys and high-temperature lubricants."
     ]
   },
   {
@@ -701,7 +793,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A rare transition metal of the platinum group, named after the Latin word for Russia.",
-      "Mainly used as a catalyst, and to harden platinum and palladium for electrical contacts."
+      "It was discovered in 1844 by Karl Ernst Claus, who named it in honor of Russia (Ruthenia).",
+      "Mainly used as a catalyst, and to harden platinum and palladium for electrical contacts.",
+      "A rare Group 8 transition metal, used to harden platinum and palladium alloys for electrical contact pads."
     ]
   },
   {
@@ -716,7 +810,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "An extremely rare, silvery-white, corrosion-resistant transition metal in the platinum group.",
-      "One of the most expensive metals in the world, primarily used in automotive catalytic converters to reduce toxic exhaust."
+      "It was discovered in 1803 by William Hyde Wollaston, who isolated it from raw platinum ore.",
+      "One of the most expensive metals in the world, primarily used in automotive catalytic converters to reduce toxic exhaust.",
+      "An extremely rare, corrosion-resistant transition metal in Group 9, used primarily in catalytic converters."
     ]
   },
   {
@@ -731,7 +827,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A rare transition metal named after the asteroid Pallas (which was named after the Greek goddess of wisdom).",
-      "Capable of absorbing up to 900 times its own volume of hydrogen gas at room temperature, making it key for hydrogen storage."
+      "It was discovered in 1803 by William Hyde Wollaston, who named it after the recently discovered asteroid Pallas.",
+      "Capable of absorbing up to 900 times its own volume of hydrogen gas at room temperature, making it key for hydrogen storage.",
+      "A rare transition metal in Group 10, valued for its capacity to absorb massive volumes of hydrogen gas."
     ]
   },
   {
@@ -746,7 +844,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A soft, bluish-white transition metal chemically similar to zinc, known to be highly toxic to human kidneys and bones.",
-      "Historically used in corrosion-resistant electroplating and in rechargeable batteries alongside nickel."
+      "It was discovered in 1817 by Friedrich Stromeyer as an impurity in zinc carbonate ores.",
+      "Historically used in corrosion-resistant electroplating and in rechargeable batteries alongside nickel.",
+      "A toxic transition metal with atomic number 48, historically paired with nickel in rechargeable battery cells."
     ]
   },
   {
@@ -761,7 +861,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "An extremely soft post-transition metal that emits a high-pitched 'metal scream' when bent.",
-      "Combined with tin oxide to make ITO, a transparent conductive coating used in all modern smartphone touchscreens."
+      "It was discovered in 1863 by Ferdinand Reich and Hieronymous Theodor Richter, who identified its indigo spectral line.",
+      "Combined with tin oxide to make ITO, a transparent conductive coating used in all modern smartphone touchscreens.",
+      "A soft post-transition metal in Group 13, alloyed with tin oxide to make transparent touchscreen coatings."
     ]
   },
   {
@@ -776,7 +878,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "Its name comes from Greek words meaning 'a metal not found alone', and its historical Latin name stibium provides its modern chemical symbol.",
-      "A lustrous grey metalloid primarily used as a flame retardant in plastics and in lead-acid batteries."
+      "Its primary mineral ore is stibnite, which was used in ancient Egypt as a cosmetic eyeliner.",
+      "A lustrous grey metalloid primarily used as a flame retardant in plastics and in lead-acid batteries.",
+      "A lustrous, silvery metalloid in Group 15, used to harden lead alloys in batteries and as a flame retardant."
     ]
   },
   {
@@ -791,7 +895,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A rare, mildly toxic, silver-white metalloid chemically related to selenium and sulfur.",
-      "Exposure to its compounds causes a pungent garlic-like breath odor that can last for weeks."
+      "It was discovered in 1782 by Franz-Joseph M\u00fcller von Reichenstein, who called it 'aurum paradoxum'.",
+      "Exposure to its compounds causes a pungent garlic-like breath odor that can last for weeks.",
+      "A rare, brittle, silver-white metalloid in Group 16, chemically related to selenium and sulfur."
     ]
   },
   {
@@ -806,7 +912,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A dark, lustrous nonmetal solid that undergoes sublimation, turning directly from a solid to a beautiful purple gas when heated.",
-      "Its name comes from the Greek word 'ioeides', which translates to 'violet-colored'."
+      "Ores containing it are burned to release its gas, which is captured and purified as dark purple crystals.",
+      "Its name comes from the Greek word 'ioeides', which translates to 'violet-colored'.",
+      "A halogen in Group 17, Period 5, essential for thyroid hormone production and used as a disinfectant."
     ]
   },
   {
@@ -821,7 +929,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A heavy, extremely rare noble gas found in Earth's atmosphere in trace amounts.",
-      "Used in specialized high-intensity flash lamps, surgical lasers, and ion propulsion thrusters for spacecraft."
+      "It was discovered in 1898 by Ramsay and Travers, who named it from the Greek word for 'stranger'.",
+      "Used in specialized high-intensity flash lamps, surgical lasers, and ion propulsion thrusters for spacecraft.",
+      "A heavy noble gas in Group 18, used in high-intensity strobe lights, medical imaging, and space thrusters."
     ]
   },
   {
@@ -836,7 +946,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A gold-tinted, extremely soft alkali metal with a very low melting point of 28.4 degrees Celsius.",
-      "The vibration of its atoms defines the official length of a single second in atomic clocks."
+      "It was discovered in 1860 by Bunsen and Kirchhoff, named from the Latin word for 'sky blue' due to its spectral lines.",
+      "The vibration of its atoms defines the official length of a single second in atomic clocks.",
+      "A gold-tinted, extremely soft alkali metal in Group 1, whose atomic vibrations define the length of a second."
     ]
   },
   {
@@ -851,7 +963,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A soft, silvery alkaline earth metal that oxidizes rapidly in air and must be stored under petroleum.",
-      "Its sulfate compound is swallowed by patients as a contrast agent for X-ray imaging of the digestive tract."
+      "Its mineral barite is highly insoluble and is used as a heavy weighting agent in oil well drilling fluids.",
+      "Its sulfate compound is swallowed by patients as a contrast agent for X-ray imaging of the digestive tract.",
+      "An alkaline earth metal with atomic number 56, whose sulfate is swallowed as an X-ray contrast agent."
     ]
   },
   {
@@ -866,7 +980,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A lustrous, silvery-grey transition metal named after the Latin name for Copenhagen (Hafnia).",
-      "Has a high capacity to absorb neutrons, making it excellent for reactor control rods in nuclear submarines."
+      "Its discovery in 1923 by Dirk Coster and George de Hevesy confirmed Mendeleev's predictions of element 72.",
+      "Has a high capacity to absorb neutrons, making it excellent for reactor control rods in nuclear submarines.",
+      "A Group 4 transition metal, chemically identical to zirconium, used as a neutron absorber in control rods."
     ]
   },
   {
@@ -881,7 +997,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "A highly corrosion-resistant refractory metal named after the Greek mythological figure Tantalus due to its resistance to acids.",
-      "Extensively used in micro-capacitors for compact mobile electronics like smartphones and pacemakers."
+      "It was discovered in 1802 by Anders Gustaf Ekeberg, who named it after a Greek mythological figure.",
+      "Extensively used in micro-capacitors for compact mobile electronics like smartphones and pacemakers.",
+      "A Group 5 transition metal, highly resistant to acids, widely used to make micro-capacitors for cell phones."
     ]
   },
   {
@@ -896,7 +1014,9 @@ export const elements = [
     "tier": 3,
     "clues": [
       "Has the highest melting point of all discovered metals (3422 degrees Celsius) and is extremely dense.",
-      "Its chemical symbol is derived from wolframite, and it was famously used as filaments in incandescent light bulbs."
+      "Its mineral scheelite was studied in 1781 by Carl Wilhelm Scheele, who isolated acid from it.",
+      "Its chemical symbol is derived from wolframite, and it was famously used as filaments in incandescent light bulbs.",
+      "A transition metal in Group 6, possessing the highest melting point of all metals (3422 degrees Celsius)."
     ]
   },
   {
@@ -911,7 +1031,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A silvery-white, heavy transition metal of Group 7, named after the River Rhine.",
-      "One of the rarest elements in the Earth's crust, used in nickel-based superalloys for jet engine combustion chambers."
+      "It was discovered in 1925 in Germany by Walter Noddack, Ida Tacke, and Otto Berg.",
+      "One of the rarest elements in the Earth's crust, used in nickel-based superalloys for jet engine combustion chambers.",
+      "A dense Group 7 transition metal, extremely rare in the crust, used in nickel superalloys for jet engines."
     ]
   },
   {
@@ -926,7 +1048,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The densest naturally occurring element, twice as dense as lead and slightly denser than iridium.",
-      "Its name comes from the Greek word for 'smell' due to the chlorine-like odor of its volatile and toxic tetroxide."
+      "It was discovered in 1803 by Smithson Tennant, who isolated it from insoluble platinum residues.",
+      "Its name comes from the Greek word for 'smell' due to the chlorine-like odor of its volatile and toxic tetroxide.",
+      "The densest element on the periodic table, Group 8, emitting a highly toxic, volatile tetroxide gas."
     ]
   },
   {
@@ -941,7 +1065,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The second-densest element, famous for being highly concentrated in a clay layer marking the dinosaur-extinction asteroid impact.",
-      "The most corrosion-resistant metal known, named after Iris, the Greek goddess of the rainbow, due to the colorful nature of its salts."
+      "It was discovered in 1803 by Smithson Tennant, who named it after Iris, the goddess of the rainbow.",
+      "The most corrosion-resistant metal known, named after Iris, the Greek goddess of the rainbow, due to the colorful nature of its salts.",
+      "The second-densest element, Group 9, famous for its concentration in the KT boundary dinosaur extinction layer."
     ]
   },
   {
@@ -956,7 +1082,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A heavy, precious transition metal whose name comes from the Spanish term platina, meaning 'little silver'.",
-      "Highly unreactive, it is widely used in high-end jewelry, laboratory crucibles, and catalytic converters."
+      "It was discovered in 1735 by Antonio de Ulloa in South America, who noted its resistance to melting.",
+      "Highly unreactive, it is widely used in high-end jewelry, laboratory crucibles, and catalytic converters.",
+      "A heavy, unreactive Group 10 transition metal, highly valued for jewelry, laboratory tools, and catalysts."
     ]
   },
   {
@@ -971,7 +1099,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A soft, malleable post-transition metal that oxidizes rapidly in air, looking like lead.",
-      "Historically popular as a weapon in murder mysteries because it is odorless, tasteless, and slowly mimics other diseases."
+      "Discovered in 1861 by William Crookes, who identified its bright green spectral line.",
+      "Historically popular as a weapon in murder mysteries because it is odorless, tasteless, and slowly mimics other diseases.",
+      "A toxic, soft post-transition metal in Group 13, historically used as a rodenticide and ant killer."
     ]
   },
   {
@@ -986,7 +1116,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A brittle post-transition metal that forms spectacular, colorful iridescent oxide crystals in step-like hopper formations.",
-      "Surprisingly non-toxic despite its heavy weight, it is the active ingredient in pink stomach remedies like Pepto-Bismol."
+      "It was long confused with lead and tin until Claude Francois Geoffroy showed it was distinct in 1753.",
+      "Surprisingly non-toxic despite its heavy weight, it is the active ingredient in pink stomach remedies like Pepto-Bismol.",
+      "A brittle post-transition metal in Group 15, forming iridescent hopper crystals and used in Pepto-Bismol."
     ]
   },
   {
@@ -1001,7 +1133,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A highly radioactive metal discovered by Marie and Pierre Curie in 1898, named in honor of Marie's homeland.",
-      "An intense alpha emitter, it was famously used to poison former Soviet agent Alexander Litvinenko in London in 2006."
+      "It was discovered in 1898 by Marie and Pierre Curie, who isolated it from uranium pitchblende.",
+      "An intense alpha emitter, it was famously used to poison former Soviet agent Alexander Litvinenko in London in 2006.",
+      "A highly radioactive, volatile metalloid in Group 16, used as a static eliminator and thermal source."
     ]
   },
   {
@@ -1016,7 +1150,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The prototype element of the lanthanide series, whose name comes from the Greek word 'to lie hidden'.",
-      "Used in carbon arc lighting for studio lights and in hybrid car nickel-metal hydride batteries."
+      "It was discovered in 1839 by Carl Gustaf Mosander, who found it as an impurity in cerium nitrate.",
+      "Used in carbon arc lighting for studio lights and in hybrid car nickel-metal hydride batteries.",
+      "A silvery rare-earth lanthanide in Group 3, Period 6, used in studio carbon arc lighting and hybrid batteries."
     ]
   },
   {
@@ -1031,7 +1167,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The most abundant of the rare-earth metals, named after the dwarf planet Ceres.",
-      "Alloyed with iron to make flint blocks that spark when scratched, used in pocket lighters."
+      "It is the main component of mischmetal, an alloy that sparks easily when scratched, used in lighter flints.",
+      "Alloyed with iron to make flint blocks that spark when scratched, used in pocket lighters.",
+      "A rare-earth lanthanide with atomic number 58, named after the dwarf planet Ceres, used as a glass polish."
     ]
   },
   {
@@ -1046,7 +1184,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A soft, silvery rare-earth metal whose name means 'green twin' due to the green coloration of its salts.",
-      "Alloyed with neodymium to create high-strength magnets and used in specialized didymium glass for welder goggles."
+      "It was isolated in 1885 by Carl Auer von Welsbach, who separated it from didymium metal.",
+      "Alloyed with neodymium to create high-strength magnets and used in specialized didymium glass for welder goggles.",
+      "A rare-earth lanthanide in Group 3, Period 6, whose salts give glass and ceramics a bright yellow-green color."
     ]
   },
   {
@@ -1061,7 +1201,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A rare-earth metal that forms the strongest known type of permanent magnets when alloyed with iron and boron.",
-      "Its magnets are critical in wind turbine generators, electric car motors, and audio speakers."
+      "It was discovered in 1885 by Carl Auer von Welsbach, who separated it from the rare-earth mix didymium.",
+      "Its magnets are critical in wind turbine generators, electric car motors, and audio speakers.",
+      "A lanthanide metal that forms the strongest known permanent magnets when alloyed with iron and boron."
     ]
   },
   {
@@ -1076,7 +1218,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The only lanthanide element that is radioactive with no stable isotopes; all of it decays quickly.",
-      "Named after Prometheus, who stole fire from the gods, it is used in atomic batteries and luminous paint."
+      "Its existence was predicted in 1902, but it was first chemically isolated in 1945 from fission product debris.",
+      "Named after Prometheus, who stole fire from the gods, it is used in atomic batteries and luminous paint.",
+      "The only lanthanide with no stable isotopes; all of its forms are radioactive, used in atomic batteries."
     ]
   },
   {
@@ -1091,7 +1235,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A moderately hard rare-earth metal that is relatively stable in air, named after a Russian mine official.",
-      "Alloyed with cobalt to make magnets that retain their magnetic fields at incredibly high temperatures."
+      "It was discovered in 1879 by Paul-Emile Lecoq de Boisbaudran, who isolated it from the mineral samarskite.",
+      "Alloyed with cobalt to make magnets that retain their magnetic fields at incredibly high temperatures.",
+      "A rare-earth lanthanide used in specialized magnets that retain their magnetism at extremely high temperatures."
     ]
   },
   {
@@ -1106,7 +1252,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The most chemically reactive of all rare-earth metals, named after a continent.",
-      "Its compounds are used as red phosphors in television screens and as anti-counterfeiting glowing ink on Euro banknotes."
+      "It was discovered in 1896 by Eugene-Anatole Demarcay, who suspected samarium samples were contaminated.",
+      "Its compounds are used as red phosphors in television screens and as anti-counterfeiting glowing ink on Euro banknotes.",
+      "The most reactive lanthanide metal, named after a continent, used as glowing red phosphors in displays."
     ]
   },
   {
@@ -1121,7 +1269,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A rare-earth metal with unusual magnetic properties, becoming ferromagnetic just below room temperature.",
-      "Its complexes are intravenously injected as a contrast medium for magnetic resonance imaging scans."
+      "It was discovered in 1880 by Jean Charles Galissard de Marignac, who identified its oxide spectrally.",
+      "Its complexes are intravenously injected as a contrast medium for magnetic resonance imaging scans.",
+      "A lanthanide metal with unusual magnetic properties, injected as a contrast agent for MRI body scans."
     ]
   },
   {
@@ -1136,7 +1286,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A silvery-white, malleable rare-earth metal named after the Swedish quarry Ytterby.",
-      "Used in solid-state devices and as a green phosphor in trichromatic lighting tubes."
+      "It was discovered in 1843 by Carl Gustaf Mosander, who detected it as an impurity in yttria ore.",
+      "Used in solid-state devices and as a green phosphor in trichromatic lighting tubes.",
+      "A rare-earth lanthanide named after Ytterby, Sweden, used as a green phosphor in fluorescent light tubes."
     ]
   },
   {
@@ -1151,7 +1303,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A rare-earth metal named after the Latin name for Stockholm (Holmia), discovered in 1878.",
-      "Has the highest magnetic moment of any element, making it useful in pole pieces for high-field magnets."
+      "It was discovered in 1878 by Marc Delafontaine and Jacques-Louis Soret, who identified its spectral lines.",
+      "Has the highest magnetic moment of any element, making it useful in pole pieces for high-field magnets.",
+      "A rare-earth lanthanide named after Stockholm, possessing the highest magnetic concentration capability."
     ]
   },
   {
@@ -1166,7 +1320,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "A silvery rare-earth metal that is chemically stable in air, named after the village Ytterby.",
-      "Its ions are used to dope optical fibers to amplify signals in long-distance internet lines."
+      "It was discovered in 1843 by Carl Gustaf Mosander, who isolated it from yttria mineral samples.",
+      "Its ions are used to dope optical fibers to amplify signals in long-distance internet lines.",
+      "A rare-earth lanthanide named after Ytterby, used to dope silica fibers to amplify internet optical signals."
     ]
   },
   {
@@ -1181,7 +1337,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The second-least abundant of all naturally occurring rare-earth metals, named after Thule (a mythical northern land).",
-      "Used as a radiation source in portable medical X-ray machines."
+      "It was discovered in 1879 by Per Teodor Cleve, who isolated it from erbia rare-earth oxide.",
+      "Used as a radiation source in portable medical X-ray machines.",
+      "The second-rarest naturally occurring lanthanide, named after Thule, used in portable medical X-ray units."
     ]
   },
   {
@@ -1196,7 +1354,9 @@ export const elements = [
     "tier": 4,
     "clues": [
       "The last element discovered at the Ytterby quarry in Sweden, which yielded four element names.",
-      "Used as a dopant in fiber laser amplifiers and in high-precision atomic clocks."
+      "It was discovered in 1878 by Jean Charles Galissard de Marignac, who isolated it from erbia samples.",
+      "Used as a dopant in fiber laser amplifiers and in high-precision atomic clocks.",
+      "The final yttrium-derived rare-earth lanthanide named after Ytterby, Sweden, used in fiber laser cutters."
     ]
   },
   {
@@ -1211,7 +1371,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A rare-earth metal whose name comes from the Greek word meaning 'hard to get'.",
-      "Added to neodymium-iron-boron magnets to increase their resistance to demagnetization under high temperatures."
+      "It was discovered in 1886 by Paul-Emile Lecoq de Boisbaudran, who isolated it from holmium oxide.",
+      "Added to neodymium-iron-boron magnets to increase their resistance to demagnetization under high temperatures.",
+      "A rare-earth lanthanide used as an alloy additive to strengthen permanent neodymium magnets under heat."
     ]
   },
   {
@@ -1226,7 +1388,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "The heaviest and hardest of all the rare-earth metals, named after the Roman name for Paris.",
-      "Has few commercial uses due to its rarity and high cost, but is used in petroleum refining catalysts."
+      "It was discovered in 1907 independently by Georges Urbain, Carl Auer von Welsbach, and Charles James.",
+      "Has few commercial uses due to its rarity and high cost, but is used in petroleum refining catalysts.",
+      "The heaviest and hardest lanthanide metal, named after the Roman name for Paris, used as a refining catalyst."
     ]
   },
   {
@@ -1241,7 +1405,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "The rarest naturally occurring element on Earth, with less than 30 grams existing in the crust at any moment.",
-      "A highly radioactive halogen that decays rapidly; named after the Greek word for 'unstable'."
+      "It was synthesized in 1940 by Dale Corson, Kenneth MacKenzie, and Emilio Segre at Berkeley.",
+      "A highly radioactive halogen that decays rapidly; named after the Greek word for 'unstable'.",
+      "The rarest naturally occurring nonmetal, Group 17, with a half-life of only 8 hours."
     ]
   },
   {
@@ -1256,7 +1422,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A colorless, odorless radioactive noble gas that seeps out of the ground from the decay of natural uranium in soil.",
-      "A major indoor air hazard, it is the second-leading cause of lung cancer globally after smoking."
+      "It was discovered in 1899 by Ernest Rutherford and Robert Owens, who noted its radioactive gas emissions.",
+      "A major indoor air hazard, it is the second-leading cause of lung cancer globally after smoking.",
+      "A heavy, radioactive noble gas in Group 18, which seeps into basements from decaying rock uranium."
     ]
   },
   {
@@ -1271,7 +1439,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "The second-rarest naturally occurring element, whose isotopes have a maximum half-life of only 22 minutes.",
-      "An extremely radioactive alkali metal that is synthesized in particle accelerators to study its atomic structure."
+      "It was discovered in 1939 by Marguerite Perey at the Curie Institute in Paris.",
+      "An extremely radioactive alkali metal that is synthesized in particle accelerators to study its atomic structure.",
+      "An extremely radioactive alkali metal in Group 1, with a maximum half-life of only 22 minutes."
     ]
   },
   {
@@ -1286,7 +1456,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "Discovered by Marie and Pierre Curie, this alkaline earth metal glows with a faint blue light in the dark.",
-      "Historically used in self-luminous watch dials, exposing factory dial-painters to lethal radiation."
+      "It was discovered in 1898 by Marie and Pierre Curie, who isolated it as a chloride salt.",
+      "Historically used in self-luminous watch dials, exposing factory dial-painters to lethal radiation.",
+      "An alkaline earth metal in Group 2, Period 7, which glows in the dark and was once used in watch dials."
     ]
   },
   {
@@ -1301,7 +1473,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "The prototype element of the actinide series, named after the Greek word for 'ray' due to its high radioactivity.",
-      "About 150 times more radioactive than radium, making it useful as a neutron source."
+      "It was discovered in 1899 by Friedrich Oskar Giesel, who isolated it from pitchblende uranium ores.",
+      "About 150 times more radioactive than radium, making it useful as a neutron source.",
+      "The prototype element of the actinide series, named from the Greek word for ray, highly radioactive."
     ]
   },
   {
@@ -1316,7 +1490,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A naturally occurring, weakly radioactive metal named after Thor, the Norse god of thunder.",
-      "Under consideration as a safer, more abundant alternative fuel to uranium in nuclear power reactors."
+      "Its radioactive decay chain produces radon gas and ends at stable lead 208, representing a natural source.",
+      "Under consideration as a safer, more abundant alternative fuel to uranium in nuclear power reactors.",
+      "A weakly radioactive actinide metal in Group 3, Period 7, researched as a safer nuclear fuel alternative."
     ]
   },
   {
@@ -1331,7 +1507,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A dense, silvery-grey actinide metal that is highly radioactive and toxic, forming a precursor to actinium.",
-      "One of the rarest and most expensive naturally occurring elements, found in pitchblende."
+      "It was discovered in 1913 by Kasimir Fajans and Oswald Helmuth G\u00f6hring, who named it brevium due to its short life.",
+      "One of the rarest and most expensive naturally occurring elements, found in pitchblende.",
+      "A rare and highly toxic radioactive actinide metal with atomic number 91, found in uranium ores."
     ]
   },
   {
@@ -1346,7 +1524,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A heavy actinide element named after the planet Uranus, discovered in 1789.",
-      "Its isotope 235 is the primary fuel used to power commercial nuclear reactors and atomic weapons."
+      "It was discovered in 1789 by Martin Heinrich Klaproth, who identified its oxide in pitchblende samples.",
+      "Its isotope 235 is the primary fuel used to power commercial nuclear reactors and atomic weapons.",
+      "A heavy actinide element in Group 3, Period 7, whose isotope 235 is the primary fuel for nuclear reactors."
     ]
   },
   {
@@ -1361,7 +1541,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "The first synthetic transuranic element, named after the planet Neptune as it lies beyond uranium.",
-      "Created by bombarding uranium with neutrons, it is a silvery metal that tarnishes in air."
+      "It was synthesized in 1940 by Edwin McMillan and Philip Abelson by bombarding uranium with neutrons.",
+      "Created by bombarding uranium with neutrons, it is a silvery metal that tarnishes in air.",
+      "The first transuranic actinide element, named after the planet Neptune, used in neutron detectors."
     ]
   },
   {
@@ -1376,7 +1558,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic actinide metal named after the planet Pluto, first synthesized in 1940.",
-      "Famous as the fissile fuel used in the 'Fat Man' atomic bomb dropped on Nagasaki in World War II."
+      "It was synthesized in 1940 by Glenn Seaborg, Arthur Wahl, Joseph Kennedy, and Edwin McMillan.",
+      "Famous as the fissile fuel used in the 'Fat Man' atomic bomb dropped on Nagasaki in World War II.",
+      "A synthetic radioactive actinide named after Pluto, used in deep-space thermal batteries and weapons."
     ]
   },
   {
@@ -1391,7 +1575,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic actinide element named after the Americas, first synthesized in 1944.",
-      "Its isotope 241 is widely used inside household ionization smoke detectors."
+      "It was synthesized in 1944 by Glenn Seaborg, Ralph James, Leon Morgan, and Albert Ghiorso.",
+      "Its isotope 241 is widely used inside household ionization smoke detectors.",
+      "A synthetic actinide element named after the Americas, widely used in household smoke detectors."
     ]
   },
   {
@@ -1406,7 +1592,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic radioactive metal named in honor of Marie and Pierre Curie.",
-      "Produced by bombarding plutonium with alpha particles, it glows purple in the dark due to its high radioactivity."
+      "It was synthesized in 1944 by Seaborg, James, and Ghiorso by bombarding plutonium with alpha particles.",
+      "Produced by bombarding plutonium with alpha particles, it glows purple in the dark due to its high radioactivity.",
+      "A synthetic actinide named after the Curies, used as alpha particle emitters on Mars rover spectrometers."
     ]
   },
   {
@@ -1421,7 +1609,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic actinide element named after the city of Berkeley, California, where it was discovered in 1949.",
-      "Mainly used as a target to synthesize heavier elements, such as tennessine."
+      "It was synthesized in 1949 by Stanley Thompson, Albert Ghiorso, and Glenn Seaborg at Berkeley.",
+      "Mainly used as a target to synthesize heavier elements, such as tennessine.",
+      "A synthetic actinide element named after Berkeley, California, used as a target to synthesize heavier elements."
     ]
   },
   {
@@ -1436,7 +1626,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic actinide named in honor of the university and state where it was created in 1950.",
-      "An extremely strong neutron emitter, used to start up nuclear reactors and detect water in soils."
+      "It was synthesized in 1950 by Thompson, Street, Ghiorso, and Seaborg by bombarding curium with alpha rays.",
+      "An extremely strong neutron emitter, used to start up nuclear reactors and detect water in soils.",
+      "A synthetic actinide named after California, acting as an extremely strong neutron emitter to start reactors."
     ]
   },
   {
@@ -1451,7 +1643,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic element discovered in the debris of the first thermonuclear bomb explosion (Ivy Mike) in 1952.",
-      "Named in honor of Albert Einstein, it is a highly radioactive metallic actinide."
+      "It was discovered in the radioactive debris of the Ivy Mike thermonuclear test in 1952.",
+      "Named in honor of Albert Einstein, it is a highly radioactive metallic actinide.",
+      "A synthetic radioactive actinide named after Albert Einstein, created by neutron bombardment of uranium."
     ]
   },
   {
@@ -1466,7 +1660,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "Discovered alongside einsteinium in the fallout of the first hydrogen bomb test in 1952.",
-      "The heaviest element that can be formed by neutron bombardment of lighter elements."
+      "It was discovered in 1952 in the fallout debris of the Ivy Mike thermonuclear explosion.",
+      "The heaviest element that can be formed by neutron bombardment of lighter elements.",
+      "A synthetic actinide element named in honor of Enrico Fermi, the heaviest element formed by neutron capture."
     ]
   },
   {
@@ -1481,7 +1677,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic radioactive element named in honor of Dmitri Mendeleev, the father of the periodic table.",
-      "First synthesized in 1955 by bombarding einsteinium with alpha particles."
+      "It was synthesized in 1955 by Ghiorso, Harvey, Choppin, Thompson, and Seaborg at Berkeley.",
+      "First synthesized in 1955 by bombarding einsteinium with alpha particles.",
+      "A synthetic actinide element named after Dmitri Mendeleev, created by bombarding einsteinium with alpha rays."
     ]
   },
   {
@@ -1496,7 +1694,9 @@ export const elements = [
     "tier": 5,
     "clues": [
       "A synthetic radioactive metal named in honor of Alfred Nobel, the inventor of dynamite.",
-      "It can only be produced in particle accelerators by bombarding lighter elements like curium with carbon ions."
+      "It was synthesized in 1958 by a team at Lawrence Berkeley Laboratory, named in honor of Alfred Nobel.",
+      "It can only be produced in particle accelerators by bombarding lighter elements like curium with carbon ions.",
+      "A synthetic actinide element with atomic number 102, produced in accelerators by bombarding curium with carbon."
     ]
   },
   {
@@ -1511,7 +1711,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic element named in honor of Ernest Lawrence, inventor of the cyclotron particle accelerator.",
-      "The final element of the actinide series, first synthesized in Berkeley, California in 1961."
+      "It was synthesized in 1961 by Ghiorso, Sikkeland, Larsh, and Latimer, named in honor of Ernest Lawrence.",
+      "The final element of the actinide series, first synthesized in Berkeley, California in 1961.",
+      "The final element of the actinide series, a synthetic radioactive metal with atomic number 103."
     ]
   },
   {
@@ -1526,7 +1728,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic transition metal named in honor of Ernest Rutherford, the father of nuclear physics.",
-      "The first transactinide element, with a half-life of only a few seconds or minutes."
+      "It was synthesized in 1964 at Dubna, Russia, and in 1969 at Berkeley, California.",
+      "The first transactinide element, with a half-life of only a few seconds or minutes.",
+      "A synthetic superheavy Group 4 transition metal, named in honor of Ernest Rutherford, decays in seconds."
     ]
   },
   {
@@ -1541,7 +1745,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "Named after Dubna, a Russian town where the Joint Institute for Nuclear Research is located.",
-      "A highly radioactive synthetic metal that does not exist in nature."
+      "It was synthesized in 1968 at Dubna and 1970 at Berkeley, named in honor of Dubna, Russia.",
+      "A highly radioactive synthetic metal that does not exist in nature.",
+      "A synthetic Group 5 transition metal with atomic number 105, possessing no stable isotopes."
     ]
   },
   {
@@ -1556,7 +1762,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "The first chemical element named after a living person (Glenn T. Seaborg) at the time of naming.",
-      "First synthesized in 1974, it is a highly unstable synthetic metal."
+      "It was synthesized in 1974 at Berkeley and Dubna, named in honor of nuclear chemist Glenn Seaborg.",
+      "First synthesized in 1974, it is a highly unstable synthetic metal.",
+      "A synthetic Group 6 transition metal with atomic number 106, the first element named for a living chemist."
     ]
   },
   {
@@ -1571,7 +1779,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic transition metal named in honor of Danish physicist Niels Bohr.",
-      "Synthesized by bombarding bismuth with chromium ions, its most stable isotope has a half-life of 61 seconds."
+      "It was synthesized in 1981 in Darmstadt, Germany, named in honor of Danish physicist Niels Bohr.",
+      "Synthesized by bombarding bismuth with chromium ions, its most stable isotope has a half-life of 61 seconds.",
+      "A synthetic Group 7 transition metal, produced by bombarding bismuth with chromium projectiles."
     ]
   },
   {
@@ -1586,7 +1796,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic element named after the German state of Hesse, where it was first created in Darmstadt.",
-      "Its tetroxide compound is predicted to be volatile, similar to osmium."
+      "It was synthesized in 1984 in Darmstadt, Germany, named after the German state of Hesse (Hassia).",
+      "Its tetroxide compound is predicted to be volatile, similar to osmium.",
+      "A synthetic Group 8 transition metal with atomic number 108, whose isotopes decay in fractions of a second."
     ]
   },
   {
@@ -1601,7 +1813,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic element named in honor of Austrian physicist Lise Meitner, co-discoverer of nuclear fission.",
-      "Extremely unstable, first synthesized in Germany in 1982."
+      "It was synthesized in 1982 in Darmstadt, Germany, named in honor of physicist Lise Meitner.",
+      "Extremely unstable, first synthesized in Germany in 1982.",
+      "A synthetic Group 9 transition metal with atomic number 109, produced by bombarding bismuth with iron."
     ]
   },
   {
@@ -1616,7 +1830,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic superheavy metal named after the German city where it was first synthesized in 1994.",
-      "Its most stable isotope has a half-life of only about 10 seconds."
+      "It was synthesized in 1994 in Darmstadt, Germany, named in honor of the city of Darmstadt.",
+      "Its most stable isotope has a half-life of only about 10 seconds.",
+      "A synthetic Group 10 transition metal with atomic number 110, whose most stable isotope has a 10s half-life."
     ]
   },
   {
@@ -1631,7 +1847,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic element named in honor of Wilhelm Conrad Roentgen, discoverer of X-rays.",
-      "Belongs to group 11, placing it in the same column as copper, silver, and gold."
+      "It was synthesized in 1994 in Darmstadt, Germany, named in honor of Wilhelm Roentgen, discoverer of X-rays.",
+      "Belongs to group 11, placing it in the same column as copper, silver, and gold.",
+      "A synthetic Group 11 transition metal with atomic number 111, placing it in the gold column."
     ]
   },
   {
@@ -1646,7 +1864,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic transition metal named in honor of astronomer Nicolaus Copernicus.",
-      "Predicted to be a volatile liquid at room temperature due to relativistic effects, behaving like a noble gas."
+      "It was synthesized in 1996 in Darmstadt, Germany, named in honor of astronomer Nicolaus Copernicus.",
+      "Predicted to be a volatile liquid at room temperature due to relativistic effects, behaving like a noble gas.",
+      "A synthetic Group 12 transition metal, predicted to be a volatile liquid behaving like a noble gas."
     ]
   },
   {
@@ -1661,7 +1881,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "The first element discovered and named by scientists in Asia, derived from the Japanese name for Japan.",
-      "First synthesized in 2004 by bombarding bismuth with zinc."
+      "It was synthesized in 2003 at Dubna and 2004 at RIKEN, Japan, named in honor of Japan (Nihon).",
+      "First synthesized in 2004 by bombarding bismuth with zinc.",
+      "A synthetic Group 13 post-transition metal with atomic number 113, the first element named in Asia."
     ]
   },
   {
@@ -1676,7 +1898,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic superheavy metal named after the Flerov Laboratory of Nuclear Reactions in Russia.",
-      "Predicted to have closed nuclear shells, placing it near the theoretical 'island of stability'."
+      "It was synthesized in 1998 at Dubna, Russia, named in honor of the Flerov Laboratory.",
+      "Predicted to have closed nuclear shells, placing it near the theoretical 'island of stability'.",
+      "A synthetic Group 14 post-transition metal, residing near the theoretical island of stability."
     ]
   },
   {
@@ -1691,7 +1915,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A synthetic element named in honor of the Moscow Oblast region in Russia where it was created.",
-      "Extremely radioactive, decaying by alpha emission within fractions of a second."
+      "It was synthesized in 2003 at Dubna, Russia, named in honor of the Moscow region.",
+      "Extremely radioactive, decaying by alpha emission within fractions of a second.",
+      "A highly radioactive synthetic Group 15 element with atomic number 115, decaying in milliseconds."
     ]
   },
   {
@@ -1706,7 +1932,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "Named in honor of the Lawrence Livermore National Laboratory in California, which helped discover it.",
-      "A highly radioactive synthetic element with only a few atoms ever produced."
+      "It was synthesized in 2000 at Dubna, Russia, named in honor of the Lawrence Livermore Laboratory.",
+      "A highly radioactive synthetic element with only a few atoms ever produced.",
+      "A highly radioactive synthetic Group 16 element with atomic number 116, decaying in fractions of a second."
     ]
   },
   {
@@ -1721,7 +1949,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "The second-heaviest element ever created, named after the US state of Tennessee due to its nuclear research contributions.",
-      "Classified as a halogen, though relativistic effects may make it behave more like a post-transition metal."
+      "It was synthesized in 2010 at Dubna, Russia, named in honor of the state of Tennessee.",
+      "Classified as a halogen, though relativistic effects may make it behave more like a post-transition metal.",
+      "A synthetic Group 17 halogen with atomic number 117, the second-heaviest element ever created."
     ]
   },
   {
@@ -1736,7 +1966,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "The heaviest element on the periodic table, named in honor of Russian nuclear physicist Yuri Oganessian.",
-      "The only element named after a living person today, it completes the 7th period of the table."
+      "It was synthesized in 2002 at Dubna, Russia, named in honor of nuclear physicist Yuri Oganessian.",
+      "The only element named after a living person today, it completes the 7th period of the table.",
+      "The heaviest element on the periodic table, completing Group 18 and the seventh row of the table."
     ]
   },
   {
@@ -1751,7 +1983,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "A silvery-white metallic transition metal historically classified as a rare-earth element, named after Scandinavia.",
-      "Mainly used in high-strength aluminum alloys for aerospace parts and high-end bicycle frames."
+      "This transition metal has only one stable isotope, 45, and is highly concentrated in rare Scandinavian minerals.",
+      "Mainly used in high-strength aluminum alloys for aerospace parts and high-end bicycle frames.",
+      "A silvery transition metal in Group 3, Period 4, primarily used in high-intensity metal halide lamps."
     ]
   },
   {
@@ -1766,7 +2000,9 @@ export const elements = [
     "tier": 6,
     "clues": [
       "The lightest chemical element that has no stable isotopes; all of its forms are radioactive.",
-      "First element to be artificially synthesized in a laboratory in 1937, named after the Greek word for 'artificial'."
+      "It was discovered in 1937 by Emilio Segre and Carlo Perrier in a sample of molybdenum bombarded by deuterons.",
+      "First element to be artificially synthesized in a laboratory in 1937, named after the Greek word for 'artificial'.",
+      "A transition metal with atomic number 43, the lightest element with no stable isotopes; all forms are radioactive."
     ]
   }
 ];

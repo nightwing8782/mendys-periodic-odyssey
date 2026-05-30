@@ -12,6 +12,7 @@ export default function TriviaConsole({
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect' | 'timeout'
   const [timeLeft, setTimeLeft] = useState(15);
+  const [clueIndices, setClueIndices] = useState([0, 2]);
   const inputRef = useRef(null);
 
   // Auto-focus input and reset timer when a new element or round appears
@@ -20,6 +21,12 @@ export default function TriviaConsole({
     setCluesRevealed([true, false, false]);
     setFeedback(null);
     setTimeLeft(15);
+    
+    // Choose stable random indices for the active question:
+    // Choose 0 or 1 for Clue 1 (Hard), 2 or 3 for Clue 2 (Medium)
+    const hardIdx = Math.random() < 0.5 ? 0 : 1;
+    const medIdx = Math.random() < 0.5 ? 2 : 3;
+    setClueIndices([hardIdx, medIdx]);
     
     const timer = setTimeout(() => {
       if (inputRef.current) {
@@ -186,7 +193,7 @@ export default function TriviaConsole({
           Identify the Element (Hard - 300 Pts):
         </h3>
         <p className="text-xs md:text-sm font-bold text-slate-100 font-deco tracking-wide leading-relaxed">
-          {element?.clues[0]}
+          {element?.clues && element.clues[clueIndices[0]]}
         </p>
       </div>
 
@@ -201,7 +208,7 @@ export default function TriviaConsole({
               <span className="font-bold text-teal-300">+200 PTS</span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed font-mono-sci">
-              {element?.clues[1]}
+              {element?.clues && element.clues[clueIndices[1]]}
             </p>
           </div>
         ) : (
