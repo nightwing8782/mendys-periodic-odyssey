@@ -11,7 +11,7 @@ export default function TriviaConsole({
   const [cluesRevealed, setCluesRevealed] = useState([true, false, false]); // [clue1, clue2, clue3]
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect' | 'timeout'
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(20);
   const [clueIndices, setClueIndices] = useState([0, 2]);
   const inputRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -30,7 +30,7 @@ export default function TriviaConsole({
     setInputValue('');
     setCluesRevealed([true, false, false]);
     setFeedback(null);
-    setTimeLeft(15);
+    setTimeLeft(20);
     
     // Choose stable random indices for the active question:
     // Choose 0 or 1 for Clue 1 (Hard), 2 or 3 for Clue 2 (Medium)
@@ -177,22 +177,22 @@ export default function TriviaConsole({
         </span>
       </div>
 
-      {/* 15-Second Progress Timer bar */}
-      <div className="w-full mt-3 z-10">
-        <div className="flex justify-between items-center text-[9px] font-mono-sci text-slate-400 mb-1">
-          <span>TIME REMAINING</span>
-          <span className={`font-bold ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-teal-400'}`}>
-            {timeLeft}s
+      {/* 20-Second Progress Timer bar */}
+      <div className="w-full mt-4 mb-2 z-10">
+        <div className="flex justify-between items-center text-[10px] font-mono-sci text-slate-400 mb-1.5">
+          <span className="tracking-wider">DEEP SCAN TIMER</span>
+          <span className={`font-bold text-xs ${timeLeft <= 5 ? 'text-red-500 animate-pulse font-extrabold' : 'text-teal-400'}`}>
+            {timeLeft}s / 20s
           </span>
         </div>
-        <div className="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-teal-500/20 p-0.5 shadow-inner">
+        <div className="w-full h-3 bg-slate-950 rounded-full overflow-hidden border border-teal-500/30 p-0.5 shadow-inner">
           <div
             className={`h-full rounded-full transition-all duration-1000 ${
               timeLeft <= 5 
                 ? 'bg-gradient-to-r from-red-600 to-red-500 glow-red' 
                 : 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 glow-teal'
             }`}
-            style={{ width: `${(timeLeft / 15) * 100}%` }}
+            style={{ width: `${(timeLeft / 20) * 100}%` }}
           />
         </div>
       </div>
