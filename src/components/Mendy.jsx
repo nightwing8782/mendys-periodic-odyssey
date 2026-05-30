@@ -57,52 +57,57 @@ export default function Mendy({ state = 'idle' }) {
       >
         {/* Antennas */}
         <g id="antennas">
-          {/* Left Antenna */}
-          <path
-            d="M95 105C80 75 60 60 55 60"
-            stroke="#eab308"
-            strokeWidth="5"
-            strokeLinecap="round"
+          {/* Left Antenna Group */}
+          <g
             className={`transition-all duration-500 origin-[95px_105px] ${isThinking ? 'animate-antenna-l' : ''}`}
             style={{
+              transformOrigin: '95px 105px',
               transform: isIncorrect ? 'rotate(-15deg)' : 'none'
             }}
-          />
-          <circle
-            cx="55"
-            cy="60"
-            r="10"
-            fill="#22c55e"
-            className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
-            style={{
-              filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none',
-              transform: isIncorrect ? 'translate(-8px, 12px)' : 'none',
-              animation: isThinking ? 'antenna-twitch-l 0.8s ease-in-out infinite origin-[95px_105px]' : 'none'
-            }}
-          />
+          >
+            <path
+              d="M95 105C80 75 60 60 55 60"
+              stroke="#eab308"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+            <circle
+              cx="55"
+              cy="60"
+              r="10"
+              fill="#22c55e"
+              className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
+              style={{
+                filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none'
+              }}
+            />
+          </g>
 
-          {/* Right Antenna */}
-          <path
-            d="M165 105C180 75 200 60 205 60"
-            stroke="#eab308"
-            strokeWidth="5"
-            strokeLinecap="round"
+          {/* Right Antenna Group */}
+          <g
             className={`transition-all duration-500 origin-[165px_105px] ${isThinking ? 'animate-antenna-r' : ''}`}
             style={{
+              transformOrigin: '165px 105px',
               transform: isIncorrect ? 'rotate(15deg)' : 'none'
             }}
-          />
-          <circle
-            cx="205"
-            cy="60"
-            r="10"
-            fill="#22c55e"
-            className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
-            style={{
-              filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none',
-              transform: isIncorrect ? 'translate(8px, 12px)' : 'none'
-            }}
-          />
+          >
+            <path
+              d="M165 105C180 75 200 60 205 60"
+              stroke="#eab308"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+            <circle
+              cx="205"
+              cy="60"
+              r="10"
+              fill="#22c55e"
+              className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
+              style={{
+                filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none'
+              }}
+            />
+          </g>
         </g>
 
         {/* Head & Suit Color Definitions */}
