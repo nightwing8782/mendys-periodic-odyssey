@@ -71,6 +71,8 @@ export default function App() {
   const [isCurrentElementCorrect, setIsCurrentElementCorrect] = useState(false);
   const [shakeScreen, setShakeScreen] = useState(false);
   const [greenFlash, setGreenFlash] = useState(false);
+  const [correctElementsInRound, setCorrectElementsInRound] = useState([]);
+  const [showDossierModal, setShowDossierModal] = useState(false);
 
   // Round thresholds
   const getRoundThreshold = (r) => {
@@ -93,6 +95,7 @@ export default function App() {
     setRound(roundNumber);
     setMendyState('thinking'); // Mendy starts in thinking mode
     setIsCurrentElementCorrect(false);
+    setCorrectElementsInRound([]);
     setGameState('playing');
   }, [collectedSymbols]);
 
@@ -116,6 +119,7 @@ export default function App() {
       
       // Permanently add to unlocked elements database for the Mastery Board
       const currentElement = currentBatch[currentIndex];
+      setCorrectElementsInRound(prev => [...prev, currentElement]);
       setCollectedSymbols(prev => {
         const next = new Set(prev);
         next.add(currentElement.symbol);
@@ -146,6 +150,7 @@ export default function App() {
           } else {
             // Completed Round 1 to 5 successfully
             setGameState('round_complete');
+            setShowDossierModal(true); // Auto-open dossier popup!
           }
         } else {
           // Failed the round requirements
@@ -316,12 +321,20 @@ export default function App() {
                 </div>
               </div>
 
-              <button
-                onClick={handleNextRound}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono-sci tracking-widest text-sm"
-              >
-                ENGAGE ROUND {round + 1} REACTOR
-              </button>
+              <div className="flex flex-col space-y-3 w-full mt-4">
+                <button
+                  onClick={() => setShowDossierModal(true)}
+                  className="w-full bg-slate-900 border border-emerald-500/35 hover:border-emerald-400/60 text-emerald-400 font-bold py-2.5 px-6 rounded-xl transition-all duration-300 font-mono-sci text-xs cursor-pointer shadow-[0_0_8px_rgba(16,185,129,0.15)]"
+                >
+                  📁 REVIEW SCAN LOGS ({correctElementsInRound.length} CARDS)
+                </button>
+                <button
+                  onClick={handleNextRound}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
+                >
+                  ENGAGE ROUND {round + 1} REACTOR
+                </button>
+              </div>
             </div>
           )}
 
@@ -396,6 +409,111 @@ export default function App() {
           scoreAchieved={Math.round((correctInRound / 20) * 100)}
           onRetry={handleRetryRound}
         />
+      )}
+
+      {/* Dossier Modal Overlay */}
+      {showDossierModal && (
+        <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center z-50 p-4 md:p-6 animate-fade-in font-mono-sci">
+          <div className="glass-panel border-2 border-emerald-500/40 bg-slate-950/95 glow-green rounded-3xl w-full max-w-4xl max-h-[85vh] flex flex-col p-6 relative">
+            
+            {/* Header */}
+            <div className="border-b border-emerald-500/30 pb-4 flex justify-between items-center text-emerald-400">
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">📁</span>
+                <div className="text-left">
+                  <h2 className="font-deco text-lg md:text-xl font-bold tracking-wider text-slate-100 uppercase">
+                    HARVESTED ELEMENT LOGS
+                  </h2>
+                  <p className="text-[10px] text-emerald-500/80 uppercase tracking-widest mt-0.5">
+                    Expedition Round {round} Dossier — {correctElementsInRound.length} / 20 Identified
+                  </p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowDossierModal(false)}
+                className="text-slate-400 hover:text-red-400 text-xs font-bold border border-slate-700 hover:border-red-500/50 rounded-xl px-3.5 py-2 bg-slate-900 transition-all duration-300 cursor-pointer"
+              >
+                CLOSE
+              </button>
+            </div>
+
+            {/* Content (Grid of Cards) */}
+            <div className="flex-grow overflow-y-auto my-6 pr-2 space-y-4">
+              {correctElementsInRound.length === 0 ? (
+                <div className="h-48 flex flex-col justify-center items-center text-slate-500 text-xs">
+                  <span>No element telemetry was recorded in this round.</span>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {correctElementsInRound.map((el, i) => (
+                    <div 
+                      key={el.symbol} 
+                      className="glass-panel border border-emerald-500/20 bg-slate-900/60 rounded-xl p-4 flex flex-col justify-between min-h-[110px] relative overflow-hidden text-left animate-fade-in"
+                    >
+                      {/* Accent brackets */}
+                      <div className="absolute top-1.5 left-1.5 w-1.5 h-1.5 border-t border-l border-emerald-500/30" />
+                      <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 border-t border-r border-emerald-500/30" />
+                      
+                      <div className="flex justify-between items-center text-[10px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-2">
+                        <span className="font-bold">DEEP SCAN #{i + 1}</span>
+                        <span className="text-[9px] text-emerald-500/60 font-semibold">STATUS: SECURED</span>
+                      </div>
+
+                      <div className="text-[10px] text-emerald-300 space-y-1">
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
+                          <div>
+                            <span className="text-emerald-500/60 font-medium">ELEMENT:</span>{' '}
+                            <span className="font-bold text-slate-100 uppercase">{el.name}</span>
+                          </div>
+                          <div>
+                            <span className="text-emerald-500/60 font-medium">SYMBOL:</span>{' '}
+                            <span className="font-bold text-yellow-400 font-deco">{el.symbol}</span>
+                          </div>
+                          <div>
+                            <span className="text-emerald-500/60 font-medium">ATOMIC #:</span>{' '}
+                            <span className="font-bold text-slate-200">{el.number}</span>
+                          </div>
+                          <div>
+                            <span className="text-emerald-500/60 font-medium">MASS:</span>{' '}
+                            <span className="font-bold text-slate-200">{el.mass} u</span>
+                          </div>
+                        </div>
+                        
+                        <div className="border-t border-emerald-500/10 pt-1 text-[9px]">
+                          <span className="text-emerald-500/60 font-medium">CONFIG:</span>{' '}
+                          <span className="text-emerald-400 font-semibold">{el.config}</span>
+                        </div>
+                        
+                        <div className="border-t border-emerald-500/10 pt-1 leading-normal text-[9px] text-slate-300 italic">
+                          <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-[8.5px]">USE:</span> {el.use}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Footer / Continue button */}
+            <div className="border-t border-emerald-500/30 pt-4 flex flex-col sm:flex-row justify-between items-center text-xs space-y-3 sm:space-y-0">
+              <span className="text-slate-500 text-center sm:text-left text-[10px] sm:text-xs">
+                You can review these element details at any time before starting the next stage.
+              </span>
+              <button 
+                onClick={() => {
+                  setShowDossierModal(false);
+                  if (gameState === 'round_complete') {
+                    handleNextRound();
+                  }
+                }}
+                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition-all duration-300 active:scale-95 shadow-[0_0_10px_rgba(16,185,129,0.2)] tracking-wider cursor-pointer font-mono-sci text-xs"
+              >
+                {gameState === 'round_complete' ? 'CONTINUE TO NEXT ROUND' : 'CLOSE DOSSIER'}
+              </button>
+            </div>
+
+          </div>
+        </div>
       )}
 
     </CockpitLayout>
