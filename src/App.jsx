@@ -384,6 +384,7 @@ export default function App() {
         <CombinationConsole 
           activeElement={gameState === 'playing' ? currentBatch[currentIndex] : null}
           isCorrect={isCurrentElementCorrect}
+          currentIndex={currentIndex}
         />
       </div>
 

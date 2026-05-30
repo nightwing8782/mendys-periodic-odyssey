@@ -7,12 +7,27 @@ import {
   getRadioDataArray 
 } from '../utils/audio';
 
-export default function CombinationConsole({ activeElement, isCorrect }) {
+export default function CombinationConsole({ activeElement, isCorrect, currentIndex }) {
   // Radio control states
   const [station, setStation] = useState(-1); // -1 = Off, 0 = Ambient, 1 = Retro, 2 = Theremin
   const [volume, setVolume] = useState(0.3);
   const [muted, setMuted] = useState(false);
+  const [lastScannedElement, setLastScannedElement] = useState(null);
   const canvasRef = useRef(null);
+
+  // Reset cache at the start of a round (index 0)
+  useEffect(() => {
+    if (currentIndex === 0) {
+      setLastScannedElement(null);
+    }
+  }, [currentIndex]);
+
+  // Update cached scan details on a correct answer
+  useEffect(() => {
+    if (isCorrect && activeElement) {
+      setLastScannedElement(activeElement);
+    }
+  }, [isCorrect, activeElement]);
 
   // Tuner station handler
   const handleStationChange = (stationIndex) => {
@@ -145,41 +160,53 @@ export default function CombinationConsole({ activeElement, isCorrect }) {
 
         <div className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest border-b border-emerald-500/20 pb-1.5 flex justify-between items-center">
           <span>ATOMIC DEEP SCANNER</span>
-          <span className="animate-pulse flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>ONLINE</span>
-          </span>
+          {isCorrect ? (
+            <span className="animate-pulse flex items-center space-x-1 text-yellow-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-ping" />
+              <span>DATA UNLOCKED</span>
+            </span>
+          ) : lastScannedElement ? (
+            <span className="flex items-center space-x-1 text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>CACHED DATA</span>
+            </span>
+          ) : (
+            <span className="animate-pulse flex items-center space-x-1 text-emerald-600">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-700" />
+              <span>SCANNING MATRIX</span>
+            </span>
+          )}
         </div>
 
-        {isCorrect && activeElement ? (
-          // Instantly populates detailed element scientific profile upon correct answer
+        {lastScannedElement ? (
+          // Displays detailed element scientific profile of the last successfully scanned target
           <div className="flex-grow flex flex-col justify-between text-[10px] text-emerald-300 mt-2 space-y-1 animate-fade-in">
             <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
               <div>
                 <span className="text-emerald-500/60 font-medium">ELEMENT:</span>{' '}
-                <span className="font-bold text-slate-100 uppercase">{activeElement.name}</span>
+                <span className="font-bold text-slate-100 uppercase">{lastScannedElement.name}</span>
               </div>
               <div>
                 <span className="text-emerald-500/60 font-medium">SYMBOL:</span>{' '}
-                <span className="font-bold text-yellow-400 font-deco">{activeElement.symbol}</span>
+                <span className="font-bold text-yellow-400 font-deco">{lastScannedElement.symbol}</span>
               </div>
               <div>
                 <span className="text-emerald-500/60 font-medium">ATOMIC #:</span>{' '}
-                <span className="font-bold text-slate-200">{activeElement.number}</span>
+                <span className="font-bold text-slate-200">{lastScannedElement.number}</span>
               </div>
               <div>
                 <span className="text-emerald-500/60 font-medium">MASS:</span>{' '}
-                <span className="font-bold text-slate-200">{activeElement.mass} u</span>
+                <span className="font-bold text-slate-200">{lastScannedElement.mass} u</span>
               </div>
             </div>
             
             <div className="border-t border-emerald-500/10 pt-1">
               <span className="text-emerald-500/60 font-medium">CONFIG:</span>{' '}
-              <span className="text-emerald-400 text-[9px] font-semibold">{activeElement.config}</span>
+              <span className="text-emerald-400 text-[9px] font-semibold">{lastScannedElement.config}</span>
             </div>
             
             <div className="border-t border-emerald-500/10 pt-1 leading-normal text-[9px] text-slate-300 italic">
-              <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-[8.5px]">USE:</span> {activeElement.use}
+              <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-[8.5px]">USE:</span> {lastScannedElement.use}
             </div>
           </div>
         ) : (
