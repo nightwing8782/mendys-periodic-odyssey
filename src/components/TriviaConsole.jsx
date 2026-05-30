@@ -14,6 +14,16 @@ export default function TriviaConsole({
   const [timeLeft, setTimeLeft] = useState(15);
   const [clueIndices, setClueIndices] = useState([0, 2]);
   const inputRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  // Cleanup any active transition timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // Auto-focus input and reset timer when a new element or round appears
   useEffect(() => {
@@ -44,10 +54,10 @@ export default function TriviaConsole({
     if (timeLeft <= 0) {
       setFeedback('timeout');
       playIncorrectBuzz();
-      const delayTimer = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         onAnswerSubmitted(false, 0);
       }, 1500);
-      return () => clearTimeout(delayTimer);
+      return;
     }
 
     const interval = setInterval(() => {
@@ -89,7 +99,7 @@ export default function TriviaConsole({
       setFeedback('correct');
       playCorrectAscent();
       const points = getPotentialPoints();
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         // Pass info back to parent: isCorrect, pointsEarned, and wasPrecision (no hints used)
         const wasPrecision = !cluesRevealed[1] && !cluesRevealed[2];
         onAnswerSubmitted(true, points, wasPrecision);
@@ -97,7 +107,7 @@ export default function TriviaConsole({
     } else {
       setFeedback('incorrect');
       playIncorrectBuzz();
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         onAnswerSubmitted(false, 0);
       }, 1500);
     }

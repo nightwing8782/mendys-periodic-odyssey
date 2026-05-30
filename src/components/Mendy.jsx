@@ -32,10 +32,6 @@ export default function Mendy({ state = 'idle' }) {
           0%, 100% { transform: rotate(0deg); }
           50% { transform: rotate(-18deg) scaleY(0.95); }
         }
-        @keyframes chin-tap-anim {
-          0%, 100% { transform: rotate(-74deg) translate(-24px, -35px); }
-          50% { transform: rotate(-68deg) translate(-22px, -37px); }
-        }
         @keyframes success-bounce {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px) rotate(1deg); }
@@ -45,9 +41,6 @@ export default function Mendy({ state = 'idle' }) {
         }
         .animate-antenna-r {
           animation: antenna-twitch-r 0.8s ease-in-out infinite 0.15s;
-        }
-        .animate-chin-tap {
-          animation: chin-tap-anim 0.6s ease-in-out infinite;
         }
         .animate-success-bounce {
           animation: success-bounce 0.45s ease-in-out infinite;
@@ -157,7 +150,7 @@ export default function Mendy({ state = 'idle' }) {
             stroke="url(#goldTrimGrad)"
             strokeWidth="2.5"
             strokeLinecap="round"
-            className={`transition-all duration-500 origin-[75px_235px] ${isThinking ? 'animate-chin-tap' : ''}`}
+            className="transition-all duration-500 origin-[75px_235px]"
             style={{
               transform: isCorrect 
                 ? 'rotate(-130deg) translate(-45px, -35px)' 
