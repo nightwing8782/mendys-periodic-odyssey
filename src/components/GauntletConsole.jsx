@@ -351,7 +351,7 @@ export default function GauntletConsole({
           <div className="space-y-4">
             <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-4 text-center">
               <span className="text-sm text-teal-500 uppercase tracking-widest font-mono-sci block mb-1.5 font-bold">Mendy's Transmission Clue</span>
-              <p className="text-sm md:text-base font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
+              <p key={index} className="text-sm md:text-base font-bold text-slate-200 font-deco tracking-wide leading-relaxed animate-text-flicker">
                 "{question.clue}"
               </p>
             </div>
@@ -392,7 +392,7 @@ export default function GauntletConsole({
           <div className="space-y-4">
             <div className="text-center">
               <span className="text-xs text-yellow-500 uppercase tracking-widest font-mono-sci block font-bold">COMPASS ANALYSIS</span>
-              <h4 className="text-sm font-bold text-slate-300 font-deco mt-1">Tap the heavier element based on atomic mass!</h4>
+              <h4 key={index} className="text-sm font-bold text-slate-300 font-deco mt-1 animate-text-flicker">Tap the heavier element based on atomic mass!</h4>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -440,7 +440,7 @@ export default function GauntletConsole({
         {question.type === 'NUCLEAR_SYNTHESIS' && (
           <div className="space-y-4">
             {/* Visual Formula Box */}
-            <div className="flex items-center justify-center space-x-2 bg-slate-950/50 border border-yellow-500/20 rounded-none p-3 relative overflow-hidden shadow-inner">
+            <div key={index} className="flex items-center justify-center space-x-2 bg-slate-950/50 border border-yellow-500/20 rounded-none p-3 relative overflow-hidden shadow-inner animate-text-flicker">
               
               {/* Reactant 1 */}
               <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-1.5 py-2 flex flex-col items-center w-[72px] text-center">
@@ -538,7 +538,7 @@ export default function GauntletConsole({
                 </span>
               </div>
               
-              <p className="text-base md:text-lg font-bold text-slate-100 font-deco tracking-wide leading-relaxed">
+              <p key={index} className="text-base md:text-lg font-bold text-slate-100 font-deco tracking-wide leading-relaxed animate-text-flicker">
                 {question.clue}
               </p>
               
@@ -553,11 +553,12 @@ export default function GauntletConsole({
         {question.type === 'CLASSIC_TRIVIA' && (
           <div className="space-y-4">
             
-            {/* Clue 1 (Hard, 300 Pts) *            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-3.5 text-center relative overflow-hidden">
+            {/* Clue 1 (Hard, 300 Pts) */}
+            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-3.5 text-center relative overflow-hidden">
               <span className="text-sm text-teal-400 uppercase tracking-widest font-mono-sci block mb-1 font-bold">
                 Clue 1 (Hard - 300 Pts)
               </span>
-              <p className="text-base md:text-lg font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
+              <p key={index} className="text-base md:text-lg font-bold text-slate-200 font-deco tracking-wide leading-relaxed animate-text-flicker">
                 "{question.element.clues && question.element.clues[clueIndices[0]]}"
               </p>
             </div>

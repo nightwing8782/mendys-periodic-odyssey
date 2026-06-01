@@ -9,6 +9,10 @@ export default function CockpitLayout({ children, score, shake }) {
         backgroundImage: 'radial-gradient(circle at center, #050b14 0%, #030306 100%)'
       }}
     >
+      {/* CRT Scanline and Glitch Overlays */}
+      <div className="crt-scanlines" />
+      <div className="crt-scrolling-line" />
+
       {/* Cyber Grid background overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" 
@@ -27,7 +31,7 @@ export default function CockpitLayout({ children, score, shake }) {
         
         <div className="flex items-center space-x-3 text-xs tracking-widest font-bold">
           <span className="w-2 h-2 bg-cyan-500 animate-pulse shadow-[0_0_8px_#06b6d4]" />
-          <span>TACTICAL FEED [SYS_ON]</span>
+          <span className="animate-vector-glitch">TACTICAL FEED [SYS_ON]</span>
         </div>
 
         <div className="text-center text-sm font-bold tracking-[0.4em] text-yellow-400">

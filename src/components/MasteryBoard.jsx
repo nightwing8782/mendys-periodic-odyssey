@@ -334,7 +334,7 @@ export default function MasteryBoard({
 
       {/* Title Header Hacking style */}
       <div className="flex justify-between items-center mb-3 z-10 text-xs uppercase font-bold tracking-wider border-b border-cyan-500/20 pb-2">
-        <span className="text-yellow-400 font-bold">[MASTERY_DATABASE]</span>
+        <span className="text-yellow-400 font-bold animate-vector-glitch">[MASTERY_DATABASE]</span>
         <span className="text-cyan-500/60">SECTOR_TELEMETRY: CORE_118</span>
       </div>
 
@@ -398,12 +398,12 @@ export default function MasteryBoard({
                   ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
                   : isColumnCompleted
                   ? 'bg-cyan-950/20 border-cyan-500/50 text-cyan-400'
-                  : `border-dashed ${catColors.uncollectedBorder} ${catColors.uncollectedBg} text-transparent`;
+                  : `border-dashed ${catColors.uncollectedBorder} ${catColors.uncollectedBg} text-transparent animate-matrix-hum`;
 
                 if (interactive) {
                   tileClass = isCollected
                     ? `${catColors.collectedBg} ${catColors.collectedBorder} ${catColors.collectedText} font-bold cursor-pointer hover:scale-110 active:scale-95 z-30`
-                    : `border-dashed border-cyan-500/40 hover:border-yellow-400 bg-cyan-950/5 text-transparent cursor-pointer hover:scale-110 active:scale-95 z-30`;
+                    : `border-dashed border-cyan-500/40 hover:border-yellow-400 bg-cyan-950/5 text-transparent cursor-pointer hover:scale-110 active:scale-95 z-30 animate-matrix-hum`;
                 } else if (isCollected) {
                   tileClass += ` cursor-pointer hover:scale-110 active:scale-95 z-30`;
                 }

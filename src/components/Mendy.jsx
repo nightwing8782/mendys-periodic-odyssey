@@ -33,7 +33,7 @@ export default function Mendy({ state = 'idle' }) {
             isCorrect ? 'text-emerald-400' :
             isIncorrect ? 'text-red-400 animate-pulse' :
             isThinking ? 'text-yellow-400 animate-pulse' :
-            'text-cyan-400'
+            'text-cyan-400 animate-status-glow'
           }`}>
             {isCorrect ? '[TRANSMISSION_SECURED]' :
              isIncorrect ? '[LINK_ANOMALY]' :
@@ -47,11 +47,11 @@ export default function Mendy({ state = 'idle' }) {
 
         {/* Fake waveform / activity lines */}
         <div className="flex items-center space-x-1.5 h-6">
-          <div className={`w-[2px] bg-cyan-400 transition-all duration-300 ${isThinking ? 'h-6' : 'h-2 animate-pulse'}`} />
-          <div className={`w-[2px] bg-cyan-400 transition-all duration-300 ${isThinking ? 'h-4' : 'h-3 animate-pulse'}`} style={{ animationDelay: '0.1s' }} />
-          <div className={`w-[2px] bg-cyan-400 transition-all duration-300 ${isThinking ? 'h-5' : 'h-1 animate-pulse'}`} style={{ animationDelay: '0.2s' }} />
-          <div className={`w-[2px] bg-cyan-400 transition-all duration-300 ${isThinking ? 'h-2' : 'h-4 animate-pulse'}`} style={{ animationDelay: '0.3s' }} />
-          <div className={`w-[2px] bg-cyan-400 transition-all duration-300 ${isThinking ? 'h-5' : 'h-2 animate-pulse'}`} style={{ animationDelay: '0.4s' }} />
+          <div className="w-[2px] bg-cyan-400 h-6 animate-waveform-bar" style={{ animationDelay: '0.1s', animationDuration: '0.9s' }} />
+          <div className="w-[2px] bg-cyan-400 h-6 animate-waveform-bar" style={{ animationDelay: '0.35s', animationDuration: '0.7s' }} />
+          <div className="w-[2px] bg-cyan-400 h-6 animate-waveform-bar" style={{ animationDelay: '0.15s', animationDuration: '0.8s' }} />
+          <div className="w-[2px] bg-cyan-400 h-6 animate-waveform-bar" style={{ animationDelay: '0.5s', animationDuration: '0.6s' }} />
+          <div className="w-[2px] bg-cyan-400 h-6 animate-waveform-bar" style={{ animationDelay: '0.25s', animationDuration: '0.85s' }} />
         </div>
       </div>
     </div>
