@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CockpitLayout from './components/CockpitLayout';
 import Mendy from './components/Mendy';
 import GauntletConsole from './components/GauntletConsole';
@@ -34,6 +34,12 @@ export default function App() {
   const [shakeScreen, setShakeScreen] = useState(false);
   const [greenFlash, setGreenFlash] = useState(false);
   const [gridTapSymbol, setGridTapSymbol] = useState(null);
+  const [inspectedElement, setInspectedElement] = useState(null);
+
+  // Clear manual inspection cache on question or game state transition
+  useEffect(() => {
+    setInspectedElement(null);
+  }, [currentIndex, gameState]);
 
   // Manage Mendy avatar state based on game stage
   useEffect(() => {
@@ -44,8 +50,8 @@ export default function App() {
     }
   }, [currentIndex, currentRoundType, gameState]);
 
-  // Answer handler wired to GauntletConsole
-  const handleAnswerSubmitted = (isCorrect, symbol, points) => {
+  // Answer handler wired to GauntletConsole - memoized to prevent resetting child console feedback
+  const handleAnswerSubmitted = useCallback((isCorrect, symbol, points) => {
     // Ensure audio is unlocked on first action
     unlockAudio();
 
@@ -63,7 +69,7 @@ export default function App() {
 
     // Report answer to the state hook
     submitAnswer(isCorrect, symbol, points);
-  };
+  }, [submitAnswer]);
 
   // Helper to fetch details for choice cards
   const getModeDetails = (mode) => {
@@ -101,16 +107,21 @@ export default function App() {
     }
   };
 
-  // Click on Mastery Board element tile
-  const handleTileClick = (symbol) => {
+  // Click on Mastery Board element tile - memoized and upgraded to support manual element inspection
+  const handleTileClick = useCallback((symbol) => {
     if (gameState === 'PLAYING' && currentRoundType === 'GRID_TAP') {
       setGridTapSymbol(symbol);
+    } else {
+      const el = elements.find(e => e.symbol === symbol);
+      if (el) {
+        setInspectedElement(el);
+      }
     }
-  };
+  }, [gameState, currentRoundType]);
 
-  const resetGridTapSymbol = () => {
+  const resetGridTapSymbol = useCallback(() => {
     setGridTapSymbol(null);
-  };
+  }, []);
 
   // Determine current active element for Containment Chamber particle system
   const currentQuestion = questions[currentIndex];
@@ -434,6 +445,7 @@ export default function App() {
           activeElement={activeContainmentElement}
           isCorrect={gameState === 'PLAYING' && mendyState === 'correct'}
           currentIndex={currentIndex}
+          inspectedElement={inspectedElement}
         />
       </div>
 

@@ -267,7 +267,9 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
               effectClass = 'animate-breath-glow';
             }
 
-            if (interactive) {
+            const isClickable = interactive || isCollected;
+
+            if (isClickable) {
               effectClass += ' cursor-pointer hover:scale-110 hover:border-yellow-400 hover:bg-yellow-500/10 active:scale-95 z-30';
             }
 
@@ -280,7 +282,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                   gridRow: el.row,
                 }}
                 onClick={() => {
-                  if (interactive && onTileClick) {
+                  if (isClickable && onTileClick) {
                     onTileClick(el.symbol);
                   }
                 }}

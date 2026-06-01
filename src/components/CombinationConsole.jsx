@@ -7,7 +7,7 @@ import {
   getRadioDataArray 
 } from '../utils/audio';
 
-export default function CombinationConsole({ activeElement, isCorrect, currentIndex }) {
+export default function CombinationConsole({ activeElement, isCorrect, currentIndex, inspectedElement }) {
   // Radio control states
   const [station, setStation] = useState(-1); // -1 = Off, 0 = Ambient, 1 = Retro, 2 = Theremin
   const [volume, setVolume] = useState(0.3);
@@ -28,6 +28,13 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
       setLastScannedElement(activeElement);
     }
   }, [isCorrect, activeElement]);
+
+  // Update cached scan details on manual inspection of Mastery Board elements
+  useEffect(() => {
+    if (inspectedElement) {
+      setLastScannedElement(inspectedElement);
+    }
+  }, [inspectedElement]);
 
   // Tuner station handler
   const handleStationChange = (stationIndex) => {
