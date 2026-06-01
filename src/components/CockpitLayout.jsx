@@ -57,13 +57,13 @@ export default function CockpitLayout({ children, score, shake }) {
             <span className="w-2 h-2 bg-emerald-500 shadow-[0_0_6px_#10b981]" />
             <span className="w-2 h-2 bg-cyan-400 animate-pulse shadow-[0_0_6px_#2dd4bf]" />
           </div>
-          <span className="text-[10px] text-cyan-500/70 tracking-wider">SECURE LINK: STABLE [100.0% COHERENCY]</span>
+          <span className="text-xs text-cyan-500/70 tracking-wider">SECURE LINK: STABLE [100.0% COHERENCY]</span>
         </div>
 
         {/* Right Score telemetry */}
         <div className="flex items-center space-x-6 text-xs font-bold">
           <div className="flex flex-col items-end">
-            <span className="text-[8px] text-cyan-500/50 tracking-widest uppercase">BANKED SCORE DATA</span>
+            <span className="text-[10.5px] text-cyan-500/50 tracking-widest uppercase">BANKED SCORE DATA</span>
             <span className="text-sm font-bold text-yellow-400 tracking-wider">{score} PTS</span>
           </div>
         </div>

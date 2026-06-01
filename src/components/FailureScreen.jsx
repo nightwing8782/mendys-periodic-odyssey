@@ -61,11 +61,11 @@ export default function FailureScreen({ round, scoreNeeded, scoreAchieved, onRet
           {/* Score breakdown */}
           <div className="grid grid-cols-2 gap-4 bg-black/40 border border-teal-500/10 p-3 mb-6 text-center font-mono-sci text-xs">
             <div>
-              <span className="text-slate-500 block uppercase text-[10px]">Required Accuracy</span>
+              <span className="text-slate-500 block uppercase text-xs">Required Accuracy</span>
               <span className="text-yellow-400 font-bold text-sm">{scoreNeeded}%</span>
             </div>
             <div>
-              <span className="text-slate-500 block uppercase text-[10px]">Your Accuracy</span>
+              <span className="text-slate-500 block uppercase text-xs">Your Accuracy</span>
               <span className="text-red-400 font-bold text-sm">{scoreAchieved}%</span>
             </div>
           </div>

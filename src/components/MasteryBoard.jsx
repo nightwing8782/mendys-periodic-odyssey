@@ -333,7 +333,7 @@ export default function MasteryBoard({
       `}</style>
 
       {/* Title Header Hacking style */}
-      <div className="flex justify-between items-center mb-3 z-10 text-[10px] uppercase font-bold tracking-wider border-b border-cyan-500/20 pb-2">
+      <div className="flex justify-between items-center mb-3 z-10 text-xs uppercase font-bold tracking-wider border-b border-cyan-500/20 pb-2">
         <span className="text-yellow-400 font-bold">[MASTERY_DATABASE]</span>
         <span className="text-cyan-500/60">SECTOR_TELEMETRY: CORE_118</span>
       </div>
@@ -429,12 +429,12 @@ export default function MasteryBoard({
                   {showSymbol && (
                     <>
                       {/* Micro absolute atomic number at top left */}
-                      <span className={`absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
+                      <span className={`absolute top-[0.5px] left-[1px] text-[8.5px] sm:text-[9.5px] md:text-[10.5px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
                         {el.num}
                       </span>
                       
                       {/* Chemical Symbol in center */}
-                      <span className="text-[9px] sm:text-[11px] md:text-[13px] font-extrabold select-none leading-none mt-1">
+                      <span className="text-[12px] sm:text-[13.5px] md:text-[15px] font-extrabold select-none leading-none mt-1">
                         {el.symbol}
                       </span>
                     </>
@@ -450,7 +450,7 @@ export default function MasteryBoard({
       <div className="flex items-center justify-between mt-auto z-10 border-t border-cyan-500/15 pt-3 w-full">
         {/* Flat Telemetry segment lines */}
         <div className="flex items-center space-x-3 w-1/2">
-          <span className="text-[8.5px] text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
+          <span className="text-xs text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
           <div className="h-3 bg-slate-950/60 border border-cyan-500/25 flex-grow p-[2px] relative">
             <div 
               className="h-full bg-cyan-400 hud-telemetry-segments text-cyan-400 transition-all duration-1000"
@@ -461,7 +461,7 @@ export default function MasteryBoard({
 
         {/* Flat Hacking Text Ticker */}
         <div className="flex items-center space-x-2 text-xs font-bold font-mono">
-          <span className="text-cyan-500/50 uppercase tracking-widest text-[9px]">DATABASE_LOAD:</span>
+          <span className="text-cyan-500/50 uppercase tracking-widest text-xs">DATABASE_LOAD:</span>
           <span className="text-yellow-400">{collectedCount}</span>
           <span className="text-cyan-500/30">/</span>
           <span className="text-cyan-400">{totalGoalCount} SECURED</span>
