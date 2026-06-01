@@ -102,6 +102,13 @@ export default function App() {
           desc: 'High-stakes test! Click the correct element square directly on the periodic table.',
           length: '1 Question'
         };
+      case 'CLASSIC_TRIVIA':
+        return {
+          icon: '🔮',
+          title: 'Classic Trivia',
+          desc: 'Unveil up to 3 clues and type the full element name or symbol to secure it.',
+          length: '5 Questions'
+        };
       default:
         return { icon: '❓', title: 'Unknown', desc: '', length: '' };
     }

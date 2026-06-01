@@ -151,6 +151,19 @@ export function generateQuestions(type, elements, collectedSet) {
       symbol: target.symbol
     });
   }
+  
+  else if (type === 'CLASSIC_TRIVIA') {
+    // Generate 5 questions
+    const targets = priorityPool.slice(0, 5);
+    targets.forEach(target => {
+      questions.push({
+        type: 'CLASSIC_TRIVIA',
+        element: target,
+        answer: target.name,
+        symbol: target.symbol
+      });
+    });
+  }
 
   return questions;
 }

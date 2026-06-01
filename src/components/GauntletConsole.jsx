@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { playCorrectAscent, playIncorrectBuzz } from '../utils/audio';
+import { playCorrectAscent, playIncorrectBuzz, playClueChime } from '../utils/audio';
 
 export default function GauntletConsole({
   question,
@@ -24,6 +24,12 @@ export default function GauntletConsole({
     nextQuestion();
   };
 
+  // Classic trivia states
+  const [cluesRevealed, setCluesRevealed] = useState([true, false, false]);
+  const [inputValue, setInputValue] = useState('');
+  const [clueIndices, setClueIndices] = useState([0, 2]);
+  const inputRef = useRef(null);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
@@ -40,6 +46,23 @@ export default function GauntletConsole({
     setSelectedAnswer(null);
     if (resetGridTapSymbol) {
       resetGridTapSymbol();
+    }
+
+    // Reset classic trivia states
+    setInputValue('');
+    setCluesRevealed([true, false, false]);
+    const hardIdx = Math.random() < 0.5 ? 0 : 1;
+    const medIdx = Math.random() < 0.5 ? 2 : 3;
+    setClueIndices([hardIdx, medIdx]);
+
+    // Auto-focus input for Classic Trivia mode
+    if (question.type === 'CLASSIC_TRIVIA') {
+      const timer = setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [question, index, round, resetGridTapSymbol]);
 
@@ -147,6 +170,49 @@ export default function GauntletConsole({
     timeoutRef.current = setTimeout(() => {
       nextQuestion();
     }, 3000);
+  };
+
+  const getClassicPoints = () => {
+    if (cluesRevealed[2]) return 100;
+    if (cluesRevealed[1]) return 200;
+    return 300;
+  };
+
+  const handleClassicSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (feedback !== null || !inputValue.trim()) return;
+
+    const answer = inputValue.trim().toLowerCase();
+    const correctName = question.element.name.toLowerCase();
+    const correctSymbol = question.element.symbol.toLowerCase();
+
+    // If Clue 3 is revealed, must type full name. Else name or symbol works.
+    const isCorrect = cluesRevealed[2]
+      ? (answer === correctName)
+      : (answer === correctName || answer === correctSymbol);
+
+    if (isCorrect) {
+      setFeedback('correct');
+      playCorrectAscent();
+      const points = getClassicPoints();
+      onAnswerSubmitted(true, question.symbol, points);
+    } else {
+      setFeedback('incorrect');
+      playIncorrectBuzz();
+      onAnswerSubmitted(false, question.symbol, 0);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      nextQuestion();
+    }, 3000);
+  };
+
+  const revealClue = (clueIndex) => {
+    if (cluesRevealed[clueIndex] || feedback !== null) return;
+    const newRevealed = [...cluesRevealed];
+    newRevealed[clueIndex] = true;
+    setCluesRevealed(newRevealed);
+    playClueChime();
   };
 
   // Helper to determine element containment state for card styling
@@ -448,6 +514,108 @@ export default function GauntletConsole({
           </div>
         )}
 
+        {/* CLASSIC TRIVIA MODE */}
+        {question.type === 'CLASSIC_TRIVIA' && (
+          <div className="space-y-4">
+            
+            {/* Clue 1 (Hard, 300 Pts) */}
+            <div className="bg-slate-950/40 border border-teal-500/20 rounded-xl p-3.5 text-center relative overflow-hidden">
+              <span className="text-[9px] text-teal-400 uppercase tracking-widest font-mono-sci block mb-1 font-bold">
+                Clue 1 (Hard - 300 Pts)
+              </span>
+              <p className="text-xs md:text-sm font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
+                "{question.element.clues && question.element.clues[clueIndices[0]]}"
+              </p>
+            </div>
+
+            {/* Clue 2 & 3 Reveal Panel */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Clue 2 */}
+              {cluesRevealed[1] ? (
+                <div className="border border-teal-500/30 rounded-xl p-2.5 bg-slate-900/60 glow-teal text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
+                  <div className="flex justify-between items-center text-[8px] font-mono-sci text-teal-400 mb-0.5 font-bold">
+                    <span>CLUE 2 (MEDIUM)</span>
+                    <span className="text-teal-300">200 PTS MAX</span>
+                  </div>
+                  <p className="text-[9.5px] text-slate-300 font-mono-sci leading-tight">
+                    {question.element.clues && question.element.clues[clueIndices[1]]}
+                  </p>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={feedback !== null}
+                  onClick={() => revealClue(1)}
+                  className="border border-dashed border-teal-500/20 hover:border-teal-500/40 rounded-xl p-2.5 bg-teal-955/5 text-center text-[9px] text-teal-500/60 font-mono-sci transition-all duration-300 cursor-pointer hover:bg-teal-950/15 min-h-[70px] flex flex-col items-center justify-center"
+                >
+                  <span>🔍 Unlock Clue 2</span>
+                  <span className="text-[8px] opacity-75 mt-0.5">(Decays to 200 pts)</span>
+                </button>
+              )}
+
+              {/* Clue 3 */}
+              {cluesRevealed[2] ? (
+                <div className="border border-cyan-500/30 rounded-xl p-2.5 bg-slate-900/60 glow-cyan text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
+                  <div className="flex justify-between items-center text-[8px] font-mono-sci text-cyan-400 mb-0.5 font-bold">
+                    <span>CLUE 3 (EASY)</span>
+                    <span className="text-cyan-300">100 PTS MAX</span>
+                  </div>
+                  <p className="text-[9.5px] font-mono-sci leading-tight text-yellow-400 font-bold">
+                    What element has the symbol '{question.element.symbol}'?
+                  </p>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={!cluesRevealed[1] || feedback !== null}
+                  onClick={() => revealClue(2)}
+                  className={`border border-dashed rounded-xl p-2.5 text-center text-[9px] font-mono-sci transition-all duration-300 min-h-[70px] flex flex-col items-center justify-center ${
+                    cluesRevealed[1] && feedback === null
+                      ? 'border-cyan-500/20 hover:border-cyan-500/40 text-cyan-500/60 bg-cyan-955/5 cursor-pointer hover:bg-cyan-950/15'
+                      : 'border-slate-800 text-slate-700 bg-transparent cursor-not-allowed'
+                  }`}
+                >
+                  <span>🔒 Unlock Clue 3</span>
+                  <span className="text-[8px] opacity-75 mt-0.5">(Decays to 100 pts)</span>
+                </button>
+              )}
+            </div>
+
+            {/* Input Submission Box */}
+            <form onSubmit={handleClassicSubmit} className="mt-2">
+              <div className="flex items-center space-x-2">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputValue}
+                  disabled={feedback !== null}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder={cluesRevealed[2] ? "Enter element name" : "Name (e.g. Sodium) or Symbol (Na)"}
+                  className={`flex-grow bg-slate-950 text-slate-100 font-mono-sci text-xs px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none ${
+                    feedback === 'correct'
+                      ? 'border-emerald-500 text-emerald-400 glow-green'
+                      : feedback === 'incorrect'
+                      ? 'border-red-500 text-red-400'
+                      : 'border-teal-500/30 focus:border-yellow-500 focus:shadow-[0_0_10px_rgba(234,179,8,0.2)]'
+                  }`}
+                />
+                
+                <button
+                  type="submit"
+                  disabled={feedback !== null || !inputValue.trim()}
+                  className={`font-mono-sci text-xs font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 shadow-md ${
+                    feedback !== null || !inputValue.trim()
+                      ? 'bg-slate-900 border border-slate-800 text-slate-600 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 cursor-pointer shadow-[0_0_10px_rgba(234,179,8,0.2)]'
+                  }`}
+                >
+                  SUBMIT
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
         {/* Answer Feedback Alert Overlay inside content panel */}
         {feedback && (
           <div 
@@ -498,7 +666,15 @@ export default function GauntletConsole({
 
       {/* Footer Info / Potential score reward */}
       <div className="border-t border-yellow-500/20 pt-3 flex justify-between items-center text-[10px] font-mono-sci text-slate-500 z-10">
-        <span>EST. VALUE: {question.type === 'GRID_TAP' ? '500 PTS' : question.type === 'MULTIPLE_CHOICE' ? '200 PTS' : '300 PTS'}</span>
+        <span>EST. VALUE: {
+          question.type === 'GRID_TAP' 
+            ? '500 PTS' 
+            : question.type === 'MULTIPLE_CHOICE' 
+            ? '200 PTS' 
+            : question.type === 'CLASSIC_TRIVIA'
+            ? '300 PTS MAX'
+            : '300 PTS'
+        }</span>
         <span className="text-yellow-500/60 uppercase">WARP CORE GAUNTLET PROTOCOL</span>
       </div>
     </div>

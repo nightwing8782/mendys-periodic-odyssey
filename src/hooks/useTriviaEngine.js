@@ -16,7 +16,7 @@ export default function useTriviaEngine() {
 
   // Generate 2 random choices excluding lastPlayedType
   const generateChoices = useCallback((lastType) => {
-    const modes = ['MULTIPLE_CHOICE', 'WEIGHT_COMPARISON', 'NUCLEAR_SYNTHESIS', 'GRID_TAP'];
+    const modes = ['MULTIPLE_CHOICE', 'WEIGHT_COMPARISON', 'NUCLEAR_SYNTHESIS', 'GRID_TAP', 'CLASSIC_TRIVIA'];
     const available = modes.filter(m => m !== lastType);
     const shuffled = [...available].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 2);
