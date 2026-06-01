@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { elements } from '../data/elements';
 
 // Grid layout mapping for all 118 elements in the Periodic Table
 const tableElements = [
@@ -133,6 +134,67 @@ const tableElements = [
   { symbol: "No", num: 102, col: 17, row: 9 }
 ];
 
+// Helper to get group colors for uncollected element placeholders
+function getCategoryColor(category) {
+  switch (category) {
+    case 'alkali metal':
+      return {
+        border: 'border-orange-500/25',
+        bg: 'bg-orange-950/10'
+      };
+    case 'alkaline earth metal':
+      return {
+        border: 'border-amber-500/25',
+        bg: 'bg-amber-950/10'
+      };
+    case 'transition metal':
+      return {
+        border: 'border-teal-500/20',
+        bg: 'bg-teal-950/8'
+      };
+    case 'lanthanide':
+      return {
+        border: 'border-purple-500/25',
+        bg: 'bg-purple-950/10'
+      };
+    case 'actinide':
+      return {
+        border: 'border-pink-500/25',
+        bg: 'bg-pink-950/10'
+      };
+    case 'post-transition metal':
+      return {
+        border: 'border-blue-500/20',
+        bg: 'bg-blue-950/8'
+      };
+    case 'metalloid':
+      return {
+        border: 'border-emerald-500/20',
+        bg: 'bg-emerald-950/8'
+      };
+    case 'reactive nonmetal':
+      return {
+        border: 'border-lime-500/20',
+        bg: 'bg-lime-950/8'
+      };
+    case 'halogen':
+      return {
+        border: 'border-cyan-500/20',
+        bg: 'bg-cyan-950/8'
+      };
+    case 'noble gas':
+      return {
+        border: 'border-fuchsia-500/25',
+        bg: 'bg-fuchsia-950/10'
+      };
+    default:
+      return {
+        border: 'border-teal-500/10',
+        bg: 'bg-transparent'
+      };
+  }
+}
+
 export default function MasteryBoard({ collectedElements = new Set(), totalGoalCount = 118, interactive = false, onTileClick = null }) {
   const collectedCount = collectedElements.size;
   const [prevCleared, setPrevCleared] = useState(new Set());
@@ -247,70 +309,83 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
 
       {/* Periodic Table Grid Container */}
       <div className="w-full mb-3 flex justify-center z-10">
-        <div 
-          className="grid gap-[1px] md:gap-[2px] w-full max-w-[850px]"
-          style={{ 
-            gridTemplateColumns: 'repeat(18, minmax(0, 1fr))',
-            gridTemplateRows: 'repeat(9, minmax(0, 1fr))'
-          }}
-        >
-          {tableElements.map((el) => {
-            const isCollected = collectedElements.has(el.symbol);
-            const isColumnCompleted = prevCleared.has(el.col);
-            const isColumnFlashing = flashingColumns.has(el.col);
+        <div className="relative p-2 border border-teal-500/15 rounded-lg bg-slate-950/20 shadow-[inset_0_0_15px_rgba(20,184,166,0.05)] w-full max-w-[850px]">
+          {/* Edge highlight corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-teal-500/40 rounded-tl-sm pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-teal-500/40 rounded-tr-sm pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-teal-500/40 rounded-bl-sm pointer-events-none"></div>
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-teal-500/40 rounded-br-sm pointer-events-none"></div>
 
-            let borderClasses = 'border-teal-500/10 bg-transparent border-dashed text-transparent';
-            if (isCollected) {
-              borderClasses = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.3)] font-black';
-            }
+          <div 
+            className="grid gap-[1px] md:gap-[2px] w-full"
+            style={{ 
+              gridTemplateColumns: 'repeat(18, minmax(0, 1fr))',
+              gridTemplateRows: 'repeat(9, minmax(0, 1fr))'
+            }}
+          >
+            {tableElements.map((el) => {
+              const isCollected = collectedElements.has(el.symbol);
+              const isColumnCompleted = prevCleared.has(el.col);
+              const isColumnFlashing = flashingColumns.has(el.col);
 
-            // Apply special holographic flash or glow effects
-            let effectClass = '';
-            if (isColumnFlashing) {
-              effectClass = 'animate-column-flash z-20';
-            } else if (isColumnCompleted) {
-              effectClass = 'column-completed-glow animate-breath-glow text-emerald-300';
-            } else if (isCollected) {
-              effectClass = 'animate-breath-glow';
-            }
+              // Find element metadata from elements database
+              const elementMeta = elements.find(e => e.symbol === el.symbol);
+              const category = elementMeta?.category || 'unknown';
+              const catColors = getCategoryColor(category);
 
-            const isClickable = interactive || isCollected;
+              let borderClasses = `${catColors.border} ${catColors.bg} border-dashed text-transparent`;
+              if (isCollected) {
+                borderClasses = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.3)] font-black';
+              }
 
-            if (isClickable) {
-              effectClass += ' cursor-pointer hover:scale-110 hover:border-yellow-400 hover:bg-yellow-500/10 active:scale-95 z-30';
-            }
+              // Apply special holographic flash or glow effects
+              let effectClass = '';
+              if (isColumnFlashing) {
+                effectClass = 'animate-column-flash z-20';
+              } else if (isColumnCompleted) {
+                effectClass = 'column-completed-glow animate-breath-glow text-emerald-300';
+              } else if (isCollected) {
+                effectClass = 'animate-breath-glow';
+              }
 
-            return (
-              <div
-                key={el.num}
-                className={`relative flex flex-col items-center justify-center border rounded-[2px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
-                style={{
-                  gridColumn: `${el.col}`,
-                  gridRow: `${el.row}`,
-                }}
-                onClick={() => {
-                  if (isClickable && onTileClick) {
-                    onTileClick(el.symbol);
-                  }
-                }}
-                title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Row ${el.row}, Column ${el.col} [LOCKED]`}
-              >
-                {isCollected && (
-                  <>
-                    {/* Micro absolute atomic number at top left */}
-                    <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8.5px] opacity-75 leading-none select-none">
-                      {el.num}
-                    </span>
-                    
-                    {/* Chemical Symbol in center */}
-                    <span className="text-[9px] sm:text-[12px] md:text-[14px] font-bold select-none leading-none mt-1">
-                      {el.symbol}
-                    </span>
-                  </>
-                )}
-              </div>
-            );
-          })}
+              const isClickable = interactive || isCollected;
+
+              if (isClickable) {
+                effectClass += ' cursor-pointer hover:scale-110 hover:border-yellow-400 hover:bg-yellow-500/10 active:scale-95 z-30';
+              }
+
+              return (
+                <div
+                  key={el.num}
+                  className={`relative flex flex-col items-center justify-center border rounded-[2px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
+                  style={{
+                    gridColumn: `${el.col}`,
+                    gridRow: `${el.row}`,
+                  }}
+                  onClick={() => {
+                    if (isClickable && onTileClick) {
+                      onTileClick(el.symbol);
+                    }
+                  }}
+                  title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Row ${el.row}, Column ${el.col} [LOCKED]`}
+                >
+                  {isCollected && (
+                    <>
+                      {/* Micro absolute atomic number at top left */}
+                      <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8.5px] opacity-75 leading-none select-none">
+                        {el.num}
+                      </span>
+                      
+                      {/* Chemical Symbol in center */}
+                      <span className="text-[9px] sm:text-[12px] md:text-[14px] font-bold select-none leading-none mt-1">
+                        {el.symbol}
+                      </span>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
