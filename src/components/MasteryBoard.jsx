@@ -429,12 +429,12 @@ export default function MasteryBoard({
                   {showSymbol && (
                     <>
                       {/* Micro absolute atomic number at top left */}
-                      <span className={`absolute top-[0.5px] left-[1px] text-[10.5px] sm:text-[11.5px] md:text-[12.5px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
+                      <span className={`absolute top-[1px] left-[1.5px] text-[7.5px] sm:text-[8.5px] md:text-[9.5px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
                         {el.num}
                       </span>
                       
                       {/* Chemical Symbol in center */}
-                      <span className="text-[14px] sm:text-[16px] md:text-[18px] font-extrabold select-none leading-none mt-1">
+                      <span className="text-[11.5px] sm:text-[13px] md:text-[14.5px] font-extrabold select-none leading-none mt-1.5">
                         {el.symbol}
                       </span>
                     </>
