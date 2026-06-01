@@ -140,7 +140,7 @@ export default function App() {
     .filter(Boolean);
 
   return (
-    <CockpitLayout score={score}>
+    <CockpitLayout score={score} shake={shakeScreen}>
       {/* Inline styles for screen shake and outline flashes */}
       <style>{`
         @keyframes screen-shake-anim {
@@ -169,302 +169,290 @@ export default function App() {
 
       {/* Screen Success Flash Overlay */}
       {greenFlash && (
-        <div className="fixed inset-0 border-[6px] rounded-lg pointer-events-none z-50 animate-flash-pulse" />
+        <div className="fixed inset-0 border-[6px] rounded-none pointer-events-none z-50 animate-flash-pulse" />
       )}
 
-      {/* LEFT COLUMN: Captain Mendy, Status Gauges, & Central Console Deck */}
-      <div className={`lg:col-span-5 flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
+      {/* COLUMN 1 (LEFT, 25%): Holographic Mendy & Telemetry Diagnostic Feed */}
+      <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
+        <div className="flex justify-center w-full">
+          <Mendy state={mendyState} />
+        </div>
         
-        {/* Side-by-Side Steampunk Chassis & Warp Status Panel */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
-          {/* Prominent Steampunk Chassis Wrapper */}
-          <div className="flex items-center justify-center">
-            <Mendy state={mendyState} />
+        {/* Diagnostic Warp Core panel */}
+        <div className="hud-panel p-4 flex flex-col justify-between bg-black/40 font-mono text-[10px] space-y-3 relative flex-grow">
+          <div className="hud-bracket hud-bracket-tl" />
+          <div className="hud-bracket hud-bracket-tr" />
+          <div className="hud-bracket hud-bracket-bl" />
+          <div className="hud-bracket hud-bracket-br" />
+          
+          <div className="space-y-2">
+            <div className="w-full flex justify-between text-[9px] text-cyan-400 font-bold">
+              <span>[WARP_CORE_CHARGE]</span>
+              <span>{collectedElements.length} / 118 BANKED</span>
+            </div>
+            
+            <div className="w-full h-3 bg-black/50 border border-cyan-500/20 p-[2px] shadow-inner">
+              <div 
+                className="h-full bg-cyan-400 hud-telemetry-segments text-cyan-400 transition-all duration-1000"
+                style={{ width: `${(collectedElements.length / 118) * 100}%` }}
+              />
+            </div>
           </div>
 
-          {/* Hard-mounted Cockpit Status Indicator & Containment Capsule */}
-          <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between bg-slate-900/60 font-mono-sci">
-            <div className="panel-bolt panel-bolt-tl" />
-            <div className="panel-bolt panel-bolt-tr" />
-            <div className="panel-bolt panel-bolt-bl" />
-            <div className="panel-bolt panel-bolt-br" />
-            <div className="space-y-3">
-              <div className="w-full flex justify-between text-[9px] text-teal-400">
-                <span>WARP CORE CHARGE</span>
-                <span>{collectedElements.length} / 118 ELEMENTS</span>
-              </div>
-              
-              <div className="w-full h-3 bg-slate-950 border border-teal-500/30 rounded-full overflow-hidden p-0.5 shadow-inner">
-                <div 
-                  className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full glow-teal transition-all duration-1000"
-                  style={{ width: `${(collectedElements.length / 118) * 100}%` }}
-                />
-              </div>
-
-              <div className="text-[10px] text-yellow-500 text-center uppercase tracking-widest mt-1">
-                {gameState === 'victory' ? 'WARP ENGAGED' : `GAUNTLET EXPEDITION: ROUND ${round}`}
-              </div>
-            </div>
-
-            {/* Mount for Element Containment Chamber */}
-            <div className="border-t border-teal-500/10 pt-3 mt-3 flex flex-col items-center">
-              <ElementCapsule element={activeContainmentElement} />
-              <span className="font-mono-sci text-[8px] text-yellow-500/50 uppercase tracking-widest mt-1.5">
-                Containment Chamber
-              </span>
-            </div>
+          <div className="border-t border-cyan-500/10 pt-3 flex flex-col items-center">
+            <ElementCapsule element={activeContainmentElement} />
+            <span className="font-mono text-[8px] text-cyan-500/50 uppercase tracking-widest mt-2 block">
+              [CONTAINMENT_MATRIX]
+            </span>
+          </div>
+          
+          <div className="text-[9px] text-yellow-400 text-center uppercase tracking-widest border-t border-cyan-500/10 pt-2.5">
+            {gameState === 'victory' ? 'WARP_ENGAGED' : `EXPEDITION: PROTOCOL_${round}`}
           </div>
         </div>
+      </div>
 
-        {/* Central Harvester Game loop Deck */}
-        <div className="flex-grow min-h-[360px] flex flex-col justify-stretch">
-          
-          {/* 1. INTRO / START STATE */}
-          {gameState === 'intro' && (
-            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none relative">
-              <div className="panel-bolt panel-bolt-tl" />
-              <div className="panel-bolt panel-bolt-tr" />
-              <div className="panel-bolt panel-bolt-bl" />
-              <div className="panel-bolt panel-bolt-br" />
-              <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
-                <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider">
-                  MISSION HARVESTER
-                </h1>
-              </div>
-              
-              <div className="my-6 space-y-4">
-                <p className="text-sm leading-relaxed text-teal-100 font-mono-sci">
-                  Captain Mendy's starship warp drive has failed! 
-                  Help her traverse the periodic fields in this endless element collection gauntlet. 
-                  Identify, compare, synthesize, and tap elements until all 118 are secured!
-                </p>
-                <div className="bg-slate-950/80 border border-teal-500/20 rounded-xl p-4 text-[11px] font-mono-sci text-left text-slate-300 space-y-2.5 max-h-[140px] overflow-y-auto">
-                  <div className="flex items-start space-x-2">
-                    <span className="text-teal-400">⚡</span>
-                    <span><strong>Endless Loop:</strong> Play mini-rounds until your Mastery Board holds all 118 elements.</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <span className="text-teal-400">⚡</span>
-                    <span><strong>Back-to-Back Ban:</strong> You cannot play the same mode twice consecutively.</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <span className="text-teal-400">⚡</span>
-                    <span><strong>Deep Scans:</strong> Read and study element cards between rounds to prepare your grid taps.</span>
-                  </div>
+      {/* COLUMN 2 (CENTER, 25%): Central Gauntlet Terminal Core */}
+      <div className="lg:col-span-3 flex flex-col justify-stretch">
+        
+        {/* 1. INTRO / START STATE */}
+        {gameState === 'intro' && (
+          <div className="hud-panel p-6 flex flex-col justify-between items-center text-center select-none h-full relative">
+            <div className="hud-bracket hud-bracket-tl" />
+            <div className="hud-bracket hud-bracket-tr" />
+            <div className="hud-bracket hud-bracket-bl" />
+            <div className="hud-bracket hud-bracket-br" />
+            <div className="border border-cyan-500/20 px-6 py-2 bg-cyan-950/10 w-full mb-4">
+              <h1 className="font-mono text-base font-bold text-yellow-400 tracking-wider">
+                MISSION HARVESTER
+              </h1>
+            </div>
+            
+            <div className="my-4 space-y-4">
+              <p className="text-xs leading-relaxed text-cyan-200 font-mono">
+                Captain Mendy's starship warp drive has failed! 
+                Help her traverse the periodic fields in this endless element collection gauntlet. 
+                Identify, compare, synthesize, and tap elements until all 118 are secured!
+              </p>
+              <div className="bg-black/50 border border-cyan-500/20 p-4 text-[10px] font-mono text-left text-cyan-300 space-y-2 max-h-[140px] overflow-y-auto">
+                <div className="flex items-start space-x-2">
+                  <span className="text-yellow-400">⚡</span>
+                  <span><strong>Endless Loop:</strong> Play mini-rounds until your Mastery Board holds all 118 elements.</span>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <span className="text-yellow-400">⚡</span>
+                  <span><strong>Back-to-Back Ban:</strong> You cannot play the same mode twice consecutively.</span>
                 </div>
               </div>
-
-              <button
-                onClick={() => {
-                  unlockAudio();
-                  playClueChime();
-                  startGame();
-                }}
-                className="btn-tactile w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
-              >
-                INITIALIZE HARVESTER
-              </button>
             </div>
-          )}
 
-          {/* 2. MODE SELECTION STATE */}
-          {gameState === 'MODE_SELECTION' && (
-            <div className="glass-panel rounded-2xl p-6 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in relative">
-              <div className="panel-bolt panel-bolt-tl" />
-              <div className="panel-bolt panel-bolt-tr" />
-              <div className="panel-bolt panel-bolt-bl" />
-              <div className="panel-bolt panel-bolt-br" />
-              <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
-                <h1 className="font-deco text-xl font-black text-yellow-400 tracking-wider">
-                  SELECT REACTOR TYPE
-                </h1>
-              </div>
+            <button
+              onClick={() => {
+                unlockAudio();
+                playClueChime();
+                startGame();
+              }}
+              className="hud-btn-arcade w-full cursor-pointer text-xs"
+            >
+              INITIALIZE HARVESTER
+            </button>
+          </div>
+        )}
+
+        {/* 2. MODE SELECTION STATE */}
+        {gameState === 'MODE_SELECTION' && (
+          <div className="hud-panel p-4 flex flex-col justify-between items-center text-center select-none h-full relative animate-fade-in">
+            <div className="hud-bracket hud-bracket-tl" />
+            <div className="hud-bracket hud-bracket-tr" />
+            <div className="hud-bracket hud-bracket-bl" />
+            <div className="hud-bracket hud-bracket-br" />
+            <div className="border border-cyan-500/20 px-6 py-1.5 bg-cyan-950/10 w-full mb-3">
+              <h1 className="font-mono text-sm font-bold text-yellow-400 tracking-wider">
+                SELECT PROTOCOL
+              </h1>
+            </div>
+            
+            <div className="my-2 space-y-3 w-full flex-grow flex flex-col justify-center">
+              <p className="text-[10px] leading-normal text-cyan-300 font-mono">
+                Captain Mendy requires energy telemetry. Select an active protocol below to proceed:
+              </p>
               
-              <div className="my-4 space-y-4 w-full flex-grow flex flex-col justify-center">
-                <p className="text-xs leading-normal text-teal-100 font-mono-sci">
-                  Captain Mendy requires energy telemetry from specific mini-game modes. Choose an active protocol below to proceed with the harvest:
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {choices.map((mode) => {
-                    const details = getModeDetails(mode);
-                    return (
-                      <button
-                        key={mode}
-                        onClick={() => {
-                          unlockAudio();
-                          selectMode(mode);
-                        }}
-                        className="glass-panel border border-teal-500/35 hover:border-yellow-400/80 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[160px] cursor-pointer bg-slate-900/60 hover:bg-slate-950/90 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97] relative"
+              <div className="grid grid-cols-2 gap-3">
+                {choices.map((mode) => {
+                  const details = getModeDetails(mode);
+                  return (
+                    <button
+                      key={mode}
+                      onClick={() => {
+                        unlockAudio();
+                        selectMode(mode);
+                      }}
+                      className="hud-panel hover:hud-panel-active border border-cyan-500/20 hover:border-yellow-400/80 p-3 flex flex-col items-center justify-between text-center min-h-[140px] cursor-pointer bg-black/40 hover:bg-black/60 transition-all duration-150 transform hover:scale-[1.02] active:scale-[0.98] w-full relative"
+                    >
+                      <div className="hud-bracket hud-bracket-tl" />
+                      <div className="hud-bracket hud-bracket-tr" />
+                      <div className="hud-bracket hud-bracket-bl" />
+                      <div className="hud-bracket hud-bracket-br" />
+                      <span className="text-xl mb-1">{details.icon}</span>
+                      <span className="font-mono font-bold text-[10px] text-yellow-400 tracking-wider uppercase z-10">{details.title}</span>
+                      <span className="text-[8px] text-cyan-500/60 font-mono mt-1 leading-normal z-10">{details.desc}</span>
+                      <span className="text-[7.5px] text-cyan-400 font-mono mt-2 border border-cyan-500/20 px-1.5 py-0.5 bg-cyan-950/20 uppercase tracking-widest z-10">{details.length}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <div className="text-[7.5px] text-cyan-500/50 font-mono tracking-widest uppercase">
+              THE BACK-TO-BACK BAN PREVENTS REPEATED PROTOCOLS
+            </div>
+          </div>
+        )}
+
+        {/* 3. PLAYING TRIVIA RUN */}
+        {gameState === 'PLAYING' && currentQuestion && (
+          <GauntletConsole
+            question={currentQuestion}
+            index={currentIndex}
+            totalQuestions={questions.length}
+            round={round}
+            onAnswerSubmitted={handleAnswerSubmitted}
+            nextQuestion={nextQuestion}
+            gridTapSymbol={gridTapSymbol}
+            resetGridTapSymbol={resetGridTapSymbol}
+          />
+        )}
+
+        {/* 4. ROUND CLEAR DOSSIER TERMINAL */}
+        {gameState === 'ROUND_CLEAR' && (
+          <div className="hud-panel p-4 flex flex-col justify-between items-center text-center select-none h-full relative animate-fade-in font-mono">
+            <div className="hud-bracket hud-bracket-tl" />
+            <div className="hud-bracket hud-bracket-tr" />
+            <div className="hud-bracket hud-bracket-bl" />
+            <div className="hud-bracket hud-bracket-br" />
+            <div className="border border-cyan-500/20 px-6 py-1.5 bg-cyan-950/10 w-full mb-3">
+              <h1 className="font-mono text-sm font-bold text-yellow-400 tracking-wider">
+                EXPEDITION SUMMARY
+              </h1>
+            </div>
+
+            {/* Harvested Elements slide view */}
+            <div className="w-full flex-grow flex flex-col justify-between my-2 overflow-hidden">
+              <div className="text-left mb-2">
+                <span className="text-[9px] text-cyan-400 font-bold uppercase tracking-wider block">
+                  HARVESTED ELEMENT TELEMETRY
+                </span>
+                <span className="text-[8.5px] text-cyan-500/50 block mt-0.5">
+                  Click elements on Mastery Board to research details.
+                </span>
+              </div>
+
+              {/* Dossier slide lists */}
+              <div className="flex-grow overflow-y-auto pr-1 space-y-3 max-h-[170px] bg-black/30 rounded-none p-3 border border-cyan-500/10">
+                {roundCollectedElements.length === 0 ? (
+                  <div className="h-full flex flex-col justify-center items-center text-cyan-500/60 text-xs py-10">
+                    <span>No elements were collected during this expedition.</span>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-2.5">
+                    {roundCollectedElements.map((el) => (
+                      <div 
+                        key={el.symbol} 
+                        className="hud-panel border border-cyan-500/20 bg-black/30 p-2.5 flex flex-col text-left relative overflow-hidden"
                       >
-                        <div className="panel-bolt panel-bolt-tl" />
-                        <div className="panel-bolt panel-bolt-tr" />
-                        <div className="panel-bolt panel-bolt-bl" />
-                        <div className="panel-bolt panel-bolt-br" />
-                        <span className="text-3xl mb-2">{details.icon}</span>
-                        <span className="font-deco font-bold text-xs text-yellow-400 tracking-wider uppercase z-10">{details.title}</span>
-                        <span className="text-[9px] text-slate-400 font-mono-sci mt-1 leading-normal z-10">{details.desc}</span>
-                        <span className="text-[8px] text-teal-400 font-mono-sci mt-3 border border-teal-500/20 px-2 py-0.5 rounded bg-teal-950/20 uppercase tracking-widest z-10">{details.length}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              
-              <div className="text-[8px] text-teal-500/60 font-mono-sci tracking-widest uppercase">
-                THE BACK-TO-BACK BAN PREVENTS PLAYING THE SAME PROTOCOL CONSECUTIVELY
-              </div>
-            </div>
-          )}
+                        <div className="hud-bracket hud-bracket-tl" />
+                        <div className="hud-bracket hud-bracket-tr" />
+                        <div className="hud-bracket hud-bracket-bl" />
+                        <div className="hud-bracket hud-bracket-br" />
+                        <div className="flex justify-between items-center text-[8.5px] text-cyan-400 border-b border-cyan-500/10 pb-1 mb-1.5 z-10 font-bold">
+                          <span>SECURED DATA</span>
+                          <span className="text-yellow-400 font-bold">{el.symbol}</span>
+                        </div>
 
-          {/* 3. PLAYING TRIVIA RUN */}
-          {gameState === 'PLAYING' && currentQuestion && (
-            <GauntletConsole
-              question={currentQuestion}
-              index={currentIndex}
-              totalQuestions={questions.length}
-              round={round}
-              onAnswerSubmitted={handleAnswerSubmitted}
-              nextQuestion={nextQuestion}
-              gridTapSymbol={gridTapSymbol}
-              resetGridTapSymbol={resetGridTapSymbol}
-            />
-          )}
-
-          {/* 4. ROUND CLEAR DOSSIER TERMINAL */}
-          {gameState === 'ROUND_CLEAR' && (
-            <div className="glass-panel rounded-2xl p-6 border-2 border-emerald-500/30 glow-green h-full flex flex-col justify-between items-center text-center select-none animate-fade-in font-mono-sci relative">
-              <div className="panel-bolt panel-bolt-tl" />
-              <div className="panel-bolt panel-bolt-tr" />
-              <div className="panel-bolt panel-bolt-bl" />
-              <div className="panel-bolt panel-bolt-br" />
-              <div className="art-deco-border px-6 py-1.5 border border-emerald-500/30 bg-emerald-950/20 rounded">
-                <h1 className="font-deco text-xl font-black text-emerald-400 tracking-wider">
-                  REACTOR EXPEDITION SUMMARY
-                </h1>
-              </div>
-
-              {/* Harvested Elements slide view */}
-              <div className="w-full flex-grow flex flex-col justify-between my-4 overflow-hidden">
-                <div className="text-left mb-2">
-                  <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider block">
-                    HARVESTED ELEMENT TELEMETRY
-                  </span>
-                  <span className="text-[8.5px] text-slate-400 block mt-0.5">
-                    Expedition {round - 1} Dossier Cards. Click elements on Mastery Board to research details.
-                  </span>
-                </div>
-
-                {/* Dossier slide lists */}
-                <div className="flex-grow overflow-y-auto pr-1 space-y-3 max-h-[170px] bg-slate-950/50 rounded-xl p-3 border border-emerald-500/10">
-                  {roundCollectedElements.length === 0 ? (
-                    <div className="h-full flex flex-col justify-center items-center text-slate-500 text-xs py-10">
-                      <span>No elements were collected during this expedition.</span>
-                      <span className="text-[10px] mt-1 text-slate-600">Try prioritizing target questions in the next round.</span>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 gap-2.5">
-                      {roundCollectedElements.map((el, i) => (
-                        <div 
-                          key={el.symbol} 
-                          className="glass-panel border border-emerald-500/20 bg-slate-900/40 rounded-xl p-3 flex flex-col text-left relative overflow-hidden"
-                        >
-                          <div className="panel-bolt panel-bolt-tl" />
-                          <div className="panel-bolt panel-bolt-tr" />
-                          <div className="panel-bolt panel-bolt-bl" />
-                          <div className="panel-bolt panel-bolt-br" />
-                          <div className="flex justify-between items-center text-[8.5px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-1.5 z-10">
-                            <span className="font-bold">SECURED DATA #{i + 1}</span>
-                            <span className="font-bold text-yellow-400 font-deco">{el.symbol}</span>
+                        <div className="text-[9px] text-cyan-300 space-y-1 z-10">
+                          <div className="grid grid-cols-2 gap-x-2">
+                            <div>
+                              <span className="text-cyan-500/60">NAME:</span>{' '}
+                              <span className="font-bold text-slate-200 uppercase">{el.name}</span>
+                            </div>
+                            <div>
+                              <span className="text-cyan-500/60">ATOMIC #:</span>{' '}
+                              <span className="font-bold text-slate-200">{el.number}</span>
+                            </div>
                           </div>
-
-                          <div className="text-[9.5px] text-emerald-300 space-y-1 z-10">
-                            <div className="grid grid-cols-2 gap-x-2">
-                              <div>
-                                <span className="text-emerald-500/60 font-medium">NAME:</span>{' '}
-                                <span className="font-bold text-slate-200 uppercase">{el.name}</span>
-                              </div>
-                              <div>
-                                <span className="text-emerald-500/60 font-medium">ATOMIC #:</span>{' '}
-                                <span className="font-bold text-slate-200">{el.number}</span>
-                              </div>
-                            </div>
-                            
-                            <div className="border-t border-emerald-500/5 pt-1 text-[8.5px] text-slate-300">
-                              <span className="text-emerald-500/60 font-medium uppercase font-bold text-[8px]">USE:</span> {el.use}
-                            </div>
+                          
+                          <div className="border-t border-cyan-500/5 pt-1 text-[8.5px] text-cyan-200/80">
+                            <span className="text-cyan-500/60 font-bold text-[8px]">USE:</span> {el.use}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                unlockAudio();
+                advanceRound();
+              }}
+              className="hud-btn-arcade-green w-full text-xs cursor-pointer"
+            >
+              ENGAGE NEXT WARP PROTOCOL
+            </button>
+          </div>
+        )}
+
+        {/* 5. VICTORY CELEBRATION */}
+        {gameState === 'victory' && (
+          <div className="hud-panel p-6 flex flex-col justify-between items-center text-center select-none h-full relative animate-fade-in font-mono">
+            <div className="hud-bracket hud-bracket-tl" />
+            <div className="hud-bracket hud-bracket-tr" />
+            <div className="hud-bracket hud-bracket-bl" />
+            <div className="hud-bracket hud-bracket-br" />
+            <div className="border border-cyan-500/20 px-6 py-2 bg-cyan-950/10 w-full mb-4">
+              <h1 className="font-mono text-base font-bold text-yellow-400 tracking-wider">
+                ODYSSEY COMPLETED
+              </h1>
+            </div>
+
+            <div className="my-4 space-y-4">
+              <div className="text-4xl animate-bounce">⚡</div>
+              <p className="text-xs text-cyan-200 leading-relaxed">
+                Stunning! You have harvested all 118 elements of the universe! 
+                Captain Mendy's warp core is completely charged and she is returning to the stars. 
+                Earth is saved and documented!
+              </p>
+              <div className="grid grid-cols-2 gap-4 bg-black/60 border border-cyan-500/20 p-3 text-xs">
+                <div>
+                  <span className="text-cyan-500/50 block text-[9px] uppercase tracking-wider">TOTAL SCORE</span>
+                  <span className="text-yellow-400 font-bold">{score} PTS</span>
+                </div>
+                <div>
+                  <span className="text-cyan-500/50 block text-[9px] uppercase tracking-wider">EXPEDITIONS</span>
+                  <span className="text-cyan-400 font-bold">ROUND {round}</span>
                 </div>
               </div>
-
-              <button
-                onClick={() => {
-                  unlockAudio();
-                  advanceRound();
-                }}
-                className="btn-tactile-green w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
-              >
-                ENGAGE NEXT WARP PROTOCOL
-              </button>
             </div>
-          )}
 
-          {/* 5. VICTORY CELEBRATION */}
-          {gameState === 'victory' && (
-            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/40 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in relative">
-              <div className="panel-bolt panel-bolt-tl" />
-              <div className="panel-bolt panel-bolt-tr" />
-              <div className="panel-bolt panel-bolt-bl" />
-              <div className="panel-bolt panel-bolt-br" />
-              <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
-                <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider animate-pulse">
-                  ODYSSEY COMPLETED!
-                </h1>
-              </div>
-
-              <div className="my-6 space-y-4">
-                <div className="text-6xl animate-bounce">🚀</div>
-                <p className="text-sm font-mono-sci text-slate-200 leading-relaxed">
-                  Stunning! You have harvested all 118 elements of the universe! 
-                  Captain Mendy's warp core is completely charged and she is returning to the stars. 
-                  Earth is saved and documented!
-                </p>
-                <div className="grid grid-cols-2 gap-4 bg-slate-950/80 border border-yellow-500/20 rounded-xl p-3 font-mono-sci text-xs">
-                  <div>
-                    <span className="text-slate-500 block">TOTAL SCORE</span>
-                    <span className="text-yellow-400 font-bold text-sm">{score} PTS</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500 block">ROUND REACHED</span>
-                    <span className="text-emerald-400 font-bold text-sm">ROUND {round}</span>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  unlockAudio();
-                  playWarpDrive();
-                  resetGame();
-                }}
-                className="btn-tactile w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
-              >
-                REBOOT ODYSSEY PROCESS
-              </button>
-            </div>
-          )}
-
-        </div>
+            <button
+              onClick={() => {
+                unlockAudio();
+                playWarpDrive();
+                resetGame();
+              }}
+              className="hud-btn-arcade w-full text-xs cursor-pointer"
+            >
+              REBOOT ODYSSEY PROCESS
+            </button>
+          </div>
+        )}
 
       </div>
 
-      {/* RIGHT COLUMN: Holographic Mastery Dashboard & Combination Console */}
-      <div className={`lg:col-span-7 h-full flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
-        
+      {/* COLUMN 3 (RIGHT, 50%): Interactive Mastery Board & Scanner Deck */}
+      <div className="lg:col-span-6 h-full flex flex-col justify-between space-y-4">
         <div className="flex-grow">
           {/* Pass interactive=true when in GRID_TAP mode */}
           <MasteryBoard 

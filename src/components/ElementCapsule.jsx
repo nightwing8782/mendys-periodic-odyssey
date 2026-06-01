@@ -347,10 +347,10 @@ export default function ElementCapsule({ element }) {
   return (
     <div className="relative flex flex-col items-center">
       {/* Glow highlight surrounding the capsule */}
-      <div className="absolute inset-0 bg-teal-500/10 blur-xl rounded-full pointer-events-none" />
+      <div className="absolute inset-0 bg-teal-500/5 blur-xl pointer-events-none" />
       <canvas
         ref={canvasRef}
-        className="border border-teal-500/20 rounded-lg bg-[#080d1a]"
+        className="border border-teal-500/20 rounded-none bg-[#05050a]"
       />
     </div>
   );

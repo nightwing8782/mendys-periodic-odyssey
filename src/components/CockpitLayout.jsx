@@ -1,95 +1,72 @@
 import React from 'react';
 
-export default function CockpitLayout({ children, score }) {
+export default function CockpitLayout({ children, score, shake }) {
   return (
     <div 
-      className="min-h-screen relative overflow-hidden flex flex-col items-center justify-between p-4 md:p-6 text-slate-100 font-sans bg-slate-950 bg-cover bg-center"
+      className={`min-h-screen relative overflow-hidden flex flex-col items-center justify-between p-4 md:p-6 text-cyan-400 font-mono bg-[#030306] select-none ${shake ? 'animate-shake' : ''}`}
       style={{ 
-        backgroundImage: 'url("/cockpit-bg.jpg")',
-        minHeight: '100vh'
+        minHeight: '100vh',
+        backgroundImage: 'radial-gradient(circle at center, #050b14 0%, #030306 100%)'
       }}
     >
+      {/* Cyber Grid background overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" 
+        style={{
+          backgroundImage: 'linear-gradient(rgba(20, 184, 166, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 184, 166, 0.3) 1px, transparent 1px)',
+          backgroundSize: '30px 30px'
+        }}
+      />
 
-      {/* 2. BRASS & GOLD COCKPIT CEILING DECOR (Symmetrical Sunburst) */}
-      <div className="w-full max-w-7xl z-10 hidden md:flex items-center justify-between px-12 py-1 bg-gradient-to-b from-[#131b2e] to-transparent border-b border-yellow-500/20 relative">
-        {/* Left Sunburst corner */}
-        <div className="flex items-center space-x-1 opacity-45">
-          <div className="w-8 h-[2px] bg-yellow-500" />
-          <div className="w-4 h-4 border-t-2 border-l-2 border-yellow-500 transform rotate-45" />
-        </div>
+      {/* HUD Hacking Header */}
+      <div className="w-full max-w-7xl z-10 hidden md:flex items-center justify-between px-6 py-2 border border-cyan-500/20 bg-[#05050a] relative">
+        <div className="hud-bracket hud-bracket-tl" />
+        <div className="hud-bracket hud-bracket-tr" />
+        <div className="hud-bracket hud-bracket-bl" />
+        <div className="hud-bracket hud-bracket-br" />
         
-        {/* Center Plaque */}
-        <div className="flex items-center space-x-6">
-          {/* Left ceiling fan */}
-          <div className="w-8 h-8 rounded-full border border-yellow-500/30 flex items-center justify-center text-[10px] text-yellow-500/40 font-mono animate-spin" style={{ animationDuration: '4s' }}>
-            ❈
-          </div>
-          <div className="text-center font-deco text-yellow-500 tracking-[0.3em] font-bold text-xs uppercase px-8 py-1 bg-slate-950/70 border-x border-yellow-500/30 rounded-md">
-            MENDY'S PERIODIC ODYSSEY
-          </div>
-          {/* Right ceiling fan */}
-          <div className="w-8 h-8 rounded-full border border-yellow-500/30 flex items-center justify-center text-[10px] text-yellow-500/40 font-mono animate-spin" style={{ animationDuration: '4s' }}>
-            ❈
-          </div>
+        <div className="flex items-center space-x-3 text-xs tracking-widest font-bold">
+          <span className="w-2 h-2 bg-cyan-500 animate-pulse shadow-[0_0_8px_#06b6d4]" />
+          <span>TACTICAL FEED [SYS_ON]</span>
         </div>
 
-        {/* Right Sunburst corner */}
-        <div className="flex items-center space-x-1 opacity-45">
-          <div className="w-4 h-4 border-t-2 border-r-2 border-yellow-500 transform -rotate-45" />
-          <div className="w-8 h-[2px] bg-yellow-500" />
+        <div className="text-center text-sm font-bold tracking-[0.4em] text-yellow-400">
+          MENDY'S PERIODIC ODYSSEY
+        </div>
+
+        <div className="text-xs text-cyan-500/80 font-bold tracking-wider">
+          COORDINATES: SEC-0{score || 0}
         </div>
       </div>
 
-      {/* 3. MAIN COCKPIT BRIDGE LAYOUT */}
-      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 z-10 mt-2 flex-grow items-stretch relative">
-        
-        {/* Left column decorative lightning bolts */}
-        <div className="absolute left-[-20px] top-1/3 text-yellow-500/10 pointer-events-none text-6xl hidden xl:block select-none">
-          ⚡
-        </div>
-        <div className="absolute right-[-20px] top-1/3 text-yellow-500/10 pointer-events-none text-6xl hidden xl:block select-none">
-          ⚡
-        </div>
-
+      {/* 3. MAIN TERMINAL GRID CORES */}
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-4 z-10 mt-4 flex-grow items-stretch relative">
         {children}
-
       </div>
 
-      {/* 4. COCKPIT DASHBOARD BASE PANEL (Analog Buttons & Dials) */}
-      <div className="w-full max-w-7xl z-10 mt-6 bg-[#0a0f1d] border-t border-yellow-500/30 rounded-b-3xl px-8 py-3 flex flex-wrap items-center justify-between shadow-[0_-5px_15px_rgba(234,179,8,0.08)]">
-        
-        {/* Left Dashboard Gauges */}
-        <div className="flex items-center space-x-4 mb-2 md:mb-0">
-          {/* Analog dial button 1 */}
-          <div className="w-8 h-8 rounded-full bg-slate-900 border border-teal-500/40 flex items-center justify-center p-1 shadow-[inset_0_0_5px_#14b8a6]">
-            <div className="w-full h-[2px] bg-teal-400 transform rotate-45" />
-          </div>
-          {/* Analog dial button 2 */}
-          <div className="w-8 h-8 rounded-full bg-slate-900 border border-yellow-500/40 flex items-center justify-center p-1 shadow-[inset_0_0_5px_#eab308]">
-            <div className="w-full h-[2px] bg-yellow-400 transform -rotate-12" />
-          </div>
+      {/* HUD TERMINAL BASE FOOTER */}
+      <div className="w-full max-w-7xl z-10 mt-4 border border-cyan-500/20 bg-[#05050a] px-6 py-3 flex flex-wrap items-center justify-between relative">
+        <div className="hud-bracket hud-bracket-tl" />
+        <div className="hud-bracket hud-bracket-tr" />
+        <div className="hud-bracket hud-bracket-bl" />
+        <div className="hud-bracket hud-bracket-br" />
 
-          <div className="flex space-x-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-500 animate-blink shadow-[0_0_6px_#ef4444]" />
-            <span className="w-3 h-3 rounded-full bg-teal-400 shadow-[0_0_4px_#2dd4bf]" />
-            <span className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_4px_#10b981]" />
+        {/* Left Status */}
+        <div className="flex items-center space-x-4 mb-2 md:mb-0 text-xs font-bold">
+          <div className="flex space-x-1">
+            <span className="w-2 h-2 bg-emerald-500 shadow-[0_0_6px_#10b981]" />
+            <span className="w-2 h-2 bg-cyan-400 animate-pulse shadow-[0_0_6px_#2dd4bf]" />
           </div>
-          
-          <span className="font-mono-sci text-[10px] text-teal-500/60 uppercase">AUTO-DIAGNOSTIC STATUS: NOMINAL</span>
+          <span className="text-[10px] text-cyan-500/70 tracking-wider">SECURE LINK: STABLE [100.0% COHERENCY]</span>
         </div>
 
-        {/* Score Board indicator */}
-        <div className="flex items-center space-x-4">
+        {/* Right Score telemetry */}
+        <div className="flex items-center space-x-6 text-xs font-bold">
           <div className="flex flex-col items-end">
-            <span className="text-[9px] font-mono-sci text-yellow-500/60 tracking-wider">TOTAL EXPEDITION SCORE</span>
-            <span className="font-mono-sci text-xl font-bold text-yellow-400 tracking-widest">{score} PTS</span>
-          </div>
-          {/* Small visual power core indicator */}
-          <div className="w-6 h-6 rounded-full border-2 border-dashed border-teal-400 flex items-center justify-center animate-spin" style={{ animationDuration: '8s' }}>
-            <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full glow-gold" />
+            <span className="text-[8px] text-cyan-500/50 tracking-widest uppercase">BANKED SCORE DATA</span>
+            <span className="text-sm font-bold text-yellow-400 tracking-wider">{score} PTS</span>
           </div>
         </div>
-
       </div>
 
     </div>

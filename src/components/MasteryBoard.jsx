@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { elements } from '../data/elements';
 
 // Grid layout mapping for all 118 elements in the Periodic Table
 const tableElements = [
@@ -134,66 +133,7 @@ const tableElements = [
   { symbol: "No", num: 102, col: 17, row: 9 }
 ];
 
-// Helper to get group colors for uncollected element placeholders
-function getCategoryColor(category) {
-  switch (category) {
-    case 'alkali metal':
-      return {
-        border: 'border-orange-500/25',
-        bg: 'bg-orange-950/10'
-      };
-    case 'alkaline earth metal':
-      return {
-        border: 'border-amber-500/25',
-        bg: 'bg-amber-950/10'
-      };
-    case 'transition metal':
-      return {
-        border: 'border-teal-500/20',
-        bg: 'bg-teal-950/8'
-      };
-    case 'lanthanide':
-      return {
-        border: 'border-purple-500/25',
-        bg: 'bg-purple-950/10'
-      };
-    case 'actinide':
-      return {
-        border: 'border-pink-500/25',
-        bg: 'bg-pink-950/10'
-      };
-    case 'post-transition metal':
-      return {
-        border: 'border-blue-500/20',
-        bg: 'bg-blue-950/8'
-      };
-    case 'metalloid':
-      return {
-        border: 'border-emerald-500/20',
-        bg: 'bg-emerald-950/8'
-      };
-    case 'reactive nonmetal':
-      return {
-        border: 'border-lime-500/20',
-        bg: 'bg-lime-950/8'
-      };
-    case 'halogen':
-      return {
-        border: 'border-cyan-500/20',
-        bg: 'bg-cyan-950/8'
-      };
-    case 'noble gas':
-      return {
-        border: 'border-fuchsia-500/25',
-        bg: 'bg-fuchsia-950/10'
-      };
-    default:
-      return {
-        border: 'border-teal-500/10',
-        bg: 'bg-transparent'
-      };
-  }
-}
+
 
 export default function MasteryBoard({ collectedElements = new Set(), totalGoalCount = 118, interactive = false, onTileClick = null }) {
   const collectedCount = collectedElements.size;
@@ -233,18 +173,16 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
   }, [collectedElements, prevCleared]);
 
   return (
-    <div className={`glass-panel-teal rounded-2xl p-4 md:p-5 relative border-2 glow-teal select-none flex flex-col justify-between h-full overflow-hidden transition-all duration-1000 ${interactive ? 'animate-interactive-pulse border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.35)]' : 'border-teal-500/30'}`}>
-      <div className="panel-bolt panel-bolt-tl" />
-      <div className="panel-bolt panel-bolt-tr" />
-      <div className="panel-bolt panel-bolt-bl" />
-      <div className="panel-bolt panel-bolt-br" />
+    <div className={`hud-panel p-4 select-none flex flex-col justify-between h-full overflow-hidden ${interactive ? 'hud-panel-active' : ''}`}>
+      <div className="hud-bracket hud-bracket-tl" />
+      <div className="hud-bracket hud-bracket-tr" />
+      <div className="hud-bracket hud-bracket-bl" />
+      <div className="hud-bracket hud-bracket-br" />
       
       {/* 1. Holographic / Scanline CRT Overlay */}
-      <div className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden z-0">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Subtle scanline lines */}
-        <div className="absolute inset-0 bg-scanlines opacity-[0.06] pointer-events-none" />
-        {/* CRT glass screen flicker */}
-        <div className="absolute inset-0 bg-teal-500/[0.03] mix-blend-overlay animate-crt-flicker pointer-events-none" />
+        <div className="absolute inset-0 bg-scanlines opacity-[0.04] pointer-events-none" />
       </div>
 
       {/* Embedded style block for Mastery Board unique holographic keyframes */}
@@ -256,70 +194,17 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
           );
           background-size: 100% 3px;
         }
-        @keyframes crt-flicker {
-          0%, 100% { opacity: 0.96; }
-          50% { opacity: 1.0; }
-        }
-        .animate-crt-flicker {
-          animation: crt-flicker 0.18s infinite;
-        }
-        @keyframes tile-breath {
-          0%, 100% { box-shadow: 0 0 3px rgba(16, 185, 129, 0.4); border-color: rgba(16, 185, 129, 0.4); }
-          50% { box-shadow: 0 0 10px rgba(52, 211, 153, 0.85); border-color: rgba(52, 211, 153, 0.8); }
-        }
-        .animate-breath-glow {
-          animation: tile-breath 2.5s ease-in-out infinite;
-        }
-        @keyframes col-flash-anim {
-          0% { box-shadow: 0 0 0px rgba(34, 197, 94, 0); background-color: rgba(16, 185, 129, 0.1); }
-          30% { box-shadow: 0 0 25px rgba(34, 197, 94, 1); background-color: rgba(34, 197, 94, 0.65); }
-          100% { box-shadow: 0 0 6px rgba(16, 185, 129, 0.4); background-color: rgba(6, 78, 59, 0.7); }
-        }
-        .animate-column-flash {
-          animation: col-flash-anim 2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-        .column-completed-glow {
-          box-shadow: 0 0 7px rgba(16, 185, 129, 0.5), inset 0 0 3px rgba(52, 211, 153, 0.2);
-          border-color: rgba(52, 211, 153, 0.7) !important;
-          background-color: rgba(6, 78, 59, 0.5) !important;
-        }
-        .hologram-text {
-          text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
-        }
-        @keyframes interactive-pulse-anim {
-          0%, 100% { border-color: rgba(20, 184, 166, 0.3); box-shadow: 0 0 10px rgba(20, 184, 166, 0.1); }
-          50% { border-color: rgba(234, 179, 8, 0.95); box-shadow: 0 0 25px rgba(234, 179, 8, 0.45); }
-        }
-        .animate-interactive-pulse {
-          animation: interactive-pulse-anim 1.8s ease-in-out infinite;
-        }
       `}</style>
 
-      {/* Decorative corners */}
-      <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-teal-400 opacity-60 z-10"></div>
-      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-teal-400 opacity-60 z-10"></div>
-      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-teal-400 opacity-60 z-10"></div>
-      <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-teal-400 opacity-60 z-10"></div>
-
-      {/* Title Header Art Deco */}
-      <div className="flex flex-col items-center mb-3 z-10">
-        <div className="border border-teal-400/40 px-6 py-0.5 rounded-sm relative art-deco-border bg-teal-950/40 shadow-[0_0_8px_rgba(20,184,166,0.2)]">
-          <h2 className="font-deco text-base font-bold tracking-widest text-teal-300 text-center hologram-text">
-            MASTERY BOARD
-          </h2>
-        </div>
-        <div className="w-1/2 h-[1px] bg-gradient-to-r from-transparent via-teal-400/40 to-transparent mt-1"></div>
+      {/* Title Header Hacking style */}
+      <div className="flex justify-between items-center mb-3 z-10 text-[10px] uppercase font-bold tracking-wider border-b border-cyan-500/20 pb-2">
+        <span className="text-yellow-400 font-bold">[MASTERY_DATABASE]</span>
+        <span className="text-cyan-500/60">SECTOR_TELEMETRY: CORE_118</span>
       </div>
 
       {/* Periodic Table Grid Container */}
       <div className="w-full mb-3 flex justify-center z-10">
-        <div className="relative p-2 border border-teal-500/15 rounded-lg bg-slate-950/20 shadow-[inset_0_0_15px_rgba(20,184,166,0.05)] w-full max-w-[850px]">
-          {/* Edge highlight corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-teal-500/40 rounded-tl-sm pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-teal-500/40 rounded-tr-sm pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-teal-500/40 rounded-bl-sm pointer-events-none"></div>
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-teal-500/40 rounded-br-sm pointer-events-none"></div>
-
+        <div className={`relative p-2 border border-cyan-500/10 bg-black/35 w-full max-w-[850px] ${interactive ? 'grid-crosshair-scan border-cyan-500/30' : ''}`}>
           <div 
             className="grid gap-[1px] md:gap-[2px] w-full"
             style={{ 
@@ -332,36 +217,24 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
               const isColumnCompleted = prevCleared.has(el.col);
               const isColumnFlashing = flashingColumns.has(el.col);
 
-              // Find element metadata from elements database
-              const elementMeta = elements.find(e => e.symbol === el.symbol);
-              const category = elementMeta?.category || 'unknown';
-              const catColors = getCategoryColor(category);
-
-              let borderClasses = `${catColors.border} ${catColors.bg} border-dashed text-transparent`;
-              if (isCollected) {
-                borderClasses = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.3)] font-black';
-              }
-
-              // Apply special holographic flash or glow effects
-              let effectClass = '';
-              if (isColumnFlashing) {
-                effectClass = 'animate-column-flash z-20';
-              } else if (isColumnCompleted) {
-                effectClass = 'column-completed-glow animate-breath-glow text-emerald-300';
-              } else if (isCollected) {
-                effectClass = 'animate-breath-glow';
-              }
-
               const isClickable = interactive || isCollected;
-
-              if (isClickable) {
-                effectClass += ' cursor-pointer hover:scale-110 hover:border-yellow-400 hover:bg-yellow-500/10 active:scale-95 z-30';
-              }
 
               return (
                 <div
                   key={el.num}
-                  className={`relative flex flex-col items-center justify-center border rounded-[2px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
+                  className={`relative flex flex-col items-center justify-center border rounded-none aspect-square transition-all duration-300 ${
+                    isCollected 
+                      ? 'bg-yellow-500 border-yellow-500 text-[#030306] font-bold shadow-[0_0_8px_rgba(234,179,8,0.7)]'
+                      : isColumnFlashing
+                      ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
+                      : isColumnCompleted
+                      ? 'bg-cyan-950/20 border-cyan-500/50 text-cyan-400'
+                      : 'border-dashed border-cyan-500/10 bg-transparent text-transparent'
+                  } ${
+                    isClickable ? 'cursor-pointer hover:scale-110 active:scale-95 z-30' : ''
+                  } ${
+                    interactive && !isCollected ? 'border-cyan-500/40 hover:border-yellow-400 hover:bg-yellow-500/20' : ''
+                  }`}
                   style={{
                     gridColumn: `${el.col}`,
                     gridRow: `${el.row}`,
@@ -371,17 +244,17 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                       onTileClick(el.symbol);
                     }
                   }}
-                  title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Row ${el.row}, Column ${el.col} [LOCKED]`}
+                  title={isCollected ? `${el.symbol} (Atomic #${el.num})` : ''}
                 >
                   {isCollected && (
                     <>
                       {/* Micro absolute atomic number at top left */}
-                      <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8.5px] opacity-75 leading-none select-none">
+                      <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8px] opacity-80 leading-none select-none">
                         {el.num}
                       </span>
                       
                       {/* Chemical Symbol in center */}
-                      <span className="text-[9px] sm:text-[12px] md:text-[14px] font-bold select-none leading-none mt-1">
+                      <span className="text-[9px] sm:text-[11px] md:text-[13px] font-extrabold select-none leading-none mt-1">
                         {el.symbol}
                       </span>
                     </>
@@ -394,46 +267,24 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
       </div>
 
       {/* Counter & Indicators bottom */}
-      <div className="flex items-center justify-between mt-auto z-10">
-        {/* Neon Indicator Tube elements */}
-        <div className="flex space-x-3 items-end h-12">
-          <div className="flex flex-col items-center">
-            {/* Tube 1 */}
-            <div className={`w-2.5 h-8 rounded-full border border-teal-500/30 relative overflow-hidden bg-slate-950`}>
-              <div 
-                className="absolute bottom-0 left-0 right-0 bg-teal-400 glow-teal transition-all duration-1000"
-                style={{ height: `${Math.min(100, (collectedCount / totalGoalCount) * 100)}%` }}
-              />
-            </div>
-            <span className="text-[7.5px] font-mono-sci text-teal-400 mt-1">CAPS A</span>
-          </div>
-
-          <div className="flex flex-col items-center">
-            {/* Tube 2 */}
-            <div className={`w-2.5 h-8 rounded-full border border-emerald-500/30 relative overflow-hidden bg-slate-950`}>
-              <div 
-                className="absolute bottom-0 left-0 right-0 bg-emerald-400 glow-green transition-all duration-1000"
-                style={{ height: `${collectedCount >= totalGoalCount ? 100 : 0}%` }}
-              />
-            </div>
-            <span className="text-[7.5px] font-mono-sci text-emerald-400 mt-1">WARP</span>
+      <div className="flex items-center justify-between mt-auto z-10 border-t border-cyan-500/15 pt-3 w-full">
+        {/* Flat Telemetry segment lines */}
+        <div className="flex items-center space-x-3 w-1/2">
+          <span className="text-[8.5px] text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
+          <div className="h-3 bg-slate-950/60 border border-cyan-500/25 flex-grow p-[2px] relative">
+            <div 
+              className="h-full bg-cyan-400 hud-telemetry-segments text-cyan-400 transition-all duration-1000"
+              style={{ width: `${Math.min(100, (collectedCount / totalGoalCount) * 100)}%` }}
+            />
           </div>
         </div>
 
-        {/* Holographic Collected Screen */}
-        <div className="bg-slate-950/90 border border-teal-500/40 rounded-xl px-4 py-2 flex flex-col items-center min-w-[170px] shadow-[inset_0_0_10px_rgba(20,184,166,0.3)]">
-          <span className="text-[8px] font-mono-sci text-teal-400 uppercase tracking-widest mb-0.5">
-            Elements Collected
-          </span>
-          <div className="flex items-baseline space-x-1">
-            <span className="font-mono-sci text-xl font-bold text-yellow-400 tracking-wider">
-              {collectedCount}
-            </span>
-            <span className="font-mono-sci text-xs text-teal-600">/</span>
-            <span className="font-mono-sci text-base text-teal-400">
-              {totalGoalCount}
-            </span>
-          </div>
+        {/* Flat Hacking Text Ticker */}
+        <div className="flex items-center space-x-2 text-xs font-bold font-mono">
+          <span className="text-cyan-500/50 uppercase tracking-widest text-[9px]">DATABASE_LOAD:</span>
+          <span className="text-yellow-400">{collectedCount}</span>
+          <span className="text-cyan-500/30">/</span>
+          <span className="text-cyan-400">{totalGoalCount} SECURED</span>
         </div>
       </div>
     </div>

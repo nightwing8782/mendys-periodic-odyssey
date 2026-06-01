@@ -158,16 +158,11 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
       `}</style>
 
       {/* PANEL A: ATOMIC DEEP SCANNER */}
-      <div className="glass-panel border border-emerald-500/20 bg-slate-950/60 rounded-2xl p-4 flex flex-col justify-between min-h-[145px] relative overflow-hidden font-mono-sci">
-        <div className="panel-bolt panel-bolt-tl" />
-        <div className="panel-bolt panel-bolt-tr" />
-        <div className="panel-bolt panel-bolt-bl" />
-        <div className="panel-bolt panel-bolt-br" />
-        {/* Decorative corner brackets */}
-        <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-emerald-500/40"></div>
-        <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-emerald-500/40"></div>
-        <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-emerald-500/40"></div>
-        <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-emerald-500/40"></div>
+      <div className="hud-panel border border-emerald-500/20 p-4 flex flex-col justify-between min-h-[145px] relative overflow-hidden font-mono-sci">
+        <div className="hud-bracket hud-bracket-tl" />
+        <div className="hud-bracket hud-bracket-tr" />
+        <div className="hud-bracket hud-bracket-bl" />
+        <div className="hud-bracket hud-bracket-br" />
 
         <div className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest border-b border-emerald-500/20 pb-1.5 flex justify-between items-center">
           <span>ATOMIC DEEP SCANNER</span>
@@ -236,16 +231,11 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
       </div>
 
       {/* PANEL B: INTERSTELLAR RADIO */}
-      <div className="glass-panel border border-teal-500/20 bg-slate-950/60 rounded-2xl p-4 flex flex-col justify-between min-h-[145px] font-mono-sci relative">
-        <div className="panel-bolt panel-bolt-tl" />
-        <div className="panel-bolt panel-bolt-tr" />
-        <div className="panel-bolt panel-bolt-bl" />
-        <div className="panel-bolt panel-bolt-br" />
-        {/* Decorative corner brackets */}
-        <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-teal-500/40"></div>
-        <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-teal-500/40"></div>
-        <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-teal-500/40"></div>
-        <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-teal-500/40"></div>
+      <div className="hud-panel border border-teal-500/20 p-4 flex flex-col justify-between min-h-[145px] font-mono-sci relative">
+        <div className="hud-bracket hud-bracket-tl" />
+        <div className="hud-bracket hud-bracket-tr" />
+        <div className="hud-bracket hud-bracket-bl" />
+        <div className="hud-bracket hud-bracket-br" />
 
         <div className="text-[9px] text-teal-400 font-bold uppercase tracking-widest border-b border-teal-500/20 pb-1.5 flex justify-between items-center">
           <span>INTERSTELLAR RADIO</span>
@@ -265,30 +255,30 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
           <div className="flex flex-col space-y-1 flex-grow">
             <button
               onClick={() => handleStationChange(0)}
-              className={`text-[8px] text-left px-2 py-1 rounded transition-all duration-300 font-bold border ${
+              className={`text-[8px] text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
                 station === 0 
-                  ? 'bg-teal-500/25 border-teal-400 text-teal-200 shadow-[0_0_8px_rgba(20,184,166,0.3)]' 
-                  : 'bg-slate-950/80 border-teal-950/60 text-teal-600 hover:border-teal-500/30'
+                  ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
+                  : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
               }`}
             >
               🌌 AMBIENT
             </button>
             <button
               onClick={() => handleStationChange(1)}
-              className={`text-[8px] text-left px-2 py-1 rounded transition-all duration-300 font-bold border ${
+              className={`text-[8px] text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
                 station === 1 
-                  ? 'bg-teal-500/25 border-teal-400 text-teal-200 shadow-[0_0_8px_rgba(20,184,166,0.3)]' 
-                  : 'bg-slate-950/80 border-teal-950/60 text-teal-600 hover:border-teal-500/30'
+                  ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
+                  : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
               }`}
             >
               👾 RETRO
             </button>
             <button
               onClick={() => handleStationChange(2)}
-              className={`text-[8px] text-left px-2 py-1 rounded transition-all duration-300 font-bold border ${
+              className={`text-[8px] text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
                 station === 2 
-                  ? 'bg-teal-500/25 border-teal-400 text-teal-200 shadow-[0_0_8px_rgba(20,184,166,0.3)]' 
-                  : 'bg-slate-950/80 border-teal-950/60 text-teal-600 hover:border-teal-500/30'
+                  ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
+                  : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
               }`}
             >
               🎹 THEREMIN
@@ -307,16 +297,16 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
               step="0.05"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-full accent-teal-400 h-1 bg-slate-950 rounded-lg cursor-pointer"
+              className="w-full accent-teal-400 h-1 bg-black/60 rounded-none cursor-pointer"
             />
           </div>
           
           <button
             onClick={handleMuteToggle}
-            className={`px-2.5 py-0.5 rounded text-[8px] font-bold transition-all duration-300 border ${
+            className={`px-2.5 py-0.5 rounded-none text-[8px] font-bold transition-colors duration-75 border ${
               muted 
-                ? 'bg-red-950/50 border-red-500 text-red-400 glow-red animate-pulse' 
-                : 'bg-slate-950 border-teal-950/60 text-teal-500 hover:border-teal-500/30'
+                ? 'bg-red-950/40 border-red-500 text-red-400 glow-red animate-pulse' 
+                : 'bg-black/40 border-teal-500/20 text-teal-500 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
             }`}
           >
             {muted ? 'MUTED' : 'MUTE'}

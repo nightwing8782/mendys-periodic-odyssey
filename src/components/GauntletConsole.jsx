@@ -223,11 +223,11 @@ export default function GauntletConsole({
   };
 
   return (
-    <div className="glass-panel rounded-2xl p-6 relative border-2 border-yellow-500/10 glow-gold select-none h-full flex flex-col justify-between overflow-hidden">
-      <div className="panel-bolt panel-bolt-tl" />
-      <div className="panel-bolt panel-bolt-tr" />
-      <div className="panel-bolt panel-bolt-bl" />
-      <div className="panel-bolt panel-bolt-br" />
+    <div className="hud-panel p-6 select-none h-full flex flex-col justify-between overflow-hidden relative">
+      <div className="hud-bracket hud-bracket-tl" />
+      <div className="hud-bracket hud-bracket-tr" />
+      <div className="hud-bracket hud-bracket-bl" />
+      <div className="hud-bracket hud-bracket-br" />
       
       {/* Styles for Art Deco details, circuit lines and custom keyframe animations */}
       <style>{`
@@ -268,13 +268,13 @@ export default function GauntletConsole({
       `}</style>
 
       {/* Dynamic Circuit SVG Borders */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl z-0">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-none z-0">
         <rect
           x="1.5"
           y="1.5"
           width="calc(100% - 3px)"
           height="calc(100% - 3px)"
-          rx="14"
+          rx="0"
           fill="none"
           stroke={
             feedback === 'correct'
@@ -299,29 +299,29 @@ export default function GauntletConsole({
       </svg>
 
       {/* Header Info HUD */}
-      <div className="border-b border-yellow-500/20 pb-3 flex justify-between items-center text-yellow-400 font-mono-sci text-xs z-10">
-        <span className="uppercase tracking-widest text-[9px] text-teal-400">
+      <div className="border-b border-cyan-500/20 pb-3 flex justify-between items-center text-cyan-400 font-mono text-xs z-10">
+        <span className="uppercase tracking-widest text-[9px] text-cyan-500/60">
           MODE: {question.type.replace('_', ' ')}
         </span>
-        <span className="font-bold px-2 py-0.5 border border-yellow-500/30 rounded bg-yellow-950/20">
+        <span className="font-bold px-2 py-0.5 border border-cyan-500/30 bg-cyan-950/20">
           QUESTION {index + 1} / {totalQuestions}
         </span>
       </div>
 
       {/* 20-Second Progress Timer Bar */}
-      <div className="w-full mt-3 mb-2 z-10">
-        <div className="flex justify-between items-center text-[10px] font-mono-sci text-slate-400 mb-1.5">
-          <span className="tracking-wider">SYNTHESIS LOCK COUNTDOWN</span>
-          <span className={`font-bold text-xs ${timeLeft <= 5 ? 'text-red-500 animate-heartbeat font-extrabold' : 'text-teal-400'}`}>
+      <div className="w-full mt-3 mb-2 z-10 font-mono">
+        <div className="flex justify-between items-center text-[9px] text-cyan-500/70 mb-1">
+          <span>SYNTHESIS LOCK COUNTDOWN</span>
+          <span className={`font-bold text-xs ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-cyan-400'}`}>
             {timeLeft}s / 20s
           </span>
         </div>
-        <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-teal-500/20 p-0.5 shadow-inner">
+        <div className="w-full h-3 bg-black/40 border border-cyan-500/20 p-[2px]">
           <div
-            className={`h-full rounded-full transition-all duration-1000 ${
+            className={`h-full hud-telemetry-segments transition-all duration-1000 ${
               timeLeft <= 5 
-                ? 'bg-gradient-to-r from-red-600 to-red-500 glow-red' 
-                : 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 glow-teal'
+                ? 'text-red-500' 
+                : 'text-cyan-400'
             }`}
             style={{ width: `${(timeLeft / 20) * 100}%` }}
           />
@@ -334,7 +334,7 @@ export default function GauntletConsole({
         {/* MULTIPLE CHOICE MODE */}
         {question.type === 'MULTIPLE_CHOICE' && (
           <div className="space-y-4">
-            <div className="bg-slate-950/40 border border-teal-500/20 rounded-xl p-4 text-center">
+            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-4 text-center">
               <span className="text-[9px] text-teal-500 uppercase tracking-widest font-mono-sci block mb-1">Mendy's Transmission Clue</span>
               <p className="text-xs md:text-sm font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
                 "{question.clue}"
@@ -346,14 +346,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-slate-700 border-t-slate-600 border-l-slate-600 text-slate-300 shadow-[0_4px_0_#0f172a,inset_0_1px_0_rgba(255,255,255,0.1)] hover:from-slate-700 hover:to-slate-800 hover:border-yellow-500/60 active:translate-y-[4px] active:shadow-none';
+                let buttonStyle = 'hud-btn-arcade w-full';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'bg-gradient-to-b from-emerald-600 to-emerald-800 border-2 border-emerald-500 border-t-emerald-400 border-l-emerald-400 text-emerald-100 shadow-[0_0_12px_rgba(16,185,129,0.5),inset_0_1px_0_rgba(255,255,255,0.2)]';
+                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full';
                   } else if (isSelected) {
-                    buttonStyle = 'bg-gradient-to-b from-red-700 to-red-900 border-2 border-red-600 border-t-red-500 border-l-red-500 text-red-100 shadow-[0_0_8px_rgba(239,68,68,0.4)]';
+                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full';
                   } else {
-                    buttonStyle = 'opacity-40 border-slate-900 bg-slate-950 text-slate-600 shadow-none';
+                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full';
                   }
                 }
 
@@ -362,7 +362,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleMultipleChoiceSubmit(option)}
-                    className={`rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-150 font-mono-sci cursor-pointer ${buttonStyle}`}
+                    className={`rounded-none text-xs font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -402,14 +402,12 @@ export default function GauntletConsole({
                   <div
                     key={el.symbol}
                     onClick={() => handleWeightComparisonSubmit(el.symbol)}
-                    className={`border-2 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[140px] relative overflow-hidden ${cardStyle}`}
+                    className={`border border-cyan-500/20 rounded-none p-4 flex flex-col items-center justify-between text-center min-h-[140px] relative overflow-hidden ${cardStyle}`}
                   >
-                    <div className="panel-bolt panel-bolt-tl" />
-                    <div className="panel-bolt panel-bolt-tr" />
-                    <div className="panel-bolt panel-bolt-bl" />
-                    <div className="panel-bolt panel-bolt-br" />
-                    {/* Art Deco design brackets */}
-                    <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-current opacity-40" />
+                    <div className="hud-bracket hud-bracket-tl" />
+                    <div className="hud-bracket hud-bracket-tr" />
+                    <div className="hud-bracket hud-bracket-bl" />
+                    <div className="hud-bracket hud-bracket-br" />
                     <div className="absolute top-1 right-1 w-2 h-2 border-t border-r border-current opacity-40" />
                     <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-current opacity-40" />
                     <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-current opacity-40" />
@@ -427,10 +425,10 @@ export default function GauntletConsole({
         {question.type === 'NUCLEAR_SYNTHESIS' && (
           <div className="space-y-4">
             {/* Visual Formula Addition Box */}
-            <div className="flex items-center justify-center space-x-3 bg-slate-950/50 border border-yellow-500/20 rounded-2xl p-4 relative overflow-hidden shadow-inner">
+            <div className="flex items-center justify-center space-x-3 bg-slate-950/50 border border-yellow-500/20 rounded-none p-4 relative overflow-hidden shadow-inner">
               
               {/* Reactant 1 */}
-              <div className="bg-slate-900/90 border border-teal-500/40 rounded-xl px-3 py-2 flex flex-col items-center min-w-[70px]">
+              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px]">
                 <span className="text-[8px] text-teal-400 font-mono-sci">ATOMIC #{question.elementA.number}</span>
                 <span className="text-xl font-bold font-deco text-slate-100 my-0.5">{question.elementA.symbol}</span>
                 <span className="text-[8px] text-slate-400 uppercase font-mono-sci">{question.elementA.name}</span>
@@ -440,7 +438,7 @@ export default function GauntletConsole({
               <span className="text-yellow-500 text-lg font-black font-mono-sci">+</span>
 
               {/* Reactant 2 */}
-              <div className="bg-slate-900/90 border border-teal-500/40 rounded-xl px-3 py-2 flex flex-col items-center min-w-[70px]">
+              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px]">
                 <span className="text-[8px] text-teal-400 font-mono-sci">ATOMIC #{question.elementB.number}</span>
                 <span className="text-xl font-bold font-deco text-slate-100 my-0.5">{question.elementB.symbol}</span>
                 <span className="text-[8px] text-slate-400 uppercase font-mono-sci">{question.elementB.name}</span>
@@ -450,7 +448,7 @@ export default function GauntletConsole({
               <span className="text-yellow-500 text-lg font-black font-mono-sci">=</span>
 
               {/* Product Placeholder */}
-              <div className="bg-yellow-950/20 border border-dashed border-yellow-500/50 rounded-xl px-3 py-2 flex flex-col items-center min-w-[70px] animate-pulse">
+              <div className="bg-yellow-950/20 border border-dashed border-yellow-500/50 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px] animate-pulse">
                 <span className="text-[8px] text-yellow-400 font-mono-sci font-bold">TOTAL Z = {question.elementC.number}</span>
                 <span className="text-xl font-black font-deco text-yellow-400 my-0.5">?</span>
                 <span className="text-[8px] text-yellow-500/70 uppercase font-mono-sci">PRODUCT</span>
@@ -463,14 +461,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-slate-700 border-t-slate-600 border-l-slate-600 text-slate-300 shadow-[0_4px_0_#0f172a,inset_0_1px_0_rgba(255,255,255,0.1)] hover:from-slate-700 hover:to-slate-800 hover:border-yellow-500/60 active:translate-y-[4px] active:shadow-none';
+                let buttonStyle = 'hud-btn-arcade w-full';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'bg-gradient-to-b from-emerald-600 to-emerald-800 border-2 border-emerald-500 border-t-emerald-400 border-l-emerald-400 text-emerald-100 shadow-[0_0_12px_rgba(16,185,129,0.5),inset_0_1px_0_rgba(255,255,255,0.2)]';
+                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full';
                   } else if (isSelected) {
-                    buttonStyle = 'bg-gradient-to-b from-red-700 to-red-900 border-2 border-red-600 border-t-red-500 border-l-red-500 text-red-100 shadow-[0_0_8px_rgba(239,68,68,0.4)]';
+                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full';
                   } else {
-                    buttonStyle = 'opacity-40 border-slate-900 bg-slate-950 text-slate-600 shadow-none';
+                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full';
                   }
                 }
 
@@ -479,7 +477,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleNuclearSynthesisSubmit(option)}
-                    className={`rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-150 font-mono-sci cursor-pointer ${buttonStyle}`}
+                    className={`rounded-none text-xs font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -500,7 +498,7 @@ export default function GauntletConsole({
               <span className="text-xl z-10">🎯</span>
             </div>
 
-            <div className="bg-slate-950/60 border border-teal-500/30 rounded-2xl p-5 w-full relative">
+            <div className="bg-slate-950/60 border border-teal-500/30 rounded-none p-5 w-full relative">
               {/* Corner brackets */}
               <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-teal-400 opacity-60" />
               <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-teal-400 opacity-60" />
@@ -527,7 +525,7 @@ export default function GauntletConsole({
           <div className="space-y-4">
             
             {/* Clue 1 (Hard, 300 Pts) */}
-            <div className="bg-slate-950/40 border border-teal-500/20 rounded-xl p-3.5 text-center relative overflow-hidden">
+            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-3.5 text-center relative overflow-hidden">
               <span className="text-[9px] text-teal-400 uppercase tracking-widest font-mono-sci block mb-1 font-bold">
                 Clue 1 (Hard - 300 Pts)
               </span>
@@ -540,7 +538,7 @@ export default function GauntletConsole({
             <div className="grid grid-cols-2 gap-3">
               {/* Clue 2 */}
               {cluesRevealed[1] ? (
-                <div className="border border-teal-500/30 rounded-xl p-2.5 bg-slate-900/60 glow-teal text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
+                <div className="border border-teal-500/30 rounded-none p-2.5 bg-slate-900/60 text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
                   <div className="flex justify-between items-center text-[8px] font-mono-sci text-teal-400 mb-0.5 font-bold">
                     <span>CLUE 2 (MEDIUM)</span>
                     <span className="text-teal-300">200 PTS MAX</span>
@@ -554,7 +552,7 @@ export default function GauntletConsole({
                   type="button"
                   disabled={feedback !== null}
                   onClick={() => revealClue(1)}
-                  className="border border-teal-500/30 hover:border-teal-400 rounded-xl p-2.5 bg-gradient-to-b from-[#0c1e2a]/50 to-[#020b14]/70 text-center text-[9px] text-teal-400 font-mono-sci transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98] min-h-[70px] flex flex-col items-center justify-center shadow-[inset_0_0_10px_rgba(20,184,166,0.15)]"
+                  className="border border-teal-500/30 hover:border-teal-400 rounded-none p-2.5 bg-black/40 text-center text-[9px] text-teal-400 font-mono-sci transition-colors duration-75 cursor-pointer hover:bg-teal-500/10 hover:text-teal-300 min-h-[70px] flex flex-col items-center justify-center"
                 >
                   <span>🔍 Unlock Clue 2</span>
                   <span className="text-[8px] opacity-75 mt-0.5">(Decays to 200 pts)</span>
@@ -563,7 +561,7 @@ export default function GauntletConsole({
 
               {/* Clue 3 */}
               {cluesRevealed[2] ? (
-                <div className="border border-cyan-500/30 rounded-xl p-2.5 bg-slate-900/60 glow-cyan text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
+                <div className="border border-cyan-500/30 rounded-none p-2.5 bg-slate-900/60 text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
                   <div className="flex justify-between items-center text-[8px] font-mono-sci text-cyan-400 mb-0.5 font-bold">
                     <span>CLUE 3 (EASY)</span>
                     <span className="text-cyan-300">100 PTS MAX</span>
@@ -577,9 +575,9 @@ export default function GauntletConsole({
                   type="button"
                   disabled={!cluesRevealed[1] || feedback !== null}
                   onClick={() => revealClue(2)}
-                  className={`border rounded-xl p-2.5 text-center text-[9px] font-mono-sci transition-all duration-300 min-h-[70px] flex flex-col items-center justify-center shadow-[inset_0_0_10px_rgba(6,182,212,0.15)] ${
+                  className={`border rounded-none p-2.5 text-center text-[9px] font-mono-sci transition-colors duration-75 min-h-[70px] flex flex-col items-center justify-center ${
                     cluesRevealed[1] && feedback === null
-                      ? 'border-cyan-500/30 hover:border-cyan-400 text-cyan-400 bg-gradient-to-b from-[#061e2a]/50 to-[#020b14]/70 cursor-pointer hover:scale-[1.02] active:scale-[0.98]'
+                      ? 'border-cyan-500/30 hover:border-cyan-400 text-cyan-400 bg-black/40 cursor-pointer hover:bg-cyan-500/10 hover:text-cyan-300'
                       : 'border-slate-800 text-slate-700 bg-transparent cursor-not-allowed'
                   }`}
                 >
@@ -599,23 +597,19 @@ export default function GauntletConsole({
                   disabled={feedback !== null}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder={cluesRevealed[2] ? "Enter element name" : "Name (e.g. Sodium) or Symbol (Na)"}
-                  className={`flex-grow bg-slate-950 text-slate-100 font-mono-sci text-xs px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none ${
+                  className={`flex-grow bg-slate-950 text-slate-100 font-mono-sci text-xs px-3.5 py-3 rounded-none border transition-all duration-300 focus:outline-none ${
                     feedback === 'correct'
                       ? 'border-emerald-500 text-emerald-400 glow-green'
                       : feedback === 'incorrect'
                       ? 'border-red-500 text-red-400'
-                      : 'border-teal-500/30 focus:border-yellow-500 focus:shadow-[0_0_10px_rgba(234,179,8,0.2)]'
+                      : 'border-teal-500/30 focus:border-yellow-500'
                   }`}
                 />
                 
                 <button
                   type="submit"
                   disabled={feedback !== null || !inputValue.trim()}
-                  className={`px-4 py-3 text-xs font-bold transition-all duration-300 font-mono-sci ${
-                    feedback !== null || !inputValue.trim()
-                      ? 'bg-slate-900 border border-slate-800 text-slate-600 cursor-not-allowed opacity-50 rounded-xl'
-                      : 'btn-tactile cursor-pointer'
-                  }`}
+                  className="hud-btn-arcade text-xs px-4 py-3 cursor-pointer"
                 >
                   SUBMIT
                 </button>
@@ -628,7 +622,7 @@ export default function GauntletConsole({
         {feedback && (
           <div 
             onClick={dismissFeedback}
-            className="absolute inset-0 bg-slate-950/90 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 animate-fade-in z-20 cursor-pointer select-none hover:bg-slate-950/95"
+            className="absolute inset-0 bg-slate-950/90 rounded-none flex flex-col items-center justify-center p-4 transition-all duration-300 animate-fade-in z-20 cursor-pointer select-none hover:bg-slate-950/95"
             title="Tap to dismiss"
           >
             {feedback === 'correct' && (
