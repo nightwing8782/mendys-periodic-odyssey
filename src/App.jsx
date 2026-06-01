@@ -184,6 +184,10 @@ export default function App() {
 
           {/* Hard-mounted Cockpit Status Indicator & Containment Capsule */}
           <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between bg-slate-900/60 font-mono-sci">
+            <div className="panel-bolt panel-bolt-tl" />
+            <div className="panel-bolt panel-bolt-tr" />
+            <div className="panel-bolt panel-bolt-bl" />
+            <div className="panel-bolt panel-bolt-br" />
             <div className="space-y-3">
               <div className="w-full flex justify-between text-[9px] text-teal-400">
                 <span>WARP CORE CHARGE</span>
@@ -217,7 +221,11 @@ export default function App() {
           
           {/* 1. INTRO / START STATE */}
           {gameState === 'intro' && (
-            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none">
+            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none relative">
+              <div className="panel-bolt panel-bolt-tl" />
+              <div className="panel-bolt panel-bolt-tr" />
+              <div className="panel-bolt panel-bolt-bl" />
+              <div className="panel-bolt panel-bolt-br" />
               <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
                 <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider">
                   MISSION HARVESTER
@@ -252,7 +260,7 @@ export default function App() {
                   playClueChime();
                   startGame();
                 }}
-                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
+                className="btn-tactile w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
               >
                 INITIALIZE HARVESTER
               </button>
@@ -261,7 +269,11 @@ export default function App() {
 
           {/* 2. MODE SELECTION STATE */}
           {gameState === 'MODE_SELECTION' && (
-            <div className="glass-panel rounded-2xl p-6 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in">
+            <div className="glass-panel rounded-2xl p-6 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in relative">
+              <div className="panel-bolt panel-bolt-tl" />
+              <div className="panel-bolt panel-bolt-tr" />
+              <div className="panel-bolt panel-bolt-bl" />
+              <div className="panel-bolt panel-bolt-br" />
               <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
                 <h1 className="font-deco text-xl font-black text-yellow-400 tracking-wider">
                   SELECT REACTOR TYPE
@@ -283,12 +295,16 @@ export default function App() {
                           unlockAudio();
                           selectMode(mode);
                         }}
-                        className="glass-panel border border-teal-500/35 hover:border-yellow-400/80 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[160px] cursor-pointer bg-slate-900/60 hover:bg-slate-950/90 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97]"
+                        className="glass-panel border border-teal-500/35 hover:border-yellow-400/80 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[160px] cursor-pointer bg-slate-900/60 hover:bg-slate-950/90 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97] relative"
                       >
+                        <div className="panel-bolt panel-bolt-tl" />
+                        <div className="panel-bolt panel-bolt-tr" />
+                        <div className="panel-bolt panel-bolt-bl" />
+                        <div className="panel-bolt panel-bolt-br" />
                         <span className="text-3xl mb-2">{details.icon}</span>
-                        <span className="font-deco font-bold text-xs text-yellow-400 tracking-wider uppercase">{details.title}</span>
-                        <span className="text-[9px] text-slate-400 font-mono-sci mt-1 leading-normal">{details.desc}</span>
-                        <span className="text-[8px] text-teal-400 font-mono-sci mt-3 border border-teal-500/20 px-2 py-0.5 rounded bg-teal-950/20 uppercase tracking-widest">{details.length}</span>
+                        <span className="font-deco font-bold text-xs text-yellow-400 tracking-wider uppercase z-10">{details.title}</span>
+                        <span className="text-[9px] text-slate-400 font-mono-sci mt-1 leading-normal z-10">{details.desc}</span>
+                        <span className="text-[8px] text-teal-400 font-mono-sci mt-3 border border-teal-500/20 px-2 py-0.5 rounded bg-teal-950/20 uppercase tracking-widest z-10">{details.length}</span>
                       </button>
                     );
                   })}
@@ -317,7 +333,11 @@ export default function App() {
 
           {/* 4. ROUND CLEAR DOSSIER TERMINAL */}
           {gameState === 'ROUND_CLEAR' && (
-            <div className="glass-panel rounded-2xl p-6 border-2 border-emerald-500/30 glow-green h-full flex flex-col justify-between items-center text-center select-none animate-fade-in font-mono-sci">
+            <div className="glass-panel rounded-2xl p-6 border-2 border-emerald-500/30 glow-green h-full flex flex-col justify-between items-center text-center select-none animate-fade-in font-mono-sci relative">
+              <div className="panel-bolt panel-bolt-tl" />
+              <div className="panel-bolt panel-bolt-tr" />
+              <div className="panel-bolt panel-bolt-bl" />
+              <div className="panel-bolt panel-bolt-br" />
               <div className="art-deco-border px-6 py-1.5 border border-emerald-500/30 bg-emerald-950/20 rounded">
                 <h1 className="font-deco text-xl font-black text-emerald-400 tracking-wider">
                   REACTOR EXPEDITION SUMMARY
@@ -349,12 +369,16 @@ export default function App() {
                           key={el.symbol} 
                           className="glass-panel border border-emerald-500/20 bg-slate-900/40 rounded-xl p-3 flex flex-col text-left relative overflow-hidden"
                         >
-                          <div className="flex justify-between items-center text-[8.5px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-1.5">
+                          <div className="panel-bolt panel-bolt-tl" />
+                          <div className="panel-bolt panel-bolt-tr" />
+                          <div className="panel-bolt panel-bolt-bl" />
+                          <div className="panel-bolt panel-bolt-br" />
+                          <div className="flex justify-between items-center text-[8.5px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-1.5 z-10">
                             <span className="font-bold">SECURED DATA #{i + 1}</span>
                             <span className="font-bold text-yellow-400 font-deco">{el.symbol}</span>
                           </div>
 
-                          <div className="text-[9.5px] text-emerald-300 space-y-1">
+                          <div className="text-[9.5px] text-emerald-300 space-y-1 z-10">
                             <div className="grid grid-cols-2 gap-x-2">
                               <div>
                                 <span className="text-emerald-500/60 font-medium">NAME:</span>{' '}
@@ -382,7 +406,7 @@ export default function App() {
                   unlockAudio();
                   advanceRound();
                 }}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
+                className="btn-tactile-green w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
               >
                 ENGAGE NEXT WARP PROTOCOL
               </button>
@@ -391,7 +415,11 @@ export default function App() {
 
           {/* 5. VICTORY CELEBRATION */}
           {gameState === 'victory' && (
-            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/40 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in">
+            <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/40 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in relative">
+              <div className="panel-bolt panel-bolt-tl" />
+              <div className="panel-bolt panel-bolt-tr" />
+              <div className="panel-bolt panel-bolt-bl" />
+              <div className="panel-bolt panel-bolt-br" />
               <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
                 <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider animate-pulse">
                   ODYSSEY COMPLETED!
@@ -423,7 +451,7 @@ export default function App() {
                   playWarpDrive();
                   resetGame();
                 }}
-                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.4)] font-mono-sci tracking-widest text-sm cursor-pointer"
+                className="btn-tactile w-full py-3.5 px-6 text-sm cursor-pointer font-mono-sci tracking-widest"
               >
                 REBOOT ODYSSEY PROCESS
               </button>

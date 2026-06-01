@@ -234,6 +234,10 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
 
   return (
     <div className={`glass-panel-teal rounded-2xl p-4 md:p-5 relative border-2 glow-teal select-none flex flex-col justify-between h-full overflow-hidden transition-all duration-1000 ${interactive ? 'animate-interactive-pulse border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.35)]' : 'border-teal-500/30'}`}>
+      <div className="panel-bolt panel-bolt-tl" />
+      <div className="panel-bolt panel-bolt-tr" />
+      <div className="panel-bolt panel-bolt-bl" />
+      <div className="panel-bolt panel-bolt-br" />
       
       {/* 1. Holographic / Scanline CRT Overlay */}
       <div className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden z-0">

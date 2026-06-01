@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@500;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@500;700;900&family=Share+Tech+Mono&family=Syncopate:wght@400;700&display=swap');
 
 @import "tailwindcss";
 
@@ -55,10 +55,13 @@
 
 /* Premium Console Instrument Plates */
 .glass-panel {
-  background: linear-gradient(135deg, #02070f 0%, #061222 75%, #010408 100%);
+  background: radial-gradient(circle at 50% 20%, #0c1527 0%, #030712 85%, #000000 100%);
   border: 2px solid #ca8a04;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(20, 184, 166, 0.12);
-  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 
+              inset 0 0 25px rgba(20, 184, 166, 0.15), 
+              inset 0 2px 0 rgba(253, 224, 71, 0.35),
+              0 0 0 1px rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
   position: relative;
 }
 .glass-panel::before {
@@ -66,15 +69,18 @@
   position: absolute;
   inset: 1.5px;
   border: 1.5px solid rgba(20, 184, 166, 0.06);
-  border-radius: 10px;
+  border-radius: 14px;
   pointer-events: none;
 }
 
 .glass-panel-teal {
-  background: linear-gradient(135deg, #020914 0%, #031e2a 75%, #01060d 100%);
+  background: radial-gradient(circle at 50% 20%, #061e2a 0%, #020b14 85%, #000000 100%);
   border: 2px solid #0d9488;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(20, 184, 166, 0.22);
-  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 
+              inset 0 0 30px rgba(20, 184, 166, 0.25), 
+              inset 0 2px 0 rgba(45, 212, 191, 0.35),
+              0 0 0 1px rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
   position: relative;
 }
 .glass-panel-teal::before {
@@ -82,8 +88,105 @@
   position: absolute;
   inset: 1.5px;
   border: 1.5px solid rgba(234, 179, 8, 0.06);
-  border-radius: 10px;
+  border-radius: 14px;
   pointer-events: none;
+}
+
+/* Bolted panel corner markers */
+.panel-bolt {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #eab308 0%, #ca8a04 60%, #78350f 100%);
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0.5px 0.5px rgba(255,255,255,0.4);
+  z-index: 10;
+}
+.panel-bolt-tl { top: 6px; left: 6px; }
+.panel-bolt-tr { top: 6px; right: 6px; }
+.panel-bolt-bl { bottom: 6px; left: 6px; }
+.panel-bolt-br { bottom: 6px; right: 6px; }
+
+/* Tactile heavy toggle buttons */
+.btn-tactile {
+  font-family: 'Syncopate', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #d97706 0%, #b45309 50%, #78350f 100%);
+  border: 2px solid #ca8a04;
+  border-top-color: #fef08a;
+  border-left-color: #fef08a;
+  border-radius: 8px;
+  color: #fef08a;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 6px 0 #78350f, 0 12px 20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.btn-tactile:hover {
+  background: linear-gradient(to bottom, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  box-shadow: 0 8px 0 #78350f, 0 14px 22px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+.btn-tactile:active {
+  transform: translateY(6px);
+  box-shadow: 0 0px 0 #78350f, 0 4px 8px rgba(0,0,0,0.8);
+}
+
+/* Green tactile confirmation buttons */
+.btn-tactile-green {
+  font-family: 'Syncopate', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #059669 0%, #047857 50%, #064e3b 100%);
+  border: 2px solid #34d399;
+  border-top-color: #a7f3d0;
+  border-left-color: #a7f3d0;
+  border-radius: 8px;
+  color: #a7f3d0;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 6px 0 #064e3b, 0 12px 20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.btn-tactile-green:hover {
+  background: linear-gradient(to bottom, #10b981 0%, #059669 50%, #047857 100%);
+  box-shadow: 0 8px 0 #064e3b, 0 14px 22px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+.btn-tactile-green:active {
+  transform: translateY(6px);
+  box-shadow: 0 0px 0 #064e3b, 0 4px 8px rgba(0,0,0,0.8);
+}
+
+/* Dial/knob controls for slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: #020617;
+  border: 1px solid #1e293b;
+  height: 8px;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 20px;
+  border-radius: 3px;
+  background: linear-gradient(to bottom, #ca8a04, #78350f);
+  border: 1.5px solid #ca8a04;
+  border-top-color: #fef08a;
+  border-left-color: #fef08a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: linear-gradient(to bottom, #eab308, #b45309);
 }
 
 /* Keyframes & Animations */

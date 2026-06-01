@@ -224,6 +224,10 @@ export default function GauntletConsole({
 
   return (
     <div className="glass-panel rounded-2xl p-6 relative border-2 border-yellow-500/10 glow-gold select-none h-full flex flex-col justify-between overflow-hidden">
+      <div className="panel-bolt panel-bolt-tl" />
+      <div className="panel-bolt panel-bolt-tr" />
+      <div className="panel-bolt panel-bolt-bl" />
+      <div className="panel-bolt panel-bolt-br" />
       
       {/* Styles for Art Deco details, circuit lines and custom keyframe animations */}
       <style>{`
@@ -342,14 +346,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'border-teal-500/20 hover:border-yellow-500/40 hover:bg-yellow-500/5 text-slate-300';
+                let buttonStyle = 'bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-slate-700 border-t-slate-600 border-l-slate-600 text-slate-300 shadow-[0_4px_0_#0f172a,inset_0_1px_0_rgba(255,255,255,0.1)] hover:from-slate-700 hover:to-slate-800 hover:border-yellow-500/60 active:translate-y-[4px] active:shadow-none';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'border-emerald-500 bg-emerald-950/30 text-emerald-400 glow-green';
+                    buttonStyle = 'bg-gradient-to-b from-emerald-600 to-emerald-800 border-2 border-emerald-500 border-t-emerald-400 border-l-emerald-400 text-emerald-100 shadow-[0_0_12px_rgba(16,185,129,0.5),inset_0_1px_0_rgba(255,255,255,0.2)]';
                   } else if (isSelected) {
-                    buttonStyle = 'border-red-500 bg-red-950/30 text-red-400';
+                    buttonStyle = 'bg-gradient-to-b from-red-700 to-red-900 border-2 border-red-600 border-t-red-500 border-l-red-500 text-red-100 shadow-[0_0_8px_rgba(239,68,68,0.4)]';
                   } else {
-                    buttonStyle = 'border-slate-800 text-slate-600 opacity-50';
+                    buttonStyle = 'opacity-40 border-slate-900 bg-slate-950 text-slate-600 shadow-none';
                   }
                 }
 
@@ -358,7 +362,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleMultipleChoiceSubmit(option)}
-                    className={`border rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-300 font-mono-sci cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${buttonStyle}`}
+                    className={`rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-150 font-mono-sci cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -400,6 +404,10 @@ export default function GauntletConsole({
                     onClick={() => handleWeightComparisonSubmit(el.symbol)}
                     className={`border-2 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[140px] relative overflow-hidden ${cardStyle}`}
                   >
+                    <div className="panel-bolt panel-bolt-tl" />
+                    <div className="panel-bolt panel-bolt-tr" />
+                    <div className="panel-bolt panel-bolt-bl" />
+                    <div className="panel-bolt panel-bolt-br" />
                     {/* Art Deco design brackets */}
                     <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-current opacity-40" />
                     <div className="absolute top-1 right-1 w-2 h-2 border-t border-r border-current opacity-40" />
@@ -455,14 +463,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'border-teal-500/20 hover:border-yellow-500/40 hover:bg-yellow-500/5 text-slate-300';
+                let buttonStyle = 'bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-slate-700 border-t-slate-600 border-l-slate-600 text-slate-300 shadow-[0_4px_0_#0f172a,inset_0_1px_0_rgba(255,255,255,0.1)] hover:from-slate-700 hover:to-slate-800 hover:border-yellow-500/60 active:translate-y-[4px] active:shadow-none';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'border-emerald-500 bg-emerald-950/30 text-emerald-400 glow-green';
+                    buttonStyle = 'bg-gradient-to-b from-emerald-600 to-emerald-800 border-2 border-emerald-500 border-t-emerald-400 border-l-emerald-400 text-emerald-100 shadow-[0_0_12px_rgba(16,185,129,0.5),inset_0_1px_0_rgba(255,255,255,0.2)]';
                   } else if (isSelected) {
-                    buttonStyle = 'border-red-500 bg-red-950/30 text-red-400';
+                    buttonStyle = 'bg-gradient-to-b from-red-700 to-red-900 border-2 border-red-600 border-t-red-500 border-l-red-500 text-red-100 shadow-[0_0_8px_rgba(239,68,68,0.4)]';
                   } else {
-                    buttonStyle = 'border-slate-800 text-slate-600 opacity-50';
+                    buttonStyle = 'opacity-40 border-slate-900 bg-slate-950 text-slate-600 shadow-none';
                   }
                 }
 
@@ -471,7 +479,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleNuclearSynthesisSubmit(option)}
-                    className={`border rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-300 font-mono-sci cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${buttonStyle}`}
+                    className={`rounded-xl p-3.5 text-center text-xs font-bold transition-all duration-150 font-mono-sci cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -546,7 +554,7 @@ export default function GauntletConsole({
                   type="button"
                   disabled={feedback !== null}
                   onClick={() => revealClue(1)}
-                  className="border border-dashed border-teal-500/20 hover:border-teal-500/40 rounded-xl p-2.5 bg-teal-955/5 text-center text-[9px] text-teal-500/60 font-mono-sci transition-all duration-300 cursor-pointer hover:bg-teal-950/15 min-h-[70px] flex flex-col items-center justify-center"
+                  className="border border-teal-500/30 hover:border-teal-400 rounded-xl p-2.5 bg-gradient-to-b from-[#0c1e2a]/50 to-[#020b14]/70 text-center text-[9px] text-teal-400 font-mono-sci transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98] min-h-[70px] flex flex-col items-center justify-center shadow-[inset_0_0_10px_rgba(20,184,166,0.15)]"
                 >
                   <span>🔍 Unlock Clue 2</span>
                   <span className="text-[8px] opacity-75 mt-0.5">(Decays to 200 pts)</span>
@@ -569,9 +577,9 @@ export default function GauntletConsole({
                   type="button"
                   disabled={!cluesRevealed[1] || feedback !== null}
                   onClick={() => revealClue(2)}
-                  className={`border border-dashed rounded-xl p-2.5 text-center text-[9px] font-mono-sci transition-all duration-300 min-h-[70px] flex flex-col items-center justify-center ${
+                  className={`border rounded-xl p-2.5 text-center text-[9px] font-mono-sci transition-all duration-300 min-h-[70px] flex flex-col items-center justify-center shadow-[inset_0_0_10px_rgba(6,182,212,0.15)] ${
                     cluesRevealed[1] && feedback === null
-                      ? 'border-cyan-500/20 hover:border-cyan-500/40 text-cyan-500/60 bg-cyan-955/5 cursor-pointer hover:bg-cyan-950/15'
+                      ? 'border-cyan-500/30 hover:border-cyan-400 text-cyan-400 bg-gradient-to-b from-[#061e2a]/50 to-[#020b14]/70 cursor-pointer hover:scale-[1.02] active:scale-[0.98]'
                       : 'border-slate-800 text-slate-700 bg-transparent cursor-not-allowed'
                   }`}
                 >
@@ -603,10 +611,10 @@ export default function GauntletConsole({
                 <button
                   type="submit"
                   disabled={feedback !== null || !inputValue.trim()}
-                  className={`font-mono-sci text-xs font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 shadow-md ${
+                  className={`px-4 py-3 text-xs font-bold transition-all duration-300 font-mono-sci ${
                     feedback !== null || !inputValue.trim()
-                      ? 'bg-slate-900 border border-slate-800 text-slate-600 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 cursor-pointer shadow-[0_0_10px_rgba(234,179,8,0.2)]'
+                      ? 'bg-slate-900 border border-slate-800 text-slate-600 cursor-not-allowed opacity-50 rounded-xl'
+                      : 'btn-tactile cursor-pointer'
                   }`}
                 >
                   SUBMIT

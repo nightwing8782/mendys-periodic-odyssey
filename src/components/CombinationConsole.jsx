@@ -159,6 +159,10 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
 
       {/* PANEL A: ATOMIC DEEP SCANNER */}
       <div className="glass-panel border border-emerald-500/20 bg-slate-950/60 rounded-2xl p-4 flex flex-col justify-between min-h-[145px] relative overflow-hidden font-mono-sci">
+        <div className="panel-bolt panel-bolt-tl" />
+        <div className="panel-bolt panel-bolt-tr" />
+        <div className="panel-bolt panel-bolt-bl" />
+        <div className="panel-bolt panel-bolt-br" />
         {/* Decorative corner brackets */}
         <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-emerald-500/40"></div>
         <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-emerald-500/40"></div>
@@ -233,6 +237,10 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
 
       {/* PANEL B: INTERSTELLAR RADIO */}
       <div className="glass-panel border border-teal-500/20 bg-slate-950/60 rounded-2xl p-4 flex flex-col justify-between min-h-[145px] font-mono-sci relative">
+        <div className="panel-bolt panel-bolt-tl" />
+        <div className="panel-bolt panel-bolt-tr" />
+        <div className="panel-bolt panel-bolt-bl" />
+        <div className="panel-bolt panel-bolt-br" />
         {/* Decorative corner brackets */}
         <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-teal-500/40"></div>
         <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-teal-500/40"></div>

@@ -2,42 +2,13 @@ import React from 'react';
 
 export default function CockpitLayout({ children, score }) {
   return (
-    <div className="min-h-screen bg-[#060814] relative overflow-hidden flex flex-col items-center justify-center p-4 md:p-6 text-slate-100 font-sans">
-      
-      {/* 1. OUTER SPACE BACKGROUND (Stars & Ringed Planet Viewport) */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-60">
-        {/* Starfield */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#03040c] to-[#010206]" />
-        
-        {/* Subtle glowing star sparkles */}
-        <div className="absolute top-[10%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_#ffffff]" />
-        <div className="absolute top-[25%] left-[80%] w-1 h-1 bg-white rounded-full animate-ping" />
-        <div className="absolute top-[60%] left-[8%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_6px_#ffffff]" />
-        <div className="absolute top-[75%] left-[88%] w-[1.5px] h-[1.5px] bg-white rounded-full animate-pulse" />
-        <div className="absolute top-[40%] left-[50%] w-[2px] h-[2px] bg-amber-200/50 rounded-full animate-pulse" />
-
-        {/* Ringed Planet in left viewport */}
-        <svg className="absolute left-[3%] top-[12%] w-48 h-48 opacity-45 pointer-events-none" viewBox="0 0 100 100">
-          <defs>
-            <radialGradient id="planetGrad" cx="40%" cy="40%" r="60%">
-              <stop offset="0%" stopColor="#4f46e5" />
-              <stop offset="60%" stopColor="#1e1b4b" />
-              <stop offset="100%" stopColor="#030712" />
-            </radialGradient>
-            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="rgba(20, 184, 166, 0)" />
-              <stop offset="30%" stopColor="rgba(234, 179, 8, 0.45)" />
-              <stop offset="50%" stopColor="rgba(20, 184, 166, 0.6)" />
-              <stop offset="70%" stopColor="rgba(234, 179, 8, 0.45)" />
-              <stop offset="100%" stopColor="rgba(20, 184, 166, 0)" />
-            </linearGradient>
-          </defs>
-          {/* Planet body */}
-          <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" />
-          {/* Planet ring */}
-          <ellipse cx="50" cy="50" rx="38" ry="8" fill="none" stroke="url(#ringGrad)" strokeWidth="3" transform="rotate(-18 50 50)" />
-        </svg>
-      </div>
+    <div 
+      className="min-h-screen relative overflow-hidden flex flex-col items-center justify-between p-4 md:p-6 text-slate-100 font-sans bg-slate-950 bg-cover bg-center"
+      style={{ 
+        backgroundImage: 'url("/cockpit-bg.jpg")',
+        minHeight: '100vh'
+      }}
+    >
 
       {/* 2. BRASS & GOLD COCKPIT CEILING DECOR (Symmetrical Sunburst) */}
       <div className="w-full max-w-7xl z-10 hidden md:flex items-center justify-between px-12 py-1 bg-gradient-to-b from-[#131b2e] to-transparent border-b border-yellow-500/20 relative">
