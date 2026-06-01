@@ -425,33 +425,33 @@ export default function GauntletConsole({
         {question.type === 'NUCLEAR_SYNTHESIS' && (
           <div className="space-y-4">
             {/* Visual Formula Addition Box */}
-            <div className="flex items-center justify-center space-x-3 bg-slate-950/50 border border-yellow-500/20 rounded-none p-4 relative overflow-hidden shadow-inner">
+            <div className="flex items-center justify-center space-x-1.5 bg-slate-950/50 border border-yellow-500/20 rounded-none p-3 relative overflow-hidden shadow-inner">
               
               {/* Reactant 1 */}
-              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px]">
-                <span className="text-[8px] text-teal-400 font-mono-sci">ATOMIC #{question.elementA.number}</span>
-                <span className="text-xl font-bold font-deco text-slate-100 my-0.5">{question.elementA.symbol}</span>
-                <span className="text-[8px] text-slate-400 uppercase font-mono-sci">{question.elementA.name}</span>
+              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-1.5 py-2 flex flex-col items-center w-[60px] text-center">
+                <span className="text-[8px] text-teal-400 font-mono-sci font-bold">Z={question.elementA.number}</span>
+                <span className="text-lg font-bold font-deco text-slate-100 my-0.5">{question.elementA.symbol}</span>
+                <span className="text-[7px] text-slate-400 uppercase font-mono-sci truncate w-full">{question.elementA.name}</span>
               </div>
 
               {/* Plus Sign */}
-              <span className="text-yellow-500 text-lg font-black font-mono-sci">+</span>
+              <span className="text-yellow-500 text-sm font-black font-mono-sci">+</span>
 
               {/* Reactant 2 */}
-              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px]">
-                <span className="text-[8px] text-teal-400 font-mono-sci">ATOMIC #{question.elementB.number}</span>
-                <span className="text-xl font-bold font-deco text-slate-100 my-0.5">{question.elementB.symbol}</span>
-                <span className="text-[8px] text-slate-400 uppercase font-mono-sci">{question.elementB.name}</span>
+              <div className="bg-slate-900/90 border border-teal-500/40 rounded-none px-1.5 py-2 flex flex-col items-center w-[60px] text-center">
+                <span className="text-[8px] text-teal-400 font-mono-sci font-bold">Z={question.elementB.number}</span>
+                <span className="text-lg font-bold font-deco text-slate-100 my-0.5">{question.elementB.symbol}</span>
+                <span className="text-[7px] text-slate-400 uppercase font-mono-sci truncate w-full">{question.elementB.name}</span>
               </div>
 
               {/* Equals Sign */}
-              <span className="text-yellow-500 text-lg font-black font-mono-sci">=</span>
+              <span className="text-yellow-500 text-sm font-black font-mono-sci">=</span>
 
               {/* Product Placeholder */}
-              <div className="bg-yellow-950/20 border border-dashed border-yellow-500/50 rounded-none px-3 py-2 flex flex-col items-center min-w-[70px] animate-pulse">
-                <span className="text-[8px] text-yellow-400 font-mono-sci font-bold">TOTAL Z = {question.elementC.number}</span>
-                <span className="text-xl font-black font-deco text-yellow-400 my-0.5">?</span>
-                <span className="text-[8px] text-yellow-500/70 uppercase font-mono-sci">PRODUCT</span>
+              <div className="bg-yellow-950/20 border border-dashed border-yellow-500/50 rounded-none px-1.5 py-2 flex flex-col items-center w-[60px] text-center animate-pulse">
+                <span className="text-[8px] text-yellow-400 font-mono-sci font-bold">Z={question.elementC.number}</span>
+                <span className="text-lg font-black font-deco text-yellow-400 my-0.5">?</span>
+                <span className="text-[7px] text-yellow-500/70 uppercase font-mono-sci">PRODUCT</span>
               </div>
             </div>
 
