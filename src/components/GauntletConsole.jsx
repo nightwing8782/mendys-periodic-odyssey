@@ -9,7 +9,9 @@ export default function GauntletConsole({
   onAnswerSubmitted,
   nextQuestion,
   gridTapSymbol,
-  resetGridTapSymbol
+  resetGridTapSymbol,
+  attemptNumber = 1,
+  setAttemptNumber
 }) {
   const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect' | 'timeout'
   const [timeLeft, setTimeLeft] = useState(20);
@@ -96,18 +98,31 @@ export default function GauntletConsole({
       if (isCorrect) {
         setFeedback('correct');
         playCorrectAscent();
-        onAnswerSubmitted(true, question.symbol, 500);
+        // Award points depending on attempts: 500 on Attempt 1, 300 on Attempt 2, 100 on Attempt 3
+        const pts = attemptNumber === 1 ? 500 : attemptNumber === 2 ? 300 : 100;
+        onAnswerSubmitted(true, question.symbol, pts);
+        timeoutRef.current = setTimeout(() => {
+          nextQuestion();
+        }, 3000);
       } else {
-        setFeedback('incorrect');
-        playIncorrectBuzz();
-        onAnswerSubmitted(false, question.symbol, 0);
+        if (attemptNumber < 3) {
+          playIncorrectBuzz();
+          setAttemptNumber(prev => prev + 1);
+          setSelectedAnswer(null);
+          if (resetGridTapSymbol) {
+            resetGridTapSymbol();
+          }
+        } else {
+          setFeedback('incorrect');
+          playIncorrectBuzz();
+          onAnswerSubmitted(false, question.symbol, 0);
+          timeoutRef.current = setTimeout(() => {
+            nextQuestion();
+          }, 3000);
+        }
       }
-
-      timeoutRef.current = setTimeout(() => {
-        nextQuestion();
-      }, 3000);
     }
-  }, [gridTapSymbol, question, feedback, onAnswerSubmitted, nextQuestion]);
+  }, [gridTapSymbol, question, feedback, onAnswerSubmitted, nextQuestion, attemptNumber, setAttemptNumber, resetGridTapSymbol]);
 
   const handleMultipleChoiceSubmit = (choice) => {
     if (feedback !== null) return;
@@ -508,6 +523,20 @@ export default function GauntletConsole({
               <span className="text-[9px] text-teal-400 font-mono-sci uppercase tracking-widest font-bold block mb-2">
                 HOLOGRAPHIC NAVIGATION PROTOCOL
               </span>
+
+              <div className="mb-3">
+                <span className={`text-[8.5px] px-2 py-0.5 border font-mono font-bold ${
+                  attemptNumber === 1 ? 'border-teal-500/30 text-teal-400 bg-teal-950/20' :
+                  attemptNumber === 2 ? 'border-yellow-500/50 text-yellow-400 bg-yellow-950/20 animate-pulse' :
+                  'border-red-500 text-red-400 bg-red-950/25 animate-bounce'
+                }`}>
+                  ATTEMPT {attemptNumber} / 3 {
+                    attemptNumber === 2 ? '[4x4 SECTOR LOCK-ON]' :
+                    attemptNumber === 3 ? '[4-SQUARE MATRIX]' :
+                    '[FULL GRID]'
+                  }
+                </span>
+              </div>
               
               <p className="text-xs md:text-sm font-bold text-slate-100 font-deco tracking-wide leading-relaxed">
                 {question.clue}

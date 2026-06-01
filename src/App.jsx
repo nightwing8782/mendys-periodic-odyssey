@@ -35,11 +35,28 @@ export default function App() {
   const [greenFlash, setGreenFlash] = useState(false);
   const [gridTapSymbol, setGridTapSymbol] = useState(null);
   const [inspectedElement, setInspectedElement] = useState(null);
+  const [attemptNumber, setAttemptNumber] = useState(1);
+  const [activeHighlightSymbols, setActiveHighlightSymbols] = useState([]);
 
-  // Clear manual inspection cache on question or game state transition
+  // Clear manual inspection cache on question or game state transition, reset attempts
   useEffect(() => {
     setInspectedElement(null);
-  }, [currentIndex, gameState]);
+    setAttemptNumber(1);
+
+    // Filter 4 elements (correct + 3 random incorrects) for Attempt 3 Matrix Highlight
+    const currentQuestion = questions[currentIndex];
+    if (gameState === 'PLAYING' && currentRoundType === 'GRID_TAP' && currentQuestion) {
+      const targetSym = currentQuestion.symbol;
+      const incorrectSymbols = elements
+        .filter(e => e.symbol !== targetSym)
+        .map(e => e.symbol)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+      setActiveHighlightSymbols([targetSym, ...incorrectSymbols]);
+    } else {
+      setActiveHighlightSymbols([]);
+    }
+  }, [currentIndex, gameState, currentRoundType, questions]);
 
   // Manage Mendy avatar state based on game stage
   useEffect(() => {
@@ -320,6 +337,8 @@ export default function App() {
             nextQuestion={nextQuestion}
             gridTapSymbol={gridTapSymbol}
             resetGridTapSymbol={resetGridTapSymbol}
+            attemptNumber={attemptNumber}
+            setAttemptNumber={setAttemptNumber}
           />
         )}
 
@@ -460,6 +479,9 @@ export default function App() {
             totalGoalCount={118}
             interactive={gameState === 'PLAYING' && currentRoundType === 'GRID_TAP'}
             onTileClick={handleTileClick}
+            attemptNumber={attemptNumber}
+            targetSymbol={currentQuestion?.symbol}
+            activeHighlightSymbols={activeHighlightSymbols}
           />
         </div>
         

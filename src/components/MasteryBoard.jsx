@@ -1,4 +1,99 @@
 import React, { useState, useEffect } from 'react';
+import { elements } from '../data/elements';
+
+// Helper to get group colors for elements
+function getCategoryColor(category) {
+  switch (category) {
+    case 'alkali metal':
+      return {
+        collectedBg: 'bg-orange-500',
+        collectedBorder: 'border-orange-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-orange-500/20',
+        uncollectedBg: 'bg-orange-950/5'
+      };
+    case 'alkaline earth metal':
+      return {
+        collectedBg: 'bg-amber-500',
+        collectedBorder: 'border-amber-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-amber-500/20',
+        uncollectedBg: 'bg-amber-950/5'
+      };
+    case 'transition metal':
+      return {
+        collectedBg: 'bg-teal-500',
+        collectedBorder: 'border-teal-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-teal-500/20',
+        uncollectedBg: 'bg-teal-950/5'
+      };
+    case 'lanthanide':
+      return {
+        collectedBg: 'bg-purple-500',
+        collectedBorder: 'border-purple-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-purple-500/20',
+        uncollectedBg: 'bg-purple-950/5'
+      };
+    case 'actinide':
+      return {
+        collectedBg: 'bg-pink-500',
+        collectedBorder: 'border-pink-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-pink-500/20',
+        uncollectedBg: 'bg-pink-950/5'
+      };
+    case 'post-transition metal':
+      return {
+        collectedBg: 'bg-blue-500',
+        collectedBorder: 'border-blue-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-blue-500/20',
+        uncollectedBg: 'bg-blue-950/5'
+      };
+    case 'metalloid':
+      return {
+        collectedBg: 'bg-emerald-500',
+        collectedBorder: 'border-emerald-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-emerald-500/20',
+        uncollectedBg: 'bg-emerald-950/5'
+      };
+    case 'reactive nonmetal':
+      return {
+        collectedBg: 'bg-lime-500',
+        collectedBorder: 'border-lime-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-lime-500/20',
+        uncollectedBg: 'bg-lime-950/5'
+      };
+    case 'halogen':
+      return {
+        collectedBg: 'bg-cyan-500',
+        collectedBorder: 'border-cyan-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-cyan-500/20',
+        uncollectedBg: 'bg-cyan-950/5'
+      };
+    case 'noble gas':
+      return {
+        collectedBg: 'bg-fuchsia-500',
+        collectedBorder: 'border-fuchsia-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-fuchsia-500/20',
+        uncollectedBg: 'bg-fuchsia-950/5'
+      };
+    default:
+      return {
+        collectedBg: 'bg-slate-500',
+        collectedBorder: 'border-slate-500',
+        collectedText: 'text-[#030306]',
+        uncollectedBorder: 'border-slate-500/10',
+        uncollectedBg: 'bg-transparent'
+      };
+  }
+}
 
 // Grid layout mapping for all 118 elements in the Periodic Table
 const tableElements = [
@@ -135,10 +230,43 @@ const tableElements = [
 
 
 
-export default function MasteryBoard({ collectedElements = new Set(), totalGoalCount = 118, interactive = false, onTileClick = null }) {
+export default function MasteryBoard({ 
+  collectedElements = new Set(), 
+  totalGoalCount = 118, 
+  interactive = false, 
+  onTileClick = null,
+  attemptNumber = 1,
+  targetSymbol = '',
+  activeHighlightSymbols = []
+}) {
   const collectedCount = collectedElements.size;
   const [prevCleared, setPrevCleared] = useState(new Set());
   const [flashingColumns, setFlashingColumns] = useState(new Set());
+
+  // Find target element coordinates
+  const targetEl = targetSymbol ? tableElements.find(e => e.symbol === targetSymbol) : null;
+  const targetCol = targetEl?.col || 1;
+  const targetRow = targetEl?.row || 1;
+
+  // Attempt 2 coordinates bounds
+  let minCol = 1, maxCol = 18, minRow = 1, maxRow = 9;
+  if (interactive && attemptNumber === 2 && targetEl) {
+    minCol = targetCol - 1;
+    if (minCol < 1) minCol = 1;
+    maxCol = minCol + 3;
+    if (maxCol > 18) {
+      maxCol = 18;
+      minCol = maxCol - 3;
+    }
+    
+    minRow = targetRow - 1;
+    if (minRow < 1) minRow = 1;
+    maxRow = minRow + 3;
+    if (maxRow > 9) {
+      maxRow = 9;
+      minRow = maxRow - 3;
+    }
+  }
 
   // Detect column clears and newly cleared columns
   useEffect(() => {
@@ -194,6 +322,14 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
           );
           background-size: 100% 3px;
         }
+        @keyframes sector-pulse {
+          0% { border-color: rgba(6, 182, 212, 0.4); box-shadow: 0 0 10px rgba(6, 182, 212, 0.2), inset 0 0 10px rgba(6, 182, 212, 0.1); }
+          100% { border-color: rgba(34, 211, 238, 1); box-shadow: 0 0 25px rgba(34, 211, 238, 0.8), inset 0 0 20px rgba(34, 211, 238, 0.5); }
+        }
+        .neon-sector-border {
+          border: 2px solid #22d3ee;
+          animation: sector-pulse 0.8s ease-in-out infinite alternate;
+        }
       `}</style>
 
       {/* Title Header Hacking style */}
@@ -204,37 +340,81 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
 
       {/* Periodic Table Grid Container */}
       <div className="w-full mb-3 flex justify-center z-10">
-        <div className={`relative p-2 border border-cyan-500/10 bg-black/35 w-full max-w-[850px] ${interactive ? 'grid-crosshair-scan border-cyan-500/30' : ''}`}>
+        <div className={`relative p-2 border border-cyan-500/10 bg-black/35 w-full max-w-[850px] ${interactive && attemptNumber === 1 ? 'grid-crosshair-scan border-cyan-500/30' : ''}`}>
           <div 
-            className="grid gap-[1px] md:gap-[2px] w-full"
+            className="grid gap-[1px] md:gap-[2px] w-full relative"
             style={{ 
               gridTemplateColumns: 'repeat(18, minmax(0, 1fr))',
               gridTemplateRows: 'repeat(9, minmax(0, 1fr))'
             }}
           >
+            {/* Flashing Neon Sector overlay on Attempt 2 */}
+            {interactive && attemptNumber === 2 && targetEl && (
+              <div 
+                className="absolute pointer-events-none neon-sector-border z-20"
+                style={{
+                  gridColumn: `${minCol} / span 4`,
+                  gridRow: `${minRow} / span 4`,
+                }}
+              />
+            )}
+
             {tableElements.map((el) => {
               const isCollected = collectedElements.has(el.symbol);
               const isColumnCompleted = prevCleared.has(el.col);
               const isColumnFlashing = flashingColumns.has(el.col);
 
-              const isClickable = interactive || isCollected;
+              // Grid limits check
+              const in4x4Sector = !interactive || attemptNumber !== 2 || !targetEl ||
+                (el.col >= minCol && el.col <= maxCol && el.row >= minRow && el.row <= maxRow);
+
+              const in4SquareHighlight = !interactive || attemptNumber !== 3 ||
+                activeHighlightSymbols.includes(el.symbol);
+
+              const isClickable = (interactive && in4x4Sector && in4SquareHighlight) || (!interactive && isCollected);
+
+              const elementMeta = elements.find(e => e.symbol === el.symbol);
+              const category = elementMeta?.category || 'unknown';
+              const catColors = getCategoryColor(category);
+
+              let tileClass = '';
+
+              if (interactive && attemptNumber === 3) {
+                if (in4SquareHighlight) {
+                  tileClass = `bg-cyan-950/40 border-2 border-cyan-400 text-cyan-200 shadow-[0_0_15px_rgba(6,182,212,0.6)] font-bold cursor-pointer hover:scale-110 active:scale-95 z-30`;
+                } else {
+                  tileClass = `opacity-0 border-transparent pointer-events-none`;
+                }
+              } else if (interactive && attemptNumber === 2) {
+                if (in4x4Sector) {
+                  tileClass = `border-dashed border-cyan-500/40 hover:border-yellow-400 bg-cyan-950/5 text-transparent cursor-pointer hover:scale-110 active:scale-95 z-30`;
+                } else {
+                  tileClass = `opacity-10 border-cyan-500/5 bg-transparent text-transparent pointer-events-none`;
+                }
+              } else {
+                tileClass = isCollected 
+                  ? `${catColors.collectedBg} ${catColors.collectedBorder} ${catColors.collectedText} font-bold shadow-[0_0_8px_rgba(20,184,166,0.3)]`
+                  : isColumnFlashing
+                  ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
+                  : isColumnCompleted
+                  ? 'bg-cyan-950/20 border-cyan-500/50 text-cyan-400'
+                  : `border-dashed ${catColors.uncollectedBorder} ${catColors.uncollectedBg} text-transparent`;
+
+                if (interactive) {
+                  tileClass = isCollected
+                    ? `${catColors.collectedBg} ${catColors.collectedBorder} ${catColors.collectedText} font-bold cursor-pointer hover:scale-110 active:scale-95 z-30`
+                    : `border-dashed border-cyan-500/40 hover:border-yellow-400 bg-cyan-950/5 text-transparent cursor-pointer hover:scale-110 active:scale-95 z-30`;
+                } else if (isCollected) {
+                  tileClass += ` cursor-pointer hover:scale-110 active:scale-95 z-30`;
+                }
+              }
+
+              const showSymbol = isCollected || (interactive && attemptNumber === 3 && in4SquareHighlight);
 
               return (
                 <div
                   key={el.num}
-                  className={`relative flex flex-col items-center justify-center border rounded-none aspect-square transition-all duration-300 ${
-                    isCollected 
-                      ? 'bg-yellow-500 border-yellow-500 text-[#030306] font-bold shadow-[0_0_8px_rgba(234,179,8,0.7)]'
-                      : isColumnFlashing
-                      ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
-                      : isColumnCompleted
-                      ? 'bg-cyan-950/20 border-cyan-500/50 text-cyan-400'
-                      : 'border-dashed border-cyan-500/10 bg-transparent text-transparent'
-                  } ${
-                    isClickable ? 'cursor-pointer hover:scale-110 active:scale-95 z-30' : ''
-                  } ${
-                    interactive && !isCollected ? 'border-cyan-500/40 hover:border-yellow-400 hover:bg-yellow-500/20' : ''
-                  }`}
+                  className={`relative flex flex-col items-center justify-center border rounded-none aspect-square transition-all duration-300 ${tileClass}`}
                   style={{
                     gridColumn: `${el.col}`,
                     gridRow: `${el.row}`,
@@ -246,10 +426,10 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                   }}
                   title={isCollected ? `${el.symbol} (Atomic #${el.num})` : ''}
                 >
-                  {isCollected && (
+                  {showSymbol && (
                     <>
                       {/* Micro absolute atomic number at top left */}
-                      <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8px] opacity-80 leading-none select-none">
+                      <span className={`absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
                         {el.num}
                       </span>
                       

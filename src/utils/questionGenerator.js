@@ -25,6 +25,24 @@ function getPeriodAndGroup(num) {
 // Shuffles an array helper
 const shuffle = (arr) => [...arr].sort(() => 0.5 - Math.random());
 
+// Check if a clue contains substrings that give away the element's name
+function isClueGivingAwayAnswer(elementName, clue) {
+  const cleanStr = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const normClue = cleanStr(clue);
+  const normName = cleanStr(elementName);
+
+  if (normClue.includes(normName)) return true;
+
+  // Check dynamic prefix overlap (e.g. Curie/Curium, Einstein/Einsteinium)
+  const checkLen = Math.max(4, normName.length - 3);
+  const prefix = normName.slice(0, checkLen);
+  if (normClue.includes(prefix)) {
+    return true;
+  }
+
+  return false;
+}
+
 export function generateQuestions(type, elements, collectedSet) {
   const uncollected = elements.filter(e => !collectedSet.has(e.symbol));
   const collected = elements.filter(e => collectedSet.has(e.symbol));
@@ -41,8 +59,11 @@ export function generateQuestions(type, elements, collectedSet) {
     // Generate 10 questions
     const targets = priorityPool.slice(0, 10);
     targets.forEach(target => {
-      // Pick a random clue
-      const clue = target.clues[Math.floor(Math.random() * target.clues.length)];
+      // Pick a random clue that does not give away the answer
+      const safeClues = target.clues.filter(c => !isClueGivingAwayAnswer(target.name, c));
+      const clue = safeClues.length > 0 
+        ? safeClues[Math.floor(Math.random() * safeClues.length)] 
+        : target.clues[Math.floor(Math.random() * target.clues.length)];
       
       // Get 3 random incorrect options
       const incorrects = shuffle(elements.filter(e => e.symbol !== target.symbol))
