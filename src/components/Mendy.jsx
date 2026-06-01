@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import MendyRive from './MendyRive';
 
 export default function Mendy({ state = 'idle' }) {
+  const [hasRiveFile, setHasRiveFile] = useState(false);
+
+  // Check if Rive animation asset exists in the public directory
+  useEffect(() => {
+    fetch('/mendy.riv', { method: 'HEAD' })
+      .then((res) => {
+        if (res.ok) {
+          setHasRiveFile(true);
+        }
+      })
+      .catch(() => {
+        setHasRiveFile(false);
+      });
+  }, []);
+
   // Determine styles and transforms based on state
   const isCorrect = state === 'correct';
   const isIncorrect = state === 'incorrect';
@@ -91,18 +107,22 @@ export default function Mendy({ state = 'idle' }) {
           }
         `}</style>
 
-        <div className={`w-full max-w-[210px] aspect-[4/5] flex items-center justify-center transition-all duration-500 ${
-          isCorrect ? 'animate-mendy-correct mendy-glow-emerald' :
-          isIncorrect ? 'animate-mendy-incorrect mendy-glow-red' :
-          isThinking ? 'animate-mendy-float mendy-glow-amber' :
-          'animate-mendy-float mendy-glow-teal'
-        }`}>
-          <img 
-            src="/mendy-v2.png" 
-            alt="Captain Mendy" 
-            className="w-full h-full object-contain pointer-events-none"
-          />
-        </div>
+        {hasRiveFile ? (
+          <MendyRive state={state} />
+        ) : (
+          <div className={`w-full max-w-[210px] aspect-[4/5] flex items-center justify-center transition-all duration-500 ${
+            isCorrect ? 'animate-mendy-correct mendy-glow-emerald' :
+            isIncorrect ? 'animate-mendy-incorrect mendy-glow-red' :
+            isThinking ? 'animate-mendy-float mendy-glow-amber' :
+            'animate-mendy-float mendy-glow-teal'
+          }`}>
+            <img 
+              src="/mendy-v2.png" 
+              alt="Captain Mendy" 
+              className="w-full h-full object-contain pointer-events-none"
+            />
+          </div>
+        )}
       </div>
 
       {/* Thinking state bubble */}
