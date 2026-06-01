@@ -12,11 +12,15 @@
 
 /* Custom Heading Font */
 .font-deco {
-  font-family: 'Cinzel', serif;
+  font-family: 'Syncopate', sans-serif;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .font-mono-sci {
   font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.05em;
 }
 
 /* Neon Glows */
@@ -49,17 +53,37 @@
   box-shadow: 0 0 20px rgba(236, 72, 153, 0.5), inset 0 0 8px rgba(236, 72, 153, 0.3);
 }
 
-/* Glassmorphism Panels */
+/* Premium Console Instrument Plates */
 .glass-panel {
-  background: rgba(13, 17, 34, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(234, 179, 8, 0.2);
+  background: linear-gradient(135deg, #02070f 0%, #061222 75%, #010408 100%);
+  border: 2px solid #ca8a04;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(20, 184, 166, 0.12);
+  border-radius: 12px;
+  position: relative;
+}
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  border: 1.5px solid rgba(20, 184, 166, 0.06);
+  border-radius: 10px;
+  pointer-events: none;
 }
 
 .glass-panel-teal {
-  background: rgba(10, 25, 35, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(20, 184, 166, 0.25);
+  background: linear-gradient(135deg, #020914 0%, #031e2a 75%, #01060d 100%);
+  border: 2px solid #0d9488;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(20, 184, 166, 0.22);
+  border-radius: 12px;
+  position: relative;
+}
+.glass-panel-teal::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  border: 1.5px solid rgba(234, 179, 8, 0.06);
+  border-radius: 10px;
+  pointer-events: none;
 }
 
 /* Keyframes & Animations */

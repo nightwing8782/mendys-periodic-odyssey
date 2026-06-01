@@ -172,40 +172,48 @@ export default function App() {
         <div className="fixed inset-0 border-[6px] rounded-lg pointer-events-none z-50 animate-flash-pulse" />
       )}
 
-      {/* LEFT COLUMN: Captain Mendy & Navigation */}
-      <div className={`lg:col-span-3 flex flex-col items-center justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
-        
-        {/* Avatar panel */}
-        <div className="glass-panel rounded-2xl p-4 border border-teal-500/20 w-full flex items-center justify-center bg-teal-950/10 min-h-[300px]">
-          <Mendy state={mendyState} />
-        </div>
-
-        {/* Cockpit Status Board */}
-        <div className="glass-panel rounded-2xl p-4 border border-yellow-500/20 w-full flex flex-col justify-center items-center space-y-3 bg-slate-900/60 font-mono-sci">
-          <div className="w-full flex justify-between text-[9px] text-teal-400">
-            <span>WARP CORE CHARGE</span>
-            <span>{collectedElements.length} / 118 ELEMENTS</span>
-          </div>
-          
-          <div className="w-full h-3 bg-slate-950 border border-teal-500/30 rounded-full overflow-hidden p-0.5 shadow-inner">
-            <div 
-              className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full glow-teal transition-all duration-1000"
-              style={{ width: `${(collectedElements.length / 118) * 100}%` }}
-            />
-          </div>
-
-          <div className="text-[10px] text-yellow-500 text-center uppercase tracking-widest mt-1">
-            {gameState === 'victory' ? 'WARP ENGAGED' : `GAUNTLET EXPEDITION: ROUND ${round}`}
-          </div>
-        </div>
-
-      </div>
-
-      {/* CENTER COLUMN: Central Console & Element Containment Chamber */}
+      {/* LEFT COLUMN: Captain Mendy, Status Gauges, & Central Console Deck */}
       <div className={`lg:col-span-5 flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
-        {/* Main interactive state switcher */}
-        <div className="flex-grow min-h-[360px]">
+        {/* Side-by-Side Steampunk Chassis & Warp Status Panel */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+          {/* Prominent Steampunk Chassis Wrapper */}
+          <div className="flex items-center justify-center">
+            <Mendy state={mendyState} />
+          </div>
+
+          {/* Hard-mounted Cockpit Status Indicator & Containment Capsule */}
+          <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between bg-slate-900/60 font-mono-sci">
+            <div className="space-y-3">
+              <div className="w-full flex justify-between text-[9px] text-teal-400">
+                <span>WARP CORE CHARGE</span>
+                <span>{collectedElements.length} / 118 ELEMENTS</span>
+              </div>
+              
+              <div className="w-full h-3 bg-slate-950 border border-teal-500/30 rounded-full overflow-hidden p-0.5 shadow-inner">
+                <div 
+                  className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full glow-teal transition-all duration-1000"
+                  style={{ width: `${(collectedElements.length / 118) * 100}%` }}
+                />
+              </div>
+
+              <div className="text-[10px] text-yellow-500 text-center uppercase tracking-widest mt-1">
+                {gameState === 'victory' ? 'WARP ENGAGED' : `GAUNTLET EXPEDITION: ROUND ${round}`}
+              </div>
+            </div>
+
+            {/* Mount for Element Containment Chamber */}
+            <div className="border-t border-teal-500/10 pt-3 mt-3 flex flex-col items-center">
+              <ElementCapsule element={activeContainmentElement} />
+              <span className="font-mono-sci text-[8px] text-yellow-500/50 uppercase tracking-widest mt-1.5">
+                Containment Chamber
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Central Harvester Game loop Deck */}
+        <div className="flex-grow min-h-[360px] flex flex-col justify-stretch">
           
           {/* 1. INTRO / START STATE */}
           {gameState === 'intro' && (
@@ -424,18 +432,10 @@ export default function App() {
 
         </div>
 
-        {/* Dynamic Containment Capsule */}
-        <div className="flex flex-col items-center">
-          <ElementCapsule element={activeContainmentElement} />
-          <span className="font-mono-sci text-[9px] text-yellow-500/60 uppercase tracking-widest mt-2">
-            Element Containment Chamber
-          </span>
-        </div>
-
       </div>
 
       {/* RIGHT COLUMN: Holographic Mastery Dashboard & Combination Console */}
-      <div className={`lg:col-span-4 h-full flex flex-col justify-stretch transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
+      <div className={`lg:col-span-7 h-full flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
         <div className="flex-grow">
           {/* Pass interactive=true when in GRID_TAP mode */}

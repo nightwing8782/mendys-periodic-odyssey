@@ -171,7 +171,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
   }, [collectedElements, prevCleared]);
 
   return (
-    <div className="glass-panel-teal rounded-2xl p-4 md:p-5 relative border-2 border-teal-500/30 glow-teal select-none flex flex-col justify-between h-full overflow-hidden">
+    <div className={`glass-panel-teal rounded-2xl p-4 md:p-5 relative border-2 glow-teal select-none flex flex-col justify-between h-full overflow-hidden transition-all duration-1000 ${interactive ? 'animate-interactive-pulse border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.35)]' : 'border-teal-500/30'}`}>
       
       {/* 1. Holographic / Scanline CRT Overlay */}
       <div className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden z-0">
@@ -220,6 +220,13 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
         .hologram-text {
           text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
         }
+        @keyframes interactive-pulse-anim {
+          0%, 100% { border-color: rgba(20, 184, 166, 0.3); box-shadow: 0 0 10px rgba(20, 184, 166, 0.1); }
+          50% { border-color: rgba(234, 179, 8, 0.95); box-shadow: 0 0 25px rgba(234, 179, 8, 0.45); }
+        }
+        .animate-interactive-pulse {
+          animation: interactive-pulse-anim 1.8s ease-in-out infinite;
+        }
       `}</style>
 
       {/* Decorative corners */}
@@ -241,7 +248,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
       {/* Periodic Table Grid Container */}
       <div className="w-full mb-3 flex justify-center z-10">
         <div 
-          className="grid gap-[1px] md:gap-[1.5px] w-full max-w-[340px] md:max-w-[420px]"
+          className="grid gap-[1px] md:gap-[2px] w-full max-w-[850px]"
           style={{ 
             gridTemplateColumns: 'repeat(18, minmax(0, 1fr))',
             gridTemplateRows: 'repeat(9, minmax(0, 1fr))'
@@ -252,9 +259,9 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
             const isColumnCompleted = prevCleared.has(el.col);
             const isColumnFlashing = flashingColumns.has(el.col);
 
-            let borderClasses = 'bg-teal-950/15 border-teal-950/40 text-teal-800/60 font-medium';
+            let borderClasses = 'border-teal-500/10 bg-transparent border-dashed text-transparent';
             if (isCollected) {
-              borderClasses = 'bg-emerald-950/70 border-emerald-500 text-emerald-400 font-bold';
+              borderClasses = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.3)] font-black';
             }
 
             // Apply special holographic flash or glow effects
@@ -276,7 +283,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
             return (
               <div
                 key={el.num}
-                className={`relative flex flex-col items-center justify-center border rounded-[1.5px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
+                className={`relative flex flex-col items-center justify-center border rounded-[2px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
                 style={{
                   gridColumn: el.col,
                   gridRow: el.row,
@@ -286,17 +293,21 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                     onTileClick(el.symbol);
                   }
                 }}
-                title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Atomic #${el.num} [LOCKED]`}
+                title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Row ${el.row}, Column ${el.col} [LOCKED]`}
               >
-                {/* Micro absolute atomic number at top left */}
-                <span className="absolute top-[0.5px] left-[1px] text-[4.5px] md:text-[5px] opacity-75 leading-none select-none">
-                  {el.num}
-                </span>
-                
-                {/* Chemical Symbol in center */}
-                <span className="text-[6.5px] md:text-[8px] font-bold select-none leading-none mt-1">
-                  {isCollected ? el.symbol : ""}
-                </span>
+                {isCollected && (
+                  <>
+                    {/* Micro absolute atomic number at top left */}
+                    <span className="absolute top-[0.5px] left-[1px] text-[6px] sm:text-[7.5px] md:text-[8.5px] opacity-75 leading-none select-none">
+                      {el.num}
+                    </span>
+                    
+                    {/* Chemical Symbol in center */}
+                    <span className="text-[9px] sm:text-[12px] md:text-[14px] font-bold select-none leading-none mt-1">
+                      {el.symbol}
+                    </span>
+                  </>
+                )}
               </div>
             );
           })}
