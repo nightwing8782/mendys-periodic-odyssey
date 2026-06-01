@@ -12,6 +12,22 @@ function initAudio() {
   return audioCtx;
 }
 
+// Mobile Web Audio unlocker (silent buffer play)
+export function unlockAudio() {
+  try {
+    const ctx = initAudio();
+    const buffer = ctx.createBuffer(1, 1, 22050);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(0);
+    source.stop(0.01);
+  } catch (e) {
+    console.warn("Silent audio context unlock failed:", e);
+  }
+}
+
+
 // 1. Computerized chime when clues appear
 export function playClueChime() {
   try {
@@ -232,7 +248,7 @@ export function stopRadioMusic() {
     radioMusicInterval = null;
   }
   activeRadioOscillators.forEach(osc => {
-    try { osc.stop(); } catch (e) {}
+    try { osc.stop(); } catch { /* ignore */ }
   });
   activeRadioOscillators = [];
 }

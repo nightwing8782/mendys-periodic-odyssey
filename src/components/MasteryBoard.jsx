@@ -133,7 +133,7 @@ const tableElements = [
   { symbol: "No", num: 102, col: 17, row: 9 }
 ];
 
-export default function MasteryBoard({ collectedElements = new Set(), totalGoalCount = 118 }) {
+export default function MasteryBoard({ collectedElements = new Set(), totalGoalCount = 118, interactive = false, onTileClick = null }) {
   const collectedCount = collectedElements.size;
   const [prevCleared, setPrevCleared] = useState(new Set());
   const [flashingColumns, setFlashingColumns] = useState(new Set());
@@ -267,6 +267,10 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
               effectClass = 'animate-breath-glow';
             }
 
+            if (interactive) {
+              effectClass += ' cursor-pointer hover:scale-110 hover:border-yellow-400 hover:bg-yellow-500/10 active:scale-95 z-30';
+            }
+
             return (
               <div
                 key={el.num}
@@ -274,6 +278,11 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                 style={{
                   gridColumn: el.col,
                   gridRow: el.row,
+                }}
+                onClick={() => {
+                  if (interactive && onTileClick) {
+                    onTileClick(el.symbol);
+                  }
                 }}
                 title={`${el.symbol} (Atomic #${el.num}) ${isCollected ? '[COLLECTED]' : '[LOCKED]'}`}
               >

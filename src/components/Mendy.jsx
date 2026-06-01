@@ -26,11 +26,19 @@ export default function Mendy({ state = 'idle' }) {
       <style>{`
         @keyframes antenna-twitch-l {
           0%, 100% { transform: rotate(0deg); }
-          50% { transform: rotate(18deg) scaleY(0.95); }
+          50% { transform: rotate(20deg) scaleY(0.95); }
         }
         @keyframes antenna-twitch-r {
           0%, 100% { transform: rotate(0deg); }
-          50% { transform: rotate(-18deg) scaleY(0.95); }
+          50% { transform: rotate(-20deg) scaleY(0.95); }
+        }
+        @keyframes tip-wiggle-l {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-4px, -2px) scale(1.2); }
+        }
+        @keyframes tip-wiggle-r {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(4px, -2px) scale(1.2); }
         }
         @keyframes success-bounce {
           0%, 100% { transform: translateY(0); }
@@ -41,6 +49,14 @@ export default function Mendy({ state = 'idle' }) {
         }
         .animate-antenna-r {
           animation: antenna-twitch-r 0.8s ease-in-out infinite 0.15s;
+        }
+        .animate-tip-l {
+          animation: tip-wiggle-l 0.8s ease-in-out infinite;
+          transform-origin: 55px 60px;
+        }
+        .animate-tip-r {
+          animation: tip-wiggle-r 0.8s ease-in-out infinite 0.15s;
+          transform-origin: 205px 60px;
         }
         .animate-success-bounce {
           animation: success-bounce 0.45s ease-in-out infinite;
@@ -76,9 +92,9 @@ export default function Mendy({ state = 'idle' }) {
               cy="60"
               r="10"
               fill="#22c55e"
-              className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
+              className={`transition-all duration-500 ${isThinking ? 'animate-tip-l' : ''} ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
               style={{
-                filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none'
+                filter: isCorrect ? 'drop-shadow(0 0 10px #22c55e)' : isThinking ? 'drop-shadow(0 0 4px #22c55e)' : 'none'
               }}
             />
           </g>
@@ -102,9 +118,9 @@ export default function Mendy({ state = 'idle' }) {
               cy="60"
               r="10"
               fill="#22c55e"
-              className={`transition-all duration-500 ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
+              className={`transition-all duration-500 ${isThinking ? 'animate-tip-r' : ''} ${isCorrect ? 'fill-emerald-400' : 'fill-emerald-500'}`}
               style={{
-                filter: isCorrect ? 'drop-shadow(0 0 8px #22c55e)' : 'none'
+                filter: isCorrect ? 'drop-shadow(0 0 10px #22c55e)' : isThinking ? 'drop-shadow(0 0 4px #22c55e)' : 'none'
               }}
             />
           </g>
@@ -157,11 +173,7 @@ export default function Mendy({ state = 'idle' }) {
             strokeLinecap="round"
             className="transition-all duration-500 origin-[75px_235px]"
             style={{
-              transform: isCorrect 
-                ? 'rotate(-130deg) translate(-45px, -35px)' 
-                : isIncorrect 
-                ? 'rotate(42deg) translate(12px, -8px)' // resting on hip
-                : 'none'
+              transform: 'none' // Stabilize left arm movements
             }}
           />
 

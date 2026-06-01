@@ -15,7 +15,7 @@ const EARTH_JOKES = [
 export default function FailureScreen({ round, scoreNeeded, scoreAchieved, onRetry }) {
   // Select a random joke on render
   const joke = useMemo(() => {
-    const index = Math.floor(Math.random() * EARTH_JOKES.length);
+    const index = round % EARTH_JOKES.length;
     return EARTH_JOKES[index];
   }, [round]); // select new joke if round changes, or on re-mount
 

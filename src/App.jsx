@@ -1,186 +1,129 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import CockpitLayout from './components/CockpitLayout';
 import Mendy from './components/Mendy';
-import TriviaConsole from './components/TriviaConsole';
+import GauntletConsole from './components/GauntletConsole';
 import ElementCapsule from './components/ElementCapsule';
 import MasteryBoard from './components/MasteryBoard';
-import FailureScreen from './components/FailureScreen';
 import CombinationConsole from './components/CombinationConsole';
 import { elements } from './data/elements';
-import { playWarpDrive, playClueChime, stopRadioMusic } from './utils/audio';
-
-// Helper to shuffle array and take N items
-const getRandomBatch = (arr, count) => {
-  const shuffled = [...arr].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-};
-
-// Select a batch of N elements prioritizing those NOT yet collected and matching the current round's tier
-const getRoundBatch = (allElements, collectedSet, count, roundNumber) => {
-  // 1. Filter elements in the current round's tier (Tiers 1 to 6)
-  const tierElements = allElements.filter(el => el.tier === roundNumber);
-  
-  // Find those in this tier that have NOT been collected yet
-  const uncollectedInTier = tierElements.filter(el => !collectedSet.has(el.symbol));
-
-  if (uncollectedInTier.length >= count) {
-    // If we have enough uncollected elements in the current tier, use them
-    return getRandomBatch(uncollectedInTier, count);
-  }
-
-  // 2. If not enough, get uncollected elements from other tiers to fill the gap
-  const otherElements = allElements.filter(el => el.tier !== roundNumber);
-  const uncollectedInOther = otherElements.filter(el => !collectedSet.has(el.symbol));
-
-  const combinedUncollected = [
-    ...uncollectedInTier,
-    ...getRandomBatch(uncollectedInOther, Math.min(uncollectedInOther.length, count - uncollectedInTier.length))
-  ];
-
-  if (combinedUncollected.length >= count) {
-    return combinedUncollected.sort(() => 0.5 - Math.random());
-  }
-
-  // 3. Fallback: If total uncollected elements in the entire table is less than count (20),
-  // fill remaining slots using already collected elements (current tier first, then others)
-  const collectedInTier = tierElements.filter(el => collectedSet.has(el.symbol));
-  const collectedInOther = otherElements.filter(el => collectedSet.has(el.symbol));
-  
-  const needed = count - combinedUncollected.length;
-  const fillSource = [...collectedInTier, ...collectedInOther].sort(() => 0.5 - Math.random());
-  const fallbackFill = fillSource.slice(0, needed);
-
-  return [...combinedUncollected, ...fallbackFill].sort(() => 0.5 - Math.random());
-};
+import { playWarpDrive, playClueChime, unlockAudio } from './utils/audio';
+import useTriviaEngine from './hooks/useTriviaEngine';
 
 export default function App() {
-  // Game States: 'intro' | 'playing' | 'round_complete' | 'failure' | 'victory'
-  const [gameState, setGameState] = useState('intro');
-  const [round, setRound] = useState(1);
-  const [currentBatch, setCurrentBatch] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
-  const [correctInRound, setCorrectInRound] = useState(0);
-  const [score, setScore] = useState(0);
-  const [collectedSymbols, setCollectedSymbols] = useState(new Set());
-  
-  // Track Mendy's active visual expression state: 'idle' | 'correct' | 'incorrect' | 'thinking'
-  const [mendyState, setMendyState] = useState('idle');
+  const {
+    gameState,
+    collectedElements,
+    collectedSet,
+    score,
+    round,
+    currentRoundType,
+    questions,
+    currentIndex,
+    roundCollected,
+    choices,
+    startGame,
+    selectMode,
+    submitAnswer,
+    nextQuestion,
+    resetGame,
+    advanceRound
+  } = useTriviaEngine();
 
-  // Scanner, flash and shake states for cinematic overhauled effects
-  const [isCurrentElementCorrect, setIsCurrentElementCorrect] = useState(false);
+  // Local feedback and animation states
+  const [mendyState, setMendyState] = useState('idle');
   const [shakeScreen, setShakeScreen] = useState(false);
   const [greenFlash, setGreenFlash] = useState(false);
-  const [correctElementsInRound, setCorrectElementsInRound] = useState([]);
-  const [showDossierModal, setShowDossierModal] = useState(false);
+  const [gridTapSymbol, setGridTapSymbol] = useState(null);
 
-  // Round thresholds
-  const getRoundThreshold = (r) => {
-    if (r === 1) return 50;
-    if (r === 2) return 60;
-    if (r === 3) return 70;
-    if (r === 4) return 80;
-    if (r === 5) return 90;
-    return 100; // Round 6: 100% needed
-  };
+  // Manage Mendy avatar state based on game stage
+  useEffect(() => {
+    if (gameState === 'PLAYING') {
+      setMendyState('thinking');
+    } else {
+      setMendyState('idle');
+    }
+  }, [currentIndex, currentRoundType, gameState]);
 
-  const passThreshold = getRoundThreshold(round);
+  // Answer handler wired to GauntletConsole
+  const handleAnswerSubmitted = (isCorrect, symbol, points) => {
+    // Ensure audio is unlocked on first action
+    unlockAudio();
 
-  // Initialize a new round
-  const startRound = useCallback((roundNumber) => {
-    const batch = getRoundBatch(elements, collectedSymbols, 20, roundNumber);
-    setCurrentBatch(batch);
-    setCurrentIndex(0);
-    setCorrectInRound(0);
-    setRound(roundNumber);
-    setMendyState('thinking'); // Mendy starts in thinking mode
-    setIsCurrentElementCorrect(false);
-    setCorrectElementsInRound([]);
-    setGameState('playing');
-  }, [collectedSymbols]);
-
-  // Answer handler
-  const handleAnswerSubmitted = (isCorrect, pointsEarned, wasPrecision) => {
     if (isCorrect) {
       setMendyState('correct');
-      setCorrectInRound(prev => prev + 1);
-      setScore(prev => prev + pointsEarned);
-      setIsCurrentElementCorrect(true); // Populates scanner details
-
-      // Precision correct entries trigger screen shake
-      if (wasPrecision) {
-        setShakeScreen(true);
-        setTimeout(() => setShakeScreen(false), 500);
-      }
-
-      // Success full-screen border green flash
       setGreenFlash(true);
       setTimeout(() => setGreenFlash(false), 600);
-      
-      // Permanently add to unlocked elements database for the Mastery Board
-      const currentElement = currentBatch[currentIndex];
-      setCorrectElementsInRound(prev => [...prev, currentElement]);
-      setCollectedSymbols(prev => {
-        const next = new Set(prev);
-        next.add(currentElement.symbol);
-        return next;
-      });
+
+      // Trigger screen shake for visual punchiness
+      setShakeScreen(true);
+      setTimeout(() => setShakeScreen(false), 500);
     } else {
       setMendyState('incorrect');
     }
 
-    // Delay before moving to the next element
-    setTimeout(() => {
-      setMendyState('thinking'); // Reset to thinking for the next countdown
-      setIsCurrentElementCorrect(false); // Reset correct state for scanner
-      
-      if (currentIndex < 19) {
-        setCurrentIndex(prev => prev + 1);
-      } else {
-        // Round Finished! Check accuracy percentage
-        const accuracy = Math.round(( (correctInRound + (isCorrect ? 1 : 0)) / 20 ) * 100);
-        const threshold = getRoundThreshold(round);
-        
-        if (accuracy >= threshold) {
-          if (round === 6) {
-            // WIN THE GAME!
-            setGameState('victory');
-            playWarpDrive();
-            stopRadioMusic();
-          } else {
-            // Completed Round 1 to 5 successfully
-            setGameState('round_complete');
-            setShowDossierModal(true); // Auto-open dossier popup!
-          }
-        } else {
-          // Failed the round requirements
-          setGameState('failure');
-        }
-      }
-    }, 1500);
+    // Report answer to the state hook
+    submitAnswer(isCorrect, symbol, points);
   };
 
-  // Retry the current round
-  const handleRetryRound = () => {
-    startRound(round);
+  // Helper to fetch details for choice cards
+  const getModeDetails = (mode) => {
+    switch (mode) {
+      case 'MULTIPLE_CHOICE':
+        return {
+          icon: '📋',
+          title: 'Multiple Choice',
+          desc: 'Identify elements based on historic or scientific clues from Mendy.',
+          length: '10 Questions'
+        };
+      case 'WEIGHT_COMPARISON':
+        return {
+          icon: '⚖️',
+          title: 'Weight Comparison',
+          desc: 'Examine two side-by-side elements and tap the heavier one by atomic mass.',
+          length: '5 Questions'
+        };
+      case 'NUCLEAR_SYNTHESIS':
+        return {
+          icon: '⚛️',
+          title: 'Nuclear Synthesis',
+          desc: 'Synthesize elements by combining their atomic numbers in equations.',
+          length: '5 Questions'
+        };
+      case 'GRID_TAP':
+        return {
+          icon: '🎯',
+          title: 'Grid Tap',
+          desc: 'High-stakes test! Click the correct element square directly on the periodic table.',
+          length: '1 Question'
+        };
+      default:
+        return { icon: '❓', title: 'Unknown', desc: '', length: '' };
+    }
   };
 
-  // Move to next round
-  const handleNextRound = () => {
-    startRound(round + 1);
+  // Click on Mastery Board element tile
+  const handleTileClick = (symbol) => {
+    if (gameState === 'PLAYING' && currentRoundType === 'GRID_TAP') {
+      setGridTapSymbol(symbol);
+    }
   };
 
-  // Restart the whole odyssey
-  const handleRestartGame = () => {
-    setScore(0);
-    setCollectedSymbols(new Set());
-    stopRadioMusic();
-    startRound(1);
+  const resetGridTapSymbol = () => {
+    setGridTapSymbol(null);
   };
+
+  // Determine current active element for Containment Chamber particle system
+  const currentQuestion = questions[currentIndex];
+  const activeContainmentElement = gameState === 'PLAYING' ? currentQuestion?.element : null;
+
+  // Retrieve elements successfully collected during this round
+  const roundCollectedElements = roundCollected
+    .map(sym => elements.find(el => el.symbol === sym))
+    .filter(Boolean);
 
   return (
     <CockpitLayout score={score}>
-      {/* Inline styles for screen shake and viewport outline flash */}
+      {/* Inline styles for screen shake and outline flashes */}
       <style>{`
         @keyframes screen-shake-anim {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -206,151 +149,235 @@ export default function App() {
         }
       `}</style>
 
-      {/* Viewport Electric Green Border Flash Overlay */}
+      {/* Screen Success Flash Overlay */}
       {greenFlash && (
         <div className="fixed inset-0 border-[6px] rounded-lg pointer-events-none z-50 animate-flash-pulse" />
       )}
-      
-      {/* LEFT COLUMN: Captain Mendy & Controls */}
+
+      {/* LEFT COLUMN: Captain Mendy & Navigation */}
       <div className={`lg:col-span-3 flex flex-col items-center justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
-        {/* Captain Mendy card container */}
+        {/* Avatar panel */}
         <div className="glass-panel rounded-2xl p-4 border border-teal-500/20 w-full flex items-center justify-center bg-teal-950/10 min-h-[300px]">
           <Mendy state={mendyState} />
         </div>
 
-        {/* Cockpit Gauge Panel */}
+        {/* Cockpit Status Board */}
         <div className="glass-panel rounded-2xl p-4 border border-yellow-500/20 w-full flex flex-col justify-center items-center space-y-3 bg-slate-900/60 font-mono-sci">
           <div className="w-full flex justify-between text-[9px] text-teal-400">
-            <span>WARP DRIVE SPEED</span>
-            <span>CELL CHARGE</span>
+            <span>WARP CORE CHARGE</span>
+            <span>{collectedElements.length} / 118 ELEMENTS</span>
           </div>
-          {/* Progress Bar representation */}
-          <div className="w-full h-3 bg-slate-950 border border-teal-500/30 rounded-full overflow-hidden p-0.5">
+          
+          <div className="w-full h-3 bg-slate-950 border border-teal-500/30 rounded-full overflow-hidden p-0.5 shadow-inner">
             <div 
               className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full glow-teal transition-all duration-1000"
-              style={{ width: `${(round / 6) * 100}%` }}
+              style={{ width: `${(collectedElements.length / 118) * 100}%` }}
             />
           </div>
 
           <div className="text-[10px] text-yellow-500 text-center uppercase tracking-widest mt-1">
-            ROUND {round} / 6 EXPEDITION
+            {gameState === 'victory' ? 'WARP ENGAGED' : `GAUNTLET EXPEDITION: ROUND ${round}`}
           </div>
         </div>
 
       </div>
 
-      {/* CENTER COLUMN: Trivia Console & Element Capsule */}
+      {/* CENTER COLUMN: Central Console & Element Containment Chamber */}
       <div className={`lg:col-span-5 flex flex-col justify-between space-y-6 transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
         
-        {/* Trivia Area */}
+        {/* Main interactive state switcher */}
         <div className="flex-grow min-h-[360px]">
-          {gameState === 'playing' && currentBatch[currentIndex] && (
-            <TriviaConsole
-              element={currentBatch[currentIndex]}
-              index={currentIndex}
-              round={round}
-              passThreshold={passThreshold}
-              onAnswerSubmitted={handleAnswerSubmitted}
-            />
-          )}
-
+          
+          {/* 1. INTRO / START STATE */}
           {gameState === 'intro' && (
             <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none">
               <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
                 <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider">
-                  MISSION PROTOCOL
+                  MISSION HARVESTER
                 </h1>
               </div>
               
               <div className="my-6 space-y-4">
                 <p className="text-sm leading-relaxed text-teal-100 font-mono-sci">
-                  Captain Mendy has crash-landed on Earth! Her warp drive is depleted. 
-                  To leave, she must harvest and synthesize target elements.
+                  Captain Mendy's starship warp drive has failed! 
+                  Help her traverse the periodic fields in this endless element collection gauntlet. 
+                  Identify, compare, synthesize, and tap elements until all 118 are secured!
                 </p>
-                <div className="bg-slate-950/80 border border-teal-500/20 rounded-xl p-3 text-[11px] font-mono-sci text-left text-slate-300 space-y-1.5 max-h-[140px] overflow-y-auto animate-fade-in">
-                  <div className="flex items-center space-x-2 text-yellow-500">
-                    <span>⚡</span> <span>Round 1: Common elements, 50% accuracy needed.</span>
+                <div className="bg-slate-950/80 border border-teal-500/20 rounded-xl p-4 text-[11px] font-mono-sci text-left text-slate-300 space-y-2.5 max-h-[140px] overflow-y-auto">
+                  <div className="flex items-start space-x-2">
+                    <span className="text-teal-400">⚡</span>
+                    <span><strong>Endless Loop:</strong> Play mini-rounds until your Mastery Board holds all 118 elements.</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-yellow-400">
-                    <span>⚡</span> <span>Round 2: Industrial elements, 60% accuracy needed.</span>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-teal-400">⚡</span>
+                    <span><strong>Back-to-Back Ban:</strong> You cannot play the same mode twice consecutively.</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-teal-400">
-                    <span>⚡</span> <span>Round 3: Precious metals, 70% accuracy needed.</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-teal-300">
-                    <span>⚡</span> <span>Round 4: Lanthanides & Refractory, 80% accuracy.</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-emerald-400">
-                    <span>⚡</span> <span>Round 5: Actinides & Radioactive, 90% accuracy.</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-emerald-300 font-bold animate-pulse">
-                    <span>⚡</span> <span>Round 6: Superheavy & Synthetic, 100% accuracy.</span>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-teal-400">⚡</span>
+                    <span><strong>Deep Scans:</strong> Read and study element cards between rounds to prepare your grid taps.</span>
                   </div>
                 </div>
               </div>
 
               <button
                 onClick={() => {
+                  unlockAudio();
                   playClueChime();
-                  startRound(1);
+                  startGame();
                 }}
-                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.3)] font-mono-sci tracking-widest text-sm"
+                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
               >
                 INITIALIZE HARVESTER
               </button>
             </div>
           )}
 
-          {gameState === 'round_complete' && (
-            <div className="glass-panel rounded-2xl p-8 border-2 border-emerald-500/30 glow-green h-full flex flex-col justify-between items-center text-center select-none animate-fade-in">
-              <div className="art-deco-border px-6 py-2 border border-emerald-500/30 bg-emerald-950/20 rounded">
-                <h1 className="font-deco text-2xl font-black text-emerald-400 tracking-wider">
-                  REACTOR STAGE COMPLETED
+          {/* 2. MODE SELECTION STATE */}
+          {gameState === 'MODE_SELECTION' && (
+            <div className="glass-panel rounded-2xl p-6 border-2 border-yellow-500/30 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in">
+              <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
+                <h1 className="font-deco text-xl font-black text-yellow-400 tracking-wider">
+                  SELECT REACTOR TYPE
                 </h1>
               </div>
-
-              <div className="my-6 space-y-4">
-                <div className="text-5xl">🔋</div>
-                <p className="text-sm font-mono-sci text-slate-300 leading-relaxed">
-                  Congratulations! You completed Round {round} with at least {passThreshold}% accuracy!
-                  Warp cells charged to {Math.round((round / 6) * 100)}%.
+              
+              <div className="my-4 space-y-4 w-full flex-grow flex flex-col justify-center">
+                <p className="text-xs leading-normal text-teal-100 font-mono-sci">
+                  Captain Mendy requires energy telemetry from specific mini-game modes. Choose an active protocol below to proceed with the harvest:
                 </p>
-                <div className="bg-slate-950/60 border border-emerald-500/20 rounded-xl p-3 inline-block font-mono-sci text-xs text-emerald-400">
-                  REACTOR HARVEST EFFICIENCY: {Math.round((correctInRound / 20) * 100)}%
+                
+                <div className="grid grid-cols-2 gap-4">
+                  {choices.map((mode) => {
+                    const details = getModeDetails(mode);
+                    return (
+                      <button
+                        key={mode}
+                        onClick={() => {
+                          unlockAudio();
+                          selectMode(mode);
+                        }}
+                        className="glass-panel border border-teal-500/35 hover:border-yellow-400/80 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[160px] cursor-pointer bg-slate-900/60 hover:bg-slate-950/90 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97]"
+                      >
+                        <span className="text-3xl mb-2">{details.icon}</span>
+                        <span className="font-deco font-bold text-xs text-yellow-400 tracking-wider uppercase">{details.title}</span>
+                        <span className="text-[9px] text-slate-400 font-mono-sci mt-1 leading-normal">{details.desc}</span>
+                        <span className="text-[8px] text-teal-400 font-mono-sci mt-3 border border-teal-500/20 px-2 py-0.5 rounded bg-teal-950/20 uppercase tracking-widest">{details.length}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-
-              <div className="flex flex-col space-y-3 w-full mt-4">
-                <button
-                  onClick={() => setShowDossierModal(true)}
-                  className="w-full bg-slate-900 border border-emerald-500/35 hover:border-emerald-400/60 text-emerald-400 font-bold py-2.5 px-6 rounded-xl transition-all duration-300 font-mono-sci text-xs cursor-pointer shadow-[0_0_8px_rgba(16,185,129,0.15)]"
-                >
-                  📁 REVIEW SCAN LOGS ({correctElementsInRound.length} CARDS)
-                </button>
-                <button
-                  onClick={handleNextRound}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
-                >
-                  ENGAGE ROUND {round + 1} REACTOR
-                </button>
+              
+              <div className="text-[8px] text-teal-500/60 font-mono-sci tracking-widest uppercase">
+                THE BACK-TO-BACK BAN PREVENTS PLAYING THE SAME PROTOCOL CONSECUTIVELY
               </div>
             </div>
           )}
 
+          {/* 3. PLAYING TRIVIA RUN */}
+          {gameState === 'PLAYING' && currentQuestion && (
+            <GauntletConsole
+              question={currentQuestion}
+              index={currentIndex}
+              totalQuestions={questions.length}
+              round={round}
+              onAnswerSubmitted={handleAnswerSubmitted}
+              nextQuestion={nextQuestion}
+              gridTapSymbol={gridTapSymbol}
+              resetGridTapSymbol={resetGridTapSymbol}
+            />
+          )}
+
+          {/* 4. ROUND CLEAR DOSSIER TERMINAL */}
+          {gameState === 'ROUND_CLEAR' && (
+            <div className="glass-panel rounded-2xl p-6 border-2 border-emerald-500/30 glow-green h-full flex flex-col justify-between items-center text-center select-none animate-fade-in font-mono-sci">
+              <div className="art-deco-border px-6 py-1.5 border border-emerald-500/30 bg-emerald-950/20 rounded">
+                <h1 className="font-deco text-xl font-black text-emerald-400 tracking-wider">
+                  REACTOR EXPEDITION SUMMARY
+                </h1>
+              </div>
+
+              {/* Harvested Elements slide view */}
+              <div className="w-full flex-grow flex flex-col justify-between my-4 overflow-hidden">
+                <div className="text-left mb-2">
+                  <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider block">
+                    HARVESTED ELEMENT TELEMETRY
+                  </span>
+                  <span className="text-[8.5px] text-slate-400 block mt-0.5">
+                    Expedition {round - 1} Dossier Cards. Click elements on Mastery Board to research details.
+                  </span>
+                </div>
+
+                {/* Dossier slide lists */}
+                <div className="flex-grow overflow-y-auto pr-1 space-y-3 max-h-[170px] bg-slate-950/50 rounded-xl p-3 border border-emerald-500/10">
+                  {roundCollectedElements.length === 0 ? (
+                    <div className="h-full flex flex-col justify-center items-center text-slate-500 text-xs py-10">
+                      <span>No elements were collected during this expedition.</span>
+                      <span className="text-[10px] mt-1 text-slate-600">Try prioritizing target questions in the next round.</span>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-2.5">
+                      {roundCollectedElements.map((el, i) => (
+                        <div 
+                          key={el.symbol} 
+                          className="glass-panel border border-emerald-500/20 bg-slate-900/40 rounded-xl p-3 flex flex-col text-left relative overflow-hidden"
+                        >
+                          <div className="flex justify-between items-center text-[8.5px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-1.5">
+                            <span className="font-bold">SECURED DATA #{i + 1}</span>
+                            <span className="font-bold text-yellow-400 font-deco">{el.symbol}</span>
+                          </div>
+
+                          <div className="text-[9.5px] text-emerald-300 space-y-1">
+                            <div className="grid grid-cols-2 gap-x-2">
+                              <div>
+                                <span className="text-emerald-500/60 font-medium">NAME:</span>{' '}
+                                <span className="font-bold text-slate-200 uppercase">{el.name}</span>
+                              </div>
+                              <div>
+                                <span className="text-emerald-500/60 font-medium">ATOMIC #:</span>{' '}
+                                <span className="font-bold text-slate-200">{el.number}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="border-t border-emerald-500/5 pt-1 text-[8.5px] text-slate-300">
+                              <span className="text-emerald-500/60 font-medium uppercase font-bold text-[8px]">USE:</span> {el.use}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  unlockAudio();
+                  advanceRound();
+                }}
+                className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono-sci tracking-widest text-sm cursor-pointer"
+              >
+                ENGAGE NEXT WARP PROTOCOL
+              </button>
+            </div>
+          )}
+
+          {/* 5. VICTORY CELEBRATION */}
           {gameState === 'victory' && (
             <div className="glass-panel rounded-2xl p-8 border-2 border-yellow-500/40 glow-gold h-full flex flex-col justify-between items-center text-center select-none animate-fade-in">
               <div className="art-deco-border px-6 py-2 border border-yellow-500/30 bg-yellow-950/20 rounded">
                 <h1 className="font-deco text-2xl font-black text-yellow-400 tracking-wider animate-pulse">
-                  WARP DRIVE 100% ONLINE!
+                  ODYSSEY COMPLETED!
                 </h1>
               </div>
 
               <div className="my-6 space-y-4">
                 <div className="text-6xl animate-bounce">🚀</div>
                 <p className="text-sm font-mono-sci text-slate-200 leading-relaxed">
-                  Captain Mendy's warp drive is fully charged with a flawless 100% accuracy round! 
-                  She is leaving Earth orbits now. Goodbye, terrestrial humans!
+                  Stunning! You have harvested all 118 elements of the universe! 
+                  Captain Mendy's warp core is completely charged and she is returning to the stars. 
+                  Earth is saved and documented!
                 </p>
                 <div className="grid grid-cols-2 gap-4 bg-slate-950/80 border border-yellow-500/20 rounded-xl p-3 font-mono-sci text-xs">
                   <div>
@@ -358,25 +385,30 @@ export default function App() {
                     <span className="text-yellow-400 font-bold text-sm">{score} PTS</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">ELEMENTS HARVESTED</span>
-                    <span className="text-emerald-400 font-bold text-sm">{collectedSymbols.size} / 118</span>
+                    <span className="text-slate-500 block">ROUND REACHED</span>
+                    <span className="text-emerald-400 font-bold text-sm">ROUND {round}</span>
                   </div>
                 </div>
               </div>
 
               <button
-                onClick={handleRestartGame}
-                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.4)] font-mono-sci tracking-widest text-sm"
+                onClick={() => {
+                  unlockAudio();
+                  playWarpDrive();
+                  resetGame();
+                }}
+                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-[0_0_15px_rgba(234,179,8,0.4)] font-mono-sci tracking-widest text-sm cursor-pointer"
               >
                 REBOOT ODYSSEY PROCESS
               </button>
             </div>
           )}
+
         </div>
 
-        {/* Containment Capsule */}
+        {/* Dynamic Containment Capsule */}
         <div className="flex flex-col items-center">
-          <ElementCapsule element={gameState === 'playing' ? currentBatch[currentIndex] : null} />
+          <ElementCapsule element={activeContainmentElement} />
           <span className="font-mono-sci text-[9px] text-yellow-500/60 uppercase tracking-widest mt-2">
             Element Containment Chamber
           </span>
@@ -386,135 +418,24 @@ export default function App() {
 
       {/* RIGHT COLUMN: Holographic Mastery Dashboard & Combination Console */}
       <div className={`lg:col-span-4 h-full flex flex-col justify-stretch transition-transform duration-500 ${shakeScreen ? 'animate-shake' : ''}`}>
+        
         <div className="flex-grow">
+          {/* Pass interactive=true when in GRID_TAP mode */}
           <MasteryBoard 
-            collectedElements={collectedSymbols} 
+            collectedElements={collectedSet} 
             totalGoalCount={118}
+            interactive={gameState === 'PLAYING' && currentRoundType === 'GRID_TAP'}
+            onTileClick={handleTileClick}
           />
         </div>
         
-        {/* Overhaul Lower-Right Combination Console */}
+        {/* Bottom deep scanner & Interstellar Radio */}
         <CombinationConsole 
-          activeElement={gameState === 'playing' ? currentBatch[currentIndex] : null}
-          isCorrect={isCurrentElementCorrect}
+          activeElement={activeContainmentElement}
+          isCorrect={gameState === 'PLAYING' && mendyState === 'correct'}
           currentIndex={currentIndex}
         />
       </div>
-
-      {/* Round Failure Screen Overlay */}
-      {gameState === 'failure' && (
-        <FailureScreen
-          round={round}
-          scoreNeeded={passThreshold}
-          scoreAchieved={Math.round((correctInRound / 20) * 100)}
-          onRetry={handleRetryRound}
-        />
-      )}
-
-      {/* Dossier Modal Overlay */}
-      {showDossierModal && (
-        <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center z-50 p-4 md:p-6 animate-fade-in font-mono-sci">
-          <div className="glass-panel border-2 border-emerald-500/40 bg-slate-950/95 glow-green rounded-3xl w-full max-w-4xl max-h-[85vh] flex flex-col p-6 relative">
-            
-            {/* Header */}
-            <div className="border-b border-emerald-500/30 pb-4 flex justify-between items-center text-emerald-400">
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">📁</span>
-                <div className="text-left">
-                  <h2 className="font-deco text-lg md:text-xl font-bold tracking-wider text-slate-100 uppercase">
-                    HARVESTED ELEMENT LOGS
-                  </h2>
-                  <p className="text-[10px] text-emerald-500/80 uppercase tracking-widest mt-0.5">
-                    Expedition Round {round} Dossier — {correctElementsInRound.length} / 20 Identified
-                  </p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setShowDossierModal(false)}
-                className="text-slate-400 hover:text-red-400 text-xs font-bold border border-slate-700 hover:border-red-500/50 rounded-xl px-3.5 py-2 bg-slate-900 transition-all duration-300 cursor-pointer"
-              >
-                CLOSE
-              </button>
-            </div>
-
-            {/* Content (Grid of Cards) */}
-            <div className="flex-grow overflow-y-auto my-6 pr-2 space-y-4">
-              {correctElementsInRound.length === 0 ? (
-                <div className="h-48 flex flex-col justify-center items-center text-slate-500 text-xs">
-                  <span>No element telemetry was recorded in this round.</span>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {correctElementsInRound.map((el, i) => (
-                    <div 
-                      key={el.symbol} 
-                      className="glass-panel border border-emerald-500/20 bg-slate-900/60 rounded-xl p-4 flex flex-col justify-between min-h-[110px] relative overflow-hidden text-left animate-fade-in"
-                    >
-                      {/* Accent brackets */}
-                      <div className="absolute top-1.5 left-1.5 w-1.5 h-1.5 border-t border-l border-emerald-500/30" />
-                      <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 border-t border-r border-emerald-500/30" />
-                      
-                      <div className="flex justify-between items-center text-[10px] text-emerald-400 border-b border-emerald-500/10 pb-1 mb-2">
-                        <span className="font-bold">DEEP SCAN #{i + 1}</span>
-                        <span className="text-[9px] text-emerald-500/60 font-semibold">STATUS: SECURED</span>
-                      </div>
-
-                      <div className="text-[10px] text-emerald-300 space-y-1">
-                        <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
-                          <div>
-                            <span className="text-emerald-500/60 font-medium">ELEMENT:</span>{' '}
-                            <span className="font-bold text-slate-100 uppercase">{el.name}</span>
-                          </div>
-                          <div>
-                            <span className="text-emerald-500/60 font-medium">SYMBOL:</span>{' '}
-                            <span className="font-bold text-yellow-400 font-deco">{el.symbol}</span>
-                          </div>
-                          <div>
-                            <span className="text-emerald-500/60 font-medium">ATOMIC #:</span>{' '}
-                            <span className="font-bold text-slate-200">{el.number}</span>
-                          </div>
-                          <div>
-                            <span className="text-emerald-500/60 font-medium">MASS:</span>{' '}
-                            <span className="font-bold text-slate-200">{el.mass} u</span>
-                          </div>
-                        </div>
-                        
-                        <div className="border-t border-emerald-500/10 pt-1 text-[9px]">
-                          <span className="text-emerald-500/60 font-medium">CONFIG:</span>{' '}
-                          <span className="text-emerald-400 font-semibold">{el.config}</span>
-                        </div>
-                        
-                        <div className="border-t border-emerald-500/10 pt-1 leading-normal text-[9px] text-slate-300 italic">
-                          <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-[8.5px]">USE:</span> {el.use}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Footer / Continue button */}
-            <div className="border-t border-emerald-500/30 pt-4 flex flex-col sm:flex-row justify-between items-center text-xs space-y-3 sm:space-y-0">
-              <span className="text-slate-500 text-center sm:text-left text-[10px] sm:text-xs">
-                You can review these element details at any time before starting the next stage.
-              </span>
-              <button 
-                onClick={() => {
-                  setShowDossierModal(false);
-                  if (gameState === 'round_complete') {
-                    handleNextRound();
-                  }
-                }}
-                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition-all duration-300 active:scale-95 shadow-[0_0_10px_rgba(16,185,129,0.2)] tracking-wider cursor-pointer font-mono-sci text-xs"
-              >
-                {gameState === 'round_complete' ? 'CONTINUE TO NEXT ROUND' : 'CLOSE DOSSIER'}
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
     </CockpitLayout>
   );
