@@ -16,6 +16,14 @@ export default function GauntletConsole({
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Local choice tracking
   const timeoutRef = useRef(null);
 
+  const dismissFeedback = () => {
+    if (feedback === null) return;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    nextQuestion();
+  };
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
@@ -45,7 +53,7 @@ export default function GauntletConsole({
       onAnswerSubmitted(false, question.symbol, 0);
       timeoutRef.current = setTimeout(() => {
         nextQuestion();
-      }, 1800);
+      }, 3000);
       return;
     }
 
@@ -74,7 +82,7 @@ export default function GauntletConsole({
 
       timeoutRef.current = setTimeout(() => {
         nextQuestion();
-      }, 1800);
+      }, 3000);
     }
   }, [gridTapSymbol, question, feedback, onAnswerSubmitted, nextQuestion]);
 
@@ -96,7 +104,7 @@ export default function GauntletConsole({
 
     timeoutRef.current = setTimeout(() => {
       nextQuestion();
-    }, 1800);
+    }, 3000);
   };
 
   const handleWeightComparisonSubmit = (symbol) => {
@@ -117,7 +125,7 @@ export default function GauntletConsole({
 
     timeoutRef.current = setTimeout(() => {
       nextQuestion();
-    }, 1800);
+    }, 3000);
   };
 
   const handleNuclearSynthesisSubmit = (choice) => {
@@ -138,7 +146,7 @@ export default function GauntletConsole({
 
     timeoutRef.current = setTimeout(() => {
       nextQuestion();
-    }, 1800);
+    }, 3000);
   };
 
   // Helper to determine element containment state for card styling
@@ -332,7 +340,6 @@ export default function GauntletConsole({
                     <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-current opacity-40" />
                     <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-current opacity-40" />
 
-                    <span className="text-[8px] font-mono-sci opacity-75 uppercase mt-1">Z = {el.number}</span>
                     <span className="text-3xl font-deco font-black tracking-wide my-2">{el.symbol}</span>
                     <span className="text-[10px] font-bold tracking-widest uppercase mb-1">{el.name}</span>
                   </div>
@@ -443,7 +450,11 @@ export default function GauntletConsole({
 
         {/* Answer Feedback Alert Overlay inside content panel */}
         {feedback && (
-          <div className="absolute inset-0 bg-slate-950/90 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 animate-fade-in z-20">
+          <div 
+            onClick={dismissFeedback}
+            className="absolute inset-0 bg-slate-950/90 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 animate-fade-in z-20 cursor-pointer select-none hover:bg-slate-950/95"
+            title="Tap to dismiss"
+          >
             {feedback === 'correct' && (
               <div className="text-center space-y-2 animate-bounce">
                 <span className="text-4xl text-emerald-400">✨</span>
@@ -451,6 +462,9 @@ export default function GauntletConsole({
                 <p className="text-xs text-slate-300 font-mono-sci">
                   Secured Telemetry for: <strong className="text-yellow-400 uppercase font-bold">{question.symbol}</strong>
                 </p>
+                <span className="text-[10px] text-teal-400 font-mono-sci block pt-2 animate-pulse">
+                  (Tap anywhere to dismiss)
+                </span>
               </div>
             )}
             {feedback === 'incorrect' && (
@@ -460,6 +474,9 @@ export default function GauntletConsole({
                 <p className="text-xs text-slate-300 font-mono-sci">
                   Correct Product: <strong className="text-emerald-400 uppercase font-bold">{question.symbol} ({question.element.name})</strong>
                 </p>
+                <span className="text-[10px] text-red-400/80 font-mono-sci block pt-2 animate-pulse">
+                  (Tap anywhere to dismiss)
+                </span>
               </div>
             )}
             {feedback === 'timeout' && (
@@ -469,6 +486,9 @@ export default function GauntletConsole({
                 <p className="text-xs text-slate-300 font-mono-sci">
                   Lock Lost! Solution was: <strong className="text-emerald-400 uppercase font-bold">{question.symbol}</strong>
                 </p>
+                <span className="text-[10px] text-orange-400/80 font-mono-sci block pt-2 animate-pulse">
+                  (Tap anywhere to dismiss)
+                </span>
               </div>
             )}
           </div>

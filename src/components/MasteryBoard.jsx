@@ -284,7 +284,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                     onTileClick(el.symbol);
                   }
                 }}
-                title={`${el.symbol} (Atomic #${el.num}) ${isCollected ? '[COLLECTED]' : '[LOCKED]'}`}
+                title={isCollected ? `${el.symbol} (Atomic #${el.num}) [COLLECTED]` : `Atomic #${el.num} [LOCKED]`}
               >
                 {/* Micro absolute atomic number at top left */}
                 <span className="absolute top-[0.5px] left-[1px] text-[4.5px] md:text-[5px] opacity-75 leading-none select-none">
@@ -293,7 +293,7 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                 
                 {/* Chemical Symbol in center */}
                 <span className="text-[6.5px] md:text-[8px] font-bold select-none leading-none mt-1">
-                  {el.symbol}
+                  {isCollected ? el.symbol : ""}
                 </span>
               </div>
             );
