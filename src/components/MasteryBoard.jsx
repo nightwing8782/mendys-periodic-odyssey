@@ -285,8 +285,8 @@ export default function MasteryBoard({ collectedElements = new Set(), totalGoalC
                 key={el.num}
                 className={`relative flex flex-col items-center justify-center border rounded-[2px] aspect-square transition-all duration-500 ${borderClasses} ${effectClass}`}
                 style={{
-                  gridColumn: el.col,
-                  gridRow: el.row,
+                  gridColumn: `${el.col}`,
+                  gridRow: `${el.row}`,
                 }}
                 onClick={() => {
                   if (isClickable && onTileClick) {
