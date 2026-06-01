@@ -429,12 +429,12 @@ export default function MasteryBoard({
                   {showSymbol && (
                     <>
                       {/* Micro absolute atomic number at top left */}
-                      <span className={`absolute top-[0.5px] left-[1px] text-[8.5px] sm:text-[9.5px] md:text-[10.5px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
+                      <span className={`absolute top-[0.5px] left-[1px] text-[10.5px] sm:text-[11.5px] md:text-[12.5px] opacity-80 leading-none select-none ${isCollected ? '' : 'text-cyan-400'}`}>
                         {el.num}
                       </span>
                       
                       {/* Chemical Symbol in center */}
-                      <span className="text-[12px] sm:text-[13.5px] md:text-[15px] font-extrabold select-none leading-none mt-1">
+                      <span className="text-[14px] sm:text-[16px] md:text-[18px] font-extrabold select-none leading-none mt-1">
                         {el.symbol}
                       </span>
                     </>
@@ -450,7 +450,7 @@ export default function MasteryBoard({
       <div className="flex items-center justify-between mt-auto z-10 border-t border-cyan-500/15 pt-3 w-full">
         {/* Flat Telemetry segment lines */}
         <div className="flex items-center space-x-3 w-1/2">
-          <span className="text-xs text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
+          <span className="text-sm text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
           <div className="h-3 bg-slate-950/60 border border-cyan-500/25 flex-grow p-[2px] relative">
             <div 
               className="h-full bg-cyan-400 hud-telemetry-segments text-cyan-400 transition-all duration-1000"
@@ -460,8 +460,8 @@ export default function MasteryBoard({
         </div>
 
         {/* Flat Hacking Text Ticker */}
-        <div className="flex items-center space-x-2 text-xs font-bold font-mono">
-          <span className="text-cyan-500/50 uppercase tracking-widest text-xs">DATABASE_LOAD:</span>
+        <div className="flex items-center space-x-2 text-sm font-bold font-mono">
+          <span className="text-cyan-500/50 uppercase tracking-widest text-sm">DATABASE_LOAD:</span>
           <span className="text-yellow-400">{collectedCount}</span>
           <span className="text-cyan-500/30">/</span>
           <span className="text-cyan-400">{totalGoalCount} SECURED</span>

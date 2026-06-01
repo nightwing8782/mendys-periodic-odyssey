@@ -350,8 +350,8 @@ export default function GauntletConsole({
         {question.type === 'MULTIPLE_CHOICE' && (
           <div className="space-y-4">
             <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-4 text-center">
-              <span className="text-xs text-teal-500 uppercase tracking-widest font-mono-sci block mb-1 font-bold">Mendy's Transmission Clue</span>
-              <p className="text-xs md:text-sm font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
+              <span className="text-sm text-teal-500 uppercase tracking-widest font-mono-sci block mb-1.5 font-bold">Mendy's Transmission Clue</span>
+              <p className="text-sm md:text-base font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
                 "{question.clue}"
               </p>
             </div>
@@ -361,14 +361,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'hud-btn-arcade w-full';
+                let buttonStyle = 'hud-btn-arcade w-full py-3 text-sm';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full';
+                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full py-3 text-sm';
                   } else if (isSelected) {
-                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full';
+                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full py-3 text-sm';
                   } else {
-                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full';
+                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full py-3 text-sm';
                   }
                 }
 
@@ -377,7 +377,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleMultipleChoiceSubmit(option)}
-                    className={`rounded-none text-xs font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
+                    className={`rounded-none text-sm font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -427,8 +427,8 @@ export default function GauntletConsole({
                     <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-current opacity-40" />
                     <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-current opacity-40" />
 
-                    <span className="text-3xl font-deco font-black tracking-wide my-2">{el.symbol}</span>
-                    <span className="text-xs font-bold tracking-widest uppercase mb-1">{el.name}</span>
+                    <span className="text-4xl font-deco font-black tracking-wide my-2">{el.symbol}</span>
+                    <span className="text-sm font-bold tracking-widest uppercase mb-1">{el.name}</span>
                   </div>
                 );
               })}
@@ -476,14 +476,14 @@ export default function GauntletConsole({
                 const isSelected = selectedAnswer === option;
                 const isCorrectAnswer = option.toLowerCase() === question.answer.toLowerCase();
                 
-                let buttonStyle = 'hud-btn-arcade w-full';
+                let buttonStyle = 'hud-btn-arcade w-full py-3 text-sm';
                 if (feedback !== null) {
                   if (isCorrectAnswer) {
-                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full';
+                    buttonStyle = 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.6)] font-bold w-full py-3 text-sm';
                   } else if (isSelected) {
-                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full';
+                    buttonStyle = 'bg-red-600 border-red-600 text-black font-bold w-full py-3 text-sm';
                   } else {
-                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full';
+                    buttonStyle = 'opacity-30 border-cyan-950 text-cyan-900 cursor-not-allowed w-full py-3 text-sm';
                   }
                 }
 
@@ -492,7 +492,7 @@ export default function GauntletConsole({
                     key={option}
                     disabled={feedback !== null}
                     onClick={() => handleNuclearSynthesisSubmit(option)}
-                    className={`rounded-none text-xs font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
+                    className={`rounded-none text-sm font-bold transition-all duration-75 font-mono cursor-pointer ${buttonStyle}`}
                   >
                     {option}
                   </button>
@@ -520,12 +520,12 @@ export default function GauntletConsole({
               <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-teal-400 opacity-60" />
               <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-teal-400 opacity-60" />
 
-              <span className="text-xs text-teal-400 font-mono-sci uppercase tracking-widest font-bold block mb-2">
+              <span className="text-sm text-teal-400 font-mono-sci uppercase tracking-widest font-bold block mb-2">
                 HOLOGRAPHIC NAVIGATION PROTOCOL
               </span>
 
               <div className="mb-3">
-                <span className={`text-xs px-2.5 py-1 border font-mono font-bold ${
+                <span className={`text-sm px-3 py-1.5 border font-mono font-bold ${
                   attemptNumber === 1 ? 'border-teal-500/30 text-teal-400 bg-teal-950/20' :
                   attemptNumber === 2 ? 'border-yellow-500/50 text-yellow-400 bg-yellow-950/20 animate-pulse' :
                   'border-red-500 text-red-400 bg-red-950/25 animate-bounce'
@@ -538,11 +538,11 @@ export default function GauntletConsole({
                 </span>
               </div>
               
-              <p className="text-sm md:text-base font-bold text-slate-100 font-deco tracking-wide leading-relaxed">
+              <p className="text-base md:text-lg font-bold text-slate-100 font-deco tracking-wide leading-relaxed">
                 {question.clue}
               </p>
               
-              <p className="text-xs text-slate-400 font-mono-sci mt-4 italic">
+              <p className="text-sm text-slate-400 font-mono-sci mt-4 italic">
                 * Click/Tap the correct square directly on the Periodic Table to submit your response!
               </p>
             </div>
@@ -553,12 +553,11 @@ export default function GauntletConsole({
         {question.type === 'CLASSIC_TRIVIA' && (
           <div className="space-y-4">
             
-            {/* Clue 1 (Hard, 300 Pts) */}
-            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-3.5 text-center relative overflow-hidden">
-              <span className="text-xs text-teal-400 uppercase tracking-widest font-mono-sci block mb-1 font-bold">
+            {/* Clue 1 (Hard, 300 Pts) *            <div className="bg-slate-950/40 border border-teal-500/20 rounded-none p-3.5 text-center relative overflow-hidden">
+              <span className="text-sm text-teal-400 uppercase tracking-widest font-mono-sci block mb-1 font-bold">
                 Clue 1 (Hard - 300 Pts)
               </span>
-              <p className="text-sm md:text-base font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
+              <p className="text-base md:text-lg font-bold text-slate-200 font-deco tracking-wide leading-relaxed">
                 "{question.element.clues && question.element.clues[clueIndices[0]]}"
               </p>
             </div>
@@ -568,11 +567,11 @@ export default function GauntletConsole({
               {/* Clue 2 */}
               {cluesRevealed[1] ? (
                 <div className="border border-teal-500/30 rounded-none p-2.5 bg-slate-900/60 text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
-                  <div className="flex justify-between items-center text-xs font-mono-sci text-teal-400 mb-0.5 font-bold">
+                  <div className="flex justify-between items-center text-sm font-mono-sci text-teal-400 mb-0.5 font-bold">
                     <span>CLUE 2 (MEDIUM)</span>
                     <span className="text-teal-300">200 PTS MAX</span>
                   </div>
-                  <p className="text-xs text-slate-300 font-mono-sci leading-tight">
+                  <p className="text-sm text-slate-300 font-mono-sci leading-tight">
                     {question.element.clues && question.element.clues[clueIndices[1]]}
                   </p>
                 </div>
@@ -581,21 +580,21 @@ export default function GauntletConsole({
                   type="button"
                   disabled={feedback !== null}
                   onClick={() => revealClue(1)}
-                  className="border border-teal-500/30 hover:border-teal-400 rounded-none p-2.5 bg-black/40 text-center text-xs text-teal-400 font-mono-sci transition-colors duration-75 cursor-pointer hover:bg-teal-500/10 hover:text-teal-300 min-h-[70px] flex flex-col items-center justify-center"
+                  className="border border-teal-500/30 hover:border-teal-400 rounded-none p-2.5 bg-black/40 text-center text-sm text-teal-400 font-mono-sci transition-colors duration-75 cursor-pointer hover:bg-teal-500/10 hover:text-teal-300 min-h-[70px] flex flex-col items-center justify-center"
                 >
                   <span>🔍 Unlock Clue 2</span>
-                  <span className="text-[10.5px] opacity-75 mt-0.5">(Decays to 200 pts)</span>
+                  <span className="text-xs opacity-75 mt-0.5">(Decays to 200 pts)</span>
                 </button>
               )}
 
               {/* Clue 3 */}
               {cluesRevealed[2] ? (
                 <div className="border border-cyan-500/30 rounded-none p-2.5 bg-slate-900/60 text-left animate-fade-in min-h-[70px] flex flex-col justify-center">
-                  <div className="flex justify-between items-center text-xs font-mono-sci text-cyan-400 mb-0.5 font-bold">
+                  <div className="flex justify-between items-center text-sm font-mono-sci text-cyan-400 mb-0.5 font-bold">
                     <span>CLUE 3 (EASY)</span>
                     <span className="text-cyan-300">100 PTS MAX</span>
                   </div>
-                  <p className="text-xs font-mono-sci leading-tight text-yellow-400 font-bold">
+                  <p className="text-sm font-mono-sci leading-tight text-yellow-400 font-bold">
                     What element has the symbol '{question.element.symbol}'?
                   </p>
                 </div>
@@ -604,14 +603,14 @@ export default function GauntletConsole({
                   type="button"
                   disabled={!cluesRevealed[1] || feedback !== null}
                   onClick={() => revealClue(2)}
-                  className={`border rounded-none p-2.5 text-center text-xs font-mono-sci transition-colors duration-75 min-h-[70px] flex flex-col items-center justify-center ${
+                  className={`border rounded-none p-2.5 text-center text-sm font-mono-sci transition-colors duration-75 min-h-[70px] flex flex-col items-center justify-center ${
                     cluesRevealed[1] && feedback === null
                       ? 'border-cyan-500/30 hover:border-cyan-400 text-cyan-400 bg-black/40 cursor-pointer hover:bg-cyan-500/10 hover:text-cyan-300'
                       : 'border-slate-800 text-slate-700 bg-transparent cursor-not-allowed'
                   }`}
                 >
                   <span>🔒 Unlock Clue 3</span>
-                  <span className="text-[10.5px] opacity-75 mt-0.5">(Decays to 100 pts)</span>
+                  <span className="text-xs opacity-75 mt-0.5">(Decays to 100 pts)</span>
                 </button>
               )}
             </div>
@@ -626,7 +625,7 @@ export default function GauntletConsole({
                   disabled={feedback !== null}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder={cluesRevealed[2] ? "Enter element name" : "Name (e.g. Sodium) or Symbol (Na)"}
-                  className={`flex-grow bg-slate-950 text-slate-100 font-mono-sci text-xs px-3.5 py-3 rounded-none border transition-all duration-300 focus:outline-none ${
+                  className={`flex-grow bg-slate-950 text-slate-100 font-mono-sci text-sm px-3.5 py-3 rounded-none border transition-all duration-300 focus:outline-none ${
                     feedback === 'correct'
                       ? 'border-emerald-500 text-emerald-400 glow-green'
                       : feedback === 'incorrect'
@@ -638,7 +637,7 @@ export default function GauntletConsole({
                 <button
                   type="submit"
                   disabled={feedback !== null || !inputValue.trim()}
-                  className="hud-btn-arcade text-xs px-4 py-3 cursor-pointer"
+                  className="hud-btn-arcade text-sm px-5 py-3 cursor-pointer"
                 >
                   SUBMIT
                 </button>
@@ -658,7 +657,7 @@ export default function GauntletConsole({
               <div className="text-center space-y-2 animate-bounce">
                 <span className="text-4xl text-emerald-400">✨</span>
                 <h3 className="text-lg font-deco font-black text-emerald-400 tracking-wider">SUCCESSFULLY SECURED!</h3>
-                <p className="text-xs text-slate-300 font-mono-sci">
+                <p className="text-sm text-slate-300 font-mono-sci">
                   Secured Telemetry for: <strong className="text-yellow-400 uppercase font-bold">{question.symbol}</strong>
                 </p>
                 <span className="text-xs text-teal-400 font-mono-sci block pt-2 animate-pulse">
@@ -670,7 +669,7 @@ export default function GauntletConsole({
               <div className="text-center space-y-2">
                 <span className="text-4xl text-red-500 animate-pulse">⚠️</span>
                 <h3 className="text-lg font-deco font-black text-red-500 tracking-wider">SYNTHESIS FAILURE</h3>
-                <p className="text-xs text-slate-300 font-mono-sci">
+                <p className="text-sm text-slate-300 font-mono-sci">
                   Correct Product: <strong className="text-emerald-400 uppercase font-bold">{question.symbol} ({question.element.name})</strong>
                 </p>
                 <span className="text-xs text-red-400/80 font-mono-sci block pt-2 animate-pulse">
@@ -682,7 +681,7 @@ export default function GauntletConsole({
               <div className="text-center space-y-2">
                 <span className="text-4xl text-orange-500 animate-pulse">⏳</span>
                 <h3 className="text-lg font-deco font-black text-orange-500 tracking-wider">HARVEST TIMEOUT</h3>
-                <p className="text-xs text-slate-300 font-mono-sci">
+                <p className="text-sm text-slate-300 font-mono-sci">
                   Lock Lost! Solution was: <strong className="text-emerald-400 uppercase font-bold">{question.symbol}</strong>
                 </p>
                 <span className="text-xs text-orange-400/80 font-mono-sci block pt-2 animate-pulse">

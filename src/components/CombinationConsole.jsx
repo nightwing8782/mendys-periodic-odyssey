@@ -186,33 +186,33 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
 
         {lastScannedElement ? (
           // Displays detailed element scientific profile of the last successfully scanned target
-          <div className="flex-grow flex flex-col justify-between text-xs md:text-sm text-emerald-300 mt-2 space-y-1 animate-fade-in">
+          <div className="flex-grow flex flex-col justify-between text-sm md:text-base text-emerald-300 mt-2 space-y-1 animate-fade-in">
             <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
               <div>
-                <span className="text-emerald-500/60 font-medium text-[11.5px]">ELEMENT:</span>{' '}
+                <span className="text-emerald-500/60 font-medium text-xs">ELEMENT:</span>{' '}
                 <span className="font-bold text-slate-100 uppercase">{lastScannedElement.name}</span>
               </div>
               <div>
-                <span className="text-emerald-500/60 font-medium text-[11.5px]">SYMBOL:</span>{' '}
+                <span className="text-emerald-500/60 font-medium text-xs">SYMBOL:</span>{' '}
                 <span className="font-bold text-yellow-400 font-deco">{lastScannedElement.symbol}</span>
               </div>
               <div>
-                <span className="text-emerald-500/60 font-medium text-[11.5px]">ATOMIC #:</span>{' '}
+                <span className="text-emerald-500/60 font-medium text-xs">ATOMIC #:</span>{' '}
                 <span className="font-bold text-slate-200">{lastScannedElement.number}</span>
               </div>
               <div>
-                <span className="text-emerald-500/60 font-medium text-[11.5px]">MASS:</span>{' '}
+                <span className="text-emerald-500/60 font-medium text-xs">MASS:</span>{' '}
                 <span className="font-bold text-slate-200">{lastScannedElement.mass} u</span>
               </div>
             </div>
             
             <div className="border-t border-emerald-500/10 pt-1">
-              <span className="text-emerald-500/60 font-medium text-[11px]">CONFIG:</span>{' '}
-              <span className="text-emerald-400 text-xs font-semibold">{lastScannedElement.config}</span>
+              <span className="text-emerald-500/60 font-medium text-xs">CONFIG:</span>{' '}
+              <span className="text-emerald-400 text-sm font-semibold">{lastScannedElement.config}</span>
             </div>
             
-            <div className="border-t border-emerald-500/10 pt-1 leading-normal text-xs text-slate-300 italic">
-              <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-[11px]">USE:</span> {lastScannedElement.use}
+            <div className="border-t border-emerald-500/10 pt-1 leading-normal text-sm text-slate-300 italic">
+              <span className="text-emerald-500/60 font-medium not-italic uppercase font-bold text-xs">USE:</span> {lastScannedElement.use}
             </div>
           </div>
         ) : (
@@ -220,10 +220,10 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
           <div className="flex-grow flex flex-col justify-center items-center text-center mt-2 relative">
             <div className="absolute left-0 right-0 h-[1.5px] bg-emerald-500/40 glow-green animate-scan-bar pointer-events-none" />
             
-            <span className="text-emerald-500 font-bold tracking-widest text-sm animate-pulse green-glow-text mb-1">
+            <span className="text-emerald-500 font-bold tracking-widest text-base animate-pulse green-glow-text mb-1">
               SCANNING MATRIX...
             </span>
-            <span className="text-xs text-emerald-500/60 uppercase tracking-widest">
+            <span className="text-sm text-emerald-500/60 uppercase tracking-widest">
               Awaiting Target Formulation
             </span>
           </div>
@@ -252,10 +252,10 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
           />
 
           {/* Tuner Buttons */}
-          <div className="flex flex-col space-y-1 flex-grow">
+          <div className="flex flex-col space-y-1.5 flex-grow">
             <button
               onClick={() => handleStationChange(0)}
-              className={`text-xs text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
+              className={`text-sm text-left px-3 py-1.5 rounded-none transition-colors duration-75 font-bold border ${
                 station === 0 
                   ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
                   : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
@@ -265,7 +265,7 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
             </button>
             <button
               onClick={() => handleStationChange(1)}
-              className={`text-xs text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
+              className={`text-sm text-left px-3 py-1.5 rounded-none transition-colors duration-75 font-bold border ${
                 station === 1 
                   ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
                   : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
@@ -275,7 +275,7 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
             </button>
             <button
               onClick={() => handleStationChange(2)}
-              className={`text-xs text-left px-2 py-1 rounded-none transition-colors duration-75 font-bold border ${
+              className={`text-sm text-left px-3 py-1.5 rounded-none transition-colors duration-75 font-bold border ${
                 station === 2 
                   ? 'bg-teal-500/20 border-teal-400 text-teal-200' 
                   : 'bg-black/40 border-teal-500/20 text-teal-600 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'
@@ -287,7 +287,7 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
         </div>
 
         {/* Volume Slider & Mute control */}
-        <div className="flex items-center justify-between text-xs border-t border-teal-500/10 pt-1.5 text-teal-400/80">
+        <div className="flex items-center justify-between text-sm border-t border-teal-500/10 pt-1.5 text-teal-400/80">
           <div className="flex items-center space-x-1.5 flex-grow mr-4">
             <span>VOL</span>
             <input
@@ -303,7 +303,7 @@ export default function CombinationConsole({ activeElement, isCorrect, currentIn
           
           <button
             onClick={handleMuteToggle}
-            className={`px-2.5 py-0.5 rounded-none text-xs font-bold transition-colors duration-75 border ${
+            className={`px-3 py-0.5 rounded-none text-sm font-bold transition-colors duration-75 border ${
               muted 
                 ? 'bg-red-950/40 border-red-500 text-red-400 glow-red animate-pulse' 
                 : 'bg-black/40 border-teal-500/20 text-teal-500 hover:bg-teal-500/10 hover:border-teal-400/50 hover:text-teal-300'

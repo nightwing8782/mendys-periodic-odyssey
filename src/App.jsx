@@ -196,14 +196,14 @@ export default function App() {
         </div>
         
         {/* Diagnostic Warp Core panel */}
-        <div className="hud-panel p-4 flex flex-col justify-between bg-black/40 font-mono text-xs space-y-3 relative flex-grow">
+        <div className="hud-panel p-4 flex flex-col justify-between bg-black/40 font-mono text-sm space-y-3 relative flex-grow">
           <div className="hud-bracket hud-bracket-tl" />
           <div className="hud-bracket hud-bracket-tr" />
           <div className="hud-bracket hud-bracket-bl" />
           <div className="hud-bracket hud-bracket-br" />
           
           <div className="space-y-2">
-            <div className="w-full flex justify-between text-[11px] text-cyan-400 font-bold">
+            <div className="w-full flex justify-between text-xs text-cyan-400 font-bold">
               <span>[WARP_CORE_CHARGE]</span>
               <span>{collectedElements.length} / 118 BANKED</span>
             </div>
@@ -218,12 +218,12 @@ export default function App() {
 
           <div className="border-t border-cyan-500/10 pt-3 flex flex-col items-center">
             <ElementCapsule element={activeContainmentElement} />
-            <span className="font-mono text-[10px] text-cyan-500/50 uppercase tracking-widest mt-2 block">
+            <span className="font-mono text-xs text-cyan-500/50 uppercase tracking-widest mt-2 block">
               [CONTAINMENT_MATRIX]
             </span>
           </div>
           
-          <div className="text-[11px] text-yellow-400 text-center uppercase tracking-widest border-t border-cyan-500/10 pt-2.5">
+          <div className="text-xs text-yellow-400 text-center uppercase tracking-widest border-t border-cyan-500/10 pt-2.5">
             {gameState === 'victory' ? 'WARP_ENGAGED' : `EXPEDITION: PROTOCOL_${round}`}
           </div>
         </div>
@@ -246,12 +246,12 @@ export default function App() {
             </div>
             
             <div className="my-4 space-y-4">
-              <p className="text-xs leading-relaxed text-cyan-200 font-mono">
+              <p className="text-sm leading-relaxed text-cyan-200 font-mono">
                 Captain Mendy's starship warp drive has failed! 
                 Help her traverse the periodic fields in this endless element collection gauntlet. 
                 Identify, compare, synthesize, and tap elements until all 118 are secured!
               </p>
-              <div className="bg-black/50 border border-cyan-500/20 p-4 text-xs font-mono text-left text-cyan-300 space-y-2 max-h-[140px] overflow-y-auto">
+              <div className="bg-black/50 border border-cyan-500/20 p-4 text-sm font-mono text-left text-cyan-300 space-y-2 max-h-[140px] overflow-y-auto">
                 <div className="flex items-start space-x-2">
                   <span className="text-yellow-400">⚡</span>
                   <span><strong>Endless Loop:</strong> Play mini-rounds until your Mastery Board holds all 118 elements.</span>
@@ -269,7 +269,7 @@ export default function App() {
                 playClueChime();
                 startGame();
               }}
-              className="hud-btn-arcade w-full cursor-pointer text-xs"
+              className="hud-btn-arcade w-full cursor-pointer text-sm"
             >
               INITIALIZE HARVESTER
             </button>
@@ -290,7 +290,7 @@ export default function App() {
             </div>
             
             <div className="my-2 space-y-3 w-full flex-grow flex flex-col justify-center">
-              <p className="text-xs leading-normal text-cyan-300 font-mono">
+              <p className="text-sm leading-normal text-cyan-300 font-mono">
                 Captain Mendy requires energy telemetry. Select an active protocol below to proceed:
               </p>
               
@@ -311,16 +311,16 @@ export default function App() {
                       <div className="hud-bracket hud-bracket-bl" />
                       <div className="hud-bracket hud-bracket-br" />
                       <span className="text-xl mb-1">{details.icon}</span>
-                      <span className="font-mono font-bold text-[11.5px] text-yellow-400 tracking-wider uppercase z-10">{details.title}</span>
-                      <span className="text-[10.5px] text-cyan-500/60 font-mono mt-1 leading-normal z-10">{details.desc}</span>
-                      <span className="text-[9.5px] text-cyan-400 font-mono mt-2 border border-cyan-500/20 px-1.5 py-0.5 bg-cyan-950/20 uppercase tracking-widest z-10">{details.length}</span>
+                      <span className="font-mono font-bold text-sm text-yellow-400 tracking-wider uppercase z-10">{details.title}</span>
+                      <span className="text-xs text-cyan-500/60 font-mono mt-1 leading-normal z-10">{details.desc}</span>
+                      <span className="text-xs text-cyan-400 font-mono mt-2 border border-cyan-500/20 px-1.5 py-0.5 bg-cyan-950/20 uppercase tracking-widest z-10">{details.length}</span>
                     </button>
                   );
                 })}
               </div>
             </div>
             
-            <div className="text-[9.5px] text-cyan-500/50 font-mono tracking-widest uppercase">
+            <div className="text-xs text-cyan-500/50 font-mono tracking-widest uppercase">
               THE BACK-TO-BACK BAN PREVENTS REPEATED PROTOCOLS
             </div>
           </div>
@@ -358,10 +358,10 @@ export default function App() {
             {/* Harvested Elements slide view */}
             <div className="w-full flex-grow flex flex-col justify-between my-2 overflow-hidden">
               <div className="text-left mb-2">
-                <span className="text-xs text-cyan-400 font-bold uppercase tracking-wider block">
+                <span className="text-sm text-cyan-400 font-bold uppercase tracking-wider block">
                   HARVESTED ELEMENT TELEMETRY
                 </span>
-                <span className="text-[10.5px] text-cyan-500/50 block mt-0.5">
+                <span className="text-xs text-cyan-500/50 block mt-0.5">
                   Click elements on Mastery Board to research details.
                 </span>
               </div>
@@ -383,25 +383,25 @@ export default function App() {
                         <div className="hud-bracket hud-bracket-tr" />
                         <div className="hud-bracket hud-bracket-bl" />
                         <div className="hud-bracket hud-bracket-br" />
-                        <div className="flex justify-between items-center text-[10.5px] text-cyan-400 border-b border-cyan-500/10 pb-1 mb-1.5 z-10 font-bold">
+                        <div className="flex justify-between items-center text-xs text-cyan-400 border-b border-cyan-500/10 pb-1 mb-1.5 z-10 font-bold">
                           <span>SECURED DATA</span>
                           <span className="text-yellow-400 font-bold">{el.symbol}</span>
                         </div>
 
-                        <div className="text-xs text-cyan-300 space-y-1 z-10">
+                        <div className="text-sm text-cyan-300 space-y-1 z-10">
                           <div className="grid grid-cols-2 gap-x-2">
                             <div>
-                              <span className="text-cyan-500/60 text-[10px]">NAME:</span>{' '}
+                              <span className="text-cyan-500/60 text-xs">NAME:</span>{' '}
                               <span className="font-bold text-slate-200 uppercase">{el.name}</span>
                             </div>
                             <div>
-                              <span className="text-cyan-500/60 text-[10px]">ATOMIC #:</span>{' '}
+                              <span className="text-cyan-500/60 text-xs">ATOMIC #:</span>{' '}
                               <span className="font-bold text-slate-200">{el.number}</span>
                             </div>
                           </div>
                           
-                          <div className="border-t border-cyan-500/5 pt-1 text-[10.5px] text-cyan-200/80">
-                            <span className="text-cyan-500/60 font-bold text-[9.5px]">USE:</span> {el.use}
+                          <div className="border-t border-cyan-500/5 pt-1 text-xs text-cyan-200/80">
+                            <span className="text-cyan-500/60 font-bold text-xs">USE:</span> {el.use}
                           </div>
                         </div>
                       </div>
@@ -416,7 +416,7 @@ export default function App() {
                 unlockAudio();
                 advanceRound();
               }}
-              className="hud-btn-arcade-green w-full text-xs cursor-pointer"
+              className="hud-btn-arcade-green w-full text-sm cursor-pointer"
             >
               ENGAGE NEXT WARP PROTOCOL
             </button>
@@ -438,18 +438,18 @@ export default function App() {
 
             <div className="my-4 space-y-4">
               <div className="text-4xl animate-bounce">⚡</div>
-              <p className="text-xs text-cyan-200 leading-relaxed">
+              <p className="text-sm text-cyan-200 leading-relaxed">
                 Stunning! You have harvested all 118 elements of the universe! 
                 Captain Mendy's warp core is completely charged and she is returning to the stars. 
                 Earth is saved and documented!
               </p>
-              <div className="grid grid-cols-2 gap-4 bg-black/60 border border-cyan-500/20 p-3 text-xs">
+              <div className="grid grid-cols-2 gap-4 bg-black/60 border border-cyan-500/20 p-3 text-sm">
                 <div>
-                  <span className="text-cyan-500/50 block text-[11px] uppercase tracking-wider">TOTAL SCORE</span>
+                  <span className="text-cyan-500/50 block text-xs uppercase tracking-wider">TOTAL SCORE</span>
                   <span className="text-yellow-400 font-bold">{score} PTS</span>
                 </div>
                 <div>
-                  <span className="text-cyan-500/50 block text-[11px] uppercase tracking-wider">EXPEDITIONS</span>
+                  <span className="text-cyan-500/50 block text-xs uppercase tracking-wider">EXPEDITIONS</span>
                   <span className="text-cyan-400 font-bold">ROUND {round}</span>
                 </div>
               </div>
