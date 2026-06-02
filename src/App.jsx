@@ -190,7 +190,7 @@ export default function App() {
       )}
 
       {/* COLUMN 1 (LEFT, 25%): Holographic Mendy & Telemetry Diagnostic Feed */}
-      <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
+      <div className="lg:col-span-3 flex flex-col justify-between space-y-4 order-2 lg:order-1">
         <div className="flex justify-center w-full">
           <Mendy state={mendyState} />
         </div>
@@ -230,7 +230,7 @@ export default function App() {
       </div>
 
       {/* COLUMN 2 (CENTER, 25%): Central Gauntlet Terminal Core */}
-      <div className="lg:col-span-3 flex flex-col justify-stretch">
+      <div className="lg:col-span-3 flex flex-col justify-stretch order-1 lg:order-2 min-h-[420px] lg:min-h-0">
         
         {/* 1. INTRO / START STATE */}
         {gameState === 'intro' && (
@@ -471,7 +471,7 @@ export default function App() {
       </div>
 
       {/* COLUMN 3 (RIGHT, 50%): Interactive Mastery Board & Scanner Deck */}
-      <div className="lg:col-span-6 h-full flex flex-col justify-between space-y-4">
+      <div className="lg:col-span-6 h-full flex flex-col justify-between space-y-4 order-3 lg:order-3">
         <div className="flex-grow">
           {/* Pass interactive=true when in GRID_TAP mode */}
           <MasteryBoard 

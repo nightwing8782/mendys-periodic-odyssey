@@ -339,8 +339,8 @@ export default function MasteryBoard({
       </div>
 
       {/* Periodic Table Grid Container */}
-      <div className="w-full mb-3 flex justify-center z-10">
-        <div className={`relative p-2 border border-cyan-500/10 bg-black/35 w-full max-w-[850px] ${interactive && attemptNumber === 1 ? 'grid-crosshair-scan border-cyan-500/30' : ''}`}>
+      <div className="w-full mb-3 overflow-x-auto flex justify-start lg:justify-center z-10 scrollbar-thin">
+        <div className={`relative p-2 border border-cyan-500/10 bg-black/35 min-w-[700px] lg:min-w-0 w-full max-w-[850px] ${interactive && attemptNumber === 1 ? 'grid-crosshair-scan border-cyan-500/30' : ''}`}>
           <div 
             className="grid gap-[1px] md:gap-[2px] w-full relative"
             style={{ 
@@ -447,10 +447,10 @@ export default function MasteryBoard({
       </div>
 
       {/* Counter & Indicators bottom */}
-      <div className="flex items-center justify-between mt-auto z-10 border-t border-cyan-500/15 pt-3 w-full">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mt-auto z-10 border-t border-cyan-500/15 pt-3 w-full gap-3 sm:gap-0">
         {/* Flat Telemetry segment lines */}
-        <div className="flex items-center space-x-3 w-1/2">
-          <span className="text-sm text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
+        <div className="flex items-center space-x-3 w-full sm:w-1/2">
+          <span className="text-xs sm:text-sm text-cyan-500/70 font-bold uppercase tracking-wider">HARVEST_LOAD</span>
           <div className="h-3 bg-slate-950/60 border border-cyan-500/25 flex-grow p-[2px] relative">
             <div 
               className="h-full bg-cyan-400 hud-telemetry-segments text-cyan-400 transition-all duration-1000"
@@ -460,11 +460,13 @@ export default function MasteryBoard({
         </div>
 
         {/* Flat Hacking Text Ticker */}
-        <div className="flex items-center space-x-2 text-sm font-bold font-mono">
-          <span className="text-cyan-500/50 uppercase tracking-widest text-sm">DATABASE_LOAD:</span>
-          <span className="text-yellow-400">{collectedCount}</span>
-          <span className="text-cyan-500/30">/</span>
-          <span className="text-cyan-400">{totalGoalCount} SECURED</span>
+        <div className="flex items-center justify-between sm:justify-end space-x-2 text-xs sm:text-sm font-bold font-mono">
+          <span className="text-cyan-500/50 uppercase tracking-widest">DATABASE_LOAD:</span>
+          <span>
+            <span className="text-yellow-400">{collectedCount}</span>
+            <span className="text-cyan-500/30 px-1">/</span>
+            <span className="text-cyan-400">{totalGoalCount} SECURED</span>
+          </span>
         </div>
       </div>
     </div>
